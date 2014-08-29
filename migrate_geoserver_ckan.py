@@ -59,7 +59,7 @@ for key1, dict1 in response_dict.iteritems():
 
 						package = None
 
-						# check if there is on match					
+						# check if there is one match					
 						if response_dict['count'] == 1:
 							
 							# Store the found dataset
