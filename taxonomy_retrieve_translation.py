@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import urllib2
 import urllib
 import json
@@ -12,7 +13,7 @@ CKAN_URL = 'http://192.168.33.10/'
 
 # Specify the terms to look for
 params_dict = {
-    'terms': ['Russian', 'romantic novel'], 
+    'terms': ['Dave\'s books'], 
     'lang_codes' : ['en','de','es']   
 }
 

@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import urllib2
 import urllib
 import json
@@ -9,8 +11,8 @@ import pprint
 
 # TODO also upload resource
 
-CKAN_URL = 'http://ubuntuserver'
-CKAN_API = 'a3060884-a774-4b1f-8c0e-c665c8119dca'
+CKAN_URL = 'http://192.168.33.10'
+CKAN_API_KEY = '63dfdb18-d1ee-421c-91ab-61c009725d3e'
 
 # Put the details of the dataset we're going to create into a dict.
 dataset_dict = {
@@ -29,7 +31,7 @@ request = urllib2.Request(CKAN_URL+'/api/action/package_create')
 # Creating a dataset requires an authorization header.
 # Replace *** with your API key, from your user account on the CKAN site
 # that you're creating the dataset on.
-request.add_header('Authorization', CKAN_API)
+request.add_header('Authorization', CKAN_API_KEY)
 
 # Make the HTTP request.
 response = urllib2.urlopen(request, data_string)

@@ -25,6 +25,8 @@ Searches the database of a CKAN instance with a query specified in code. The lis
 
 Uploads a new dataset to the CKAN instance specified on the code.
 
+1. Adds the translation for a specified terms // taxonomy_add_translation.py
+
 1. Retrieve the translation for a specified terms // taxonomy_retrieve_translation.py
 
 Taxonomy has been translated and inserted in different languages, this script allows to check which translations for a specified term are stored in CKAN

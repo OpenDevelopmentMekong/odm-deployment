@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import urllib2
 import urllib
 import json
@@ -15,7 +17,7 @@ import pprint
 # Execute on productions CKAN instance after testing its validity
 
 CKAN_URL = 'http://ubuntuserver'
-CKAN_API = 'a3060884-a774-4b1f-8c0e-c665c8119dca'
+CKAN_API_KEY = 'a3060884-a774-4b1f-8c0e-c665c8119dca'
 TAXONOMY_FILE = ''
 
 # Create vocabulary tags
@@ -38,7 +40,7 @@ for k, v in vocabulary.items():
 			print('Inserting tag ' + tag + ' in vocabulary ' + vocabulary_name)
 			data_string = urllib.quote(json.dumps(dict([('name', tag), ('vocabulary_id', vocabulary_name)])))
 			request = urllib2.Request(CKAN_URL+'/api/action/tag_create')
-			request.add_header('Authorization', CKAN_API)
+			request.add_header('Authorization', CKAN_API_KEY)
 			response = urllib2.urlopen(request, data_string)
 			assert response.code == 200
 

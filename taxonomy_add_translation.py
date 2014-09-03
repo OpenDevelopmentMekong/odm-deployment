@@ -1,31 +1,33 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
+# coding: utf-8
 import urllib2
 import urllib
 import json
 import pprint
 
-# Retrieve a dataset test
-# Retrieves a certain dataset from the CKAN collection and outputs its 
-# JSON representation.
+# Taxonomy Tags creation script
+# Adds a single tranlation to CKAN, for a term in a certain language.
+# This script is good for testing.
 
-CKAN_URL = 'http://ubuntuserver'
-DATASET_ID = 'hallo'
 
-# Put the details of the dataset we're going to create into a dict.
+CKAN_URL = 'http://192.168.33.10'
+CKAN_API_KEY = '63dfdb18-d1ee-421c-91ab-61c009725d3e'
+
+# Create vocabulary tags
 params_dict = {
-    'id': DATASET_ID,    
+    'term': 'Cambodia', 
+    'translation' : 'ប្រទេសកម្ពុជា',
+    'lang_code' : 'kh'   
 }
 
 # Use the json module to dump the dictionary to a string for posting.
 data_string = urllib.quote(json.dumps(params_dict))
 
 # We'll use the package_create function to create a new dataset.
-request = urllib2.Request(CKAN_URL+'/api/3/action/package_show')
+request = urllib2.Request(CKAN_URL+'/api/3/action/term_translation_update')
 
 # No need for authorisation for this call
-#request.add_header('Authorization', 'a3060884-a774-4b1f-8c0e-c665c8119dca')
+request.add_header('Authorization', CKAN_API_KEY)
 
 # Make the HTTP request.
 response = urllib2.urlopen(request, data_string)
@@ -38,3 +40,4 @@ assert response_dict['success'] is True
 # package_create returns the created package as its result.
 created_package = response_dict['result']
 pprint.pprint(created_package)
+	
