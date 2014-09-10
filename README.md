@@ -3,6 +3,8 @@ scripting
 
 Repository to host utility scripts to add/migrate/update data in the different modules. 
 
+NOTE: This scripts are in a very alpha stage.
+
 ### scripts
 
 1. Taxonomy Tags creation script // taxonomy_tag_creation.py

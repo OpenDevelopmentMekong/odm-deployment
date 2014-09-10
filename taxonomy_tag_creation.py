@@ -17,7 +17,7 @@ import pprint
 # Execute on productions CKAN instance after testing its validity
 
 CKAN_URL = 'http://ubuntuserver'
-CKAN_API_KEY = 'a3060884-a774-4b1f-8c0e-c665c8119dca'
+CKAN_API_KEY = '<KEY>' #<KEY>
 TAXONOMY_FILE = ''
 
 # Create vocabulary tags

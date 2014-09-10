@@ -12,7 +12,7 @@ import pprint
 # TODO also upload resource
 
 CKAN_URL = 'http://192.168.33.10'
-CKAN_API_KEY = '63dfdb18-d1ee-421c-91ab-61c009725d3e'
+CKAN_API_KEY = '<KEY>' # <KEY>
 
 # Put the details of the dataset we're going to create into a dict.
 dataset_dict = {
