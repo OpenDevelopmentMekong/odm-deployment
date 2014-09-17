@@ -1,0 +1,2 @@
+[webserver]
+web375.webfaction.com	ansible_connection=ssh	ansible_ssh_user=opendevmp
