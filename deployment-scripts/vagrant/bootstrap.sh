@@ -76,16 +76,6 @@ echo 'Create database tables'
 echo '----------------------------------'
 sudo /usr/lib/ckan/default/bin/paster --plugin=ckan db init --config=/etc/ckan/default/development.ini
 
-echo 'Set up the DataStore'
-echo '----------------------------------'
-# Pasting password into ~/.pgpass to bypass password prompt while running createuser for datastore_default
-# TODO: Hide password
-#echo '*:*:*:datastore_default:odmadmin' >> ~/.pgpass
-#sudo -u postgres createuser --no-password -S -D -R datastore_default
-sudo -u postgres createuser -S -D -R datastore_default
-sudo -u postgres createdb -O ckan_default datastore_default -E utf-8
-sudo /usr/lib/ckan/default/bin/paster --plugin=ckan datastore set-permissions postgres --config=/etc/ckan/default/development.ini
-
 echo 'Link to who.ini'
 echo '----------------------------------'
 ln -s /usr/lib/ckan/default/src/ckan/who.ini /etc/ckan/default/who.ini
@@ -170,19 +160,29 @@ cd /usr/lib/ckan/default/src/ckanext-spatial/
 sudo pip install -r pip-requirements.txt
 sudo python setup.py develop
 
-# # go back to ckan dir
-# cd /usr/lib/ckan/default/
+# go back to ckan dir
+cd /usr/lib/ckan/default/
 
-# # echo 'Install Google Analytics extension'
-# # echo '----------------------------------'
-# # sudo pip install -e  "git+https://github.com/ckan/ckanext-googleanalytics.git#egg=ckanext-googleanalytics"
-# # cd /usr/lib/ckan/default/src/ckanext-googleanalytics
-# # sudo python setup.py develop
+echo 'Install Google Analytics extension'
+echo '----------------------------------'
+sudo pip install -e  "git+https://github.com/ckan/ckanext-googleanalytics.git#egg=ckanext-googleanalytics"
+cd /usr/lib/ckan/default/src/ckanext-googleanalytics
+sudo python setup.py develop
 
 echo 'Deployment: Following this http://docs.ckan.org/en/latest/maintaining/installing/deployment.html'
 echo '----------------------------------'
 cd /etc/ckan/default
 sudo wget -O production.ini https://raw.githubusercontent.com/OpenDevelopmentMekong/odm-scripting/deployment-scripts/deployment-scripts/ckan_deployment/production.ini?token=384894__eyJzY29wZSI6IlJhd0Jsb2I6T3BlbkRldmVsb3BtZW50TWVrb25nL29kbS1zY3JpcHRpbmcvZGVwbG95bWVudC1zY3JpcHRzL2RlcGxveW1lbnQtc2NyaXB0cy9ja2FuX2RlcGxveW1lbnQvcHJvZHVjdGlvbi5pbmkiLCJleHBpcmVzIjoxNDEyMjUyMzg4fQ%3D%3D--671efe03cf17ce8606e9e0f0aec7c5c78835a76d
+
+echo 'Set up the DataStore'
+echo '----------------------------------'
+# Pasting password into ~/.pgpass to bypass password prompt while running createuser for datastore_default
+# TODO: Hide password
+#echo '*:*:*:datastore_default:odmadmin' >> ~/.pgpass
+#sudo -u postgres createuser --no-password -S -D -R datastore_default
+sudo -u postgres createuser -S -D -R datastore_default
+sudo -u postgres createdb -O ckan_default datastore_default -E utf-8
+sudo /usr/lib/ckan/default/bin/paster --plugin=ckan datastore set-permissions postgres --config=/etc/ckan/default/production.ini
 
 echo 'Download WSGI script file from odm-scripting repo'
 echo '----------------------------------'
@@ -208,6 +208,10 @@ echo 'Enable CKAN site'
 echo '----------------------------------'
 sudo a2ensite ckan_default
 sudo ln -s /etc/nginx/sites-available/ckan_default /etc/nginx/sites-enabled/ckan_default
+
+echo 'Disable apache default site'
+echo '----------------------------------'
+sudo a2dissite default
 
 echo 'FINALLY, restart apache and nginx'
 echo '----------------------------------'
