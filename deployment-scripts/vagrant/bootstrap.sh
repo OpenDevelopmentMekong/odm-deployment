@@ -172,7 +172,7 @@ sudo python setup.py develop
 echo 'Deployment: Following this http://docs.ckan.org/en/latest/maintaining/installing/deployment.html'
 echo '----------------------------------'
 cd /etc/ckan/default
-sudo wget -O production.ini https://raw.githubusercontent.com/OpenDevelopmentMekong/odm-scripting/deployment-scripts/deployment-scripts/ckan_deployment/production.ini?token=384894__eyJzY29wZSI6IlJhd0Jsb2I6T3BlbkRldmVsb3BtZW50TWVrb25nL29kbS1zY3JpcHRpbmcvZGVwbG95bWVudC1zY3JpcHRzL2RlcGxveW1lbnQtc2NyaXB0cy9ja2FuX2RlcGxveW1lbnQvcHJvZHVjdGlvbi5pbmkiLCJleHBpcmVzIjoxNDEyMjUyMzg4fQ%3D%3D--671efe03cf17ce8606e9e0f0aec7c5c78835a76d
+sudo wget -O production.ini https://raw.githubusercontent.com/OpenDevelopmentMekong/odm-scripting/deployment-scripts/deployment-scripts/ckan_deployment/production.ini?token=384894__eyJzY29wZSI6IlJhd0Jsb2I6T3BlbkRldmVsb3BtZW50TWVrb25nL29kbS1zY3JpcHRpbmcvZGVwbG95bWVudC1zY3JpcHRzL2RlcGxveW1lbnQtc2NyaXB0cy9ja2FuX2RlcGxveW1lbnQvcHJvZHVjdGlvbi5pbmkiLCJleHBpcmVzIjoxNDEyMjU2NjM3fQ%3D%3D--2944fad9f8ec655d9d0e47c114b15ee00ed303c3
 
 echo 'Set up the DataStore'
 echo '----------------------------------'
@@ -213,7 +213,26 @@ echo 'Disable apache default site'
 echo '----------------------------------'
 sudo a2dissite default
 
-echo 'FINALLY, restart apache and nginx'
+echo 'Restart apache and nginx'
 echo '----------------------------------'
 sudo service apache2 reload
 sudo service nginx reload
+
+echo 'Configure Test environment'
+echo '----------------------------------'
+pip install -r /usr/lib/ckan/default/src/ckan/dev-requirements.txt
+sudo -u postgres createdb -O ckan_default ckan_test -E utf-8
+sudo -u postgres createdb -O ckan_default datastore_test -E utf-8
+sudo /usr/lib/ckan/default/bin/paster --plugin=ckan datastore set-permissions postgres -c /usr/lib/ckan/default/src/ckan/test-core.ini
+
+echo 'Configure NFS mountpoint to access for development'
+echo '----------------------------------'
+sudo apt-get install --yes nfs-common
+sudo apt-get install --yes nfs-kernel-server
+sudo echo '/usr/lib/ckan *(rw,async,no_subtree_check,insecure,anonuid=0,anongid=0,all_squash)' | sudo tee -a /etc/exports
+sudo /etc/init.d/nfs-kernel-server restart
+
+echo 'Create CKAN test data'
+echo '----------------------------------'
+sudo /usr/lib/ckan/default/bin/paster --plugin=ckan create-test-data -c /etc/ckan/default/production.ini
+
