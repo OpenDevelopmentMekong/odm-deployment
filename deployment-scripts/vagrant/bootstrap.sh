@@ -48,12 +48,10 @@ sudo chown -R `whoami` /etc/ckan/
 echo 'Download development.ini from github, instead of creating it using paster make-config'
 echo '----------------------------------'
 cd /etc/ckan/default
-sudo wget -O development.ini https://raw.githubusercontent.com/OpenDevelopmentMekong/odm-scripting/deployment-scripts/deployment-scripts/ckan_deployment/development.ini?token=384894__eyJzY29wZSI6IlJhd0Jsb2I6T3BlbkRldmVsb3BtZW50TWVrb25nL29kbS1zY3JpcHRpbmcvZGVwbG95bWVudC1zY3JpcHRzL2RlcGxveW1lbnQtc2NyaXB0cy9ja2FuX2RlcGxveW1lbnQvZGV2ZWxvcG1lbnQuaW5pIiwiZXhwaXJlcyI6MTQxMjI1MTk1N30%3D--84c643a4fbdf1740caf8c9c7ed30805c5b042c49
+sudo wget -O development.ini https://raw.githubusercontent.com/OpenDevelopmentMekong/odm-scripting/master/deployment-scripts/ckan_deployment/development.ini?token=384894__eyJzY29wZSI6IlJhd0Jsb2I6T3BlbkRldmVsb3BtZW50TWVrb25nL29kbS1zY3JpcHRpbmcvbWFzdGVyL2RlcGxveW1lbnQtc2NyaXB0cy9ja2FuX2RlcGxveW1lbnQvZGV2ZWxvcG1lbnQuaW5pIiwiZXhwaXJlcyI6MTQxMjMyNzAxOX0%3D--dcd943f93fb174f7ebc845484b5c6e0cf4b629d9
 
-echo 'Download raw config files from github: development.ini and jetty'
+echo 'Download raw config files from github: jetty'
 echo '----------------------------------'
-cd /etc/ckan/default
-sudo wget -O development.ini https://raw.githubusercontent.com/OpenDevelopmentMekong/odm-scripting/deployment-scripts/deployment-scripts/ckan_deployment/development.ini?token=384894__eyJzY29wZSI6IlJhd0Jsb2I6T3BlbkRldmVsb3BtZW50TWVrb25nL29kbS1zY3JpcHRpbmcvZGVwbG95bWVudC1zY3JpcHRzL2RlcGxveW1lbnQtc2NyaXB0cy9ja2FuX2RlcGxveW1lbnQvZGV2ZWxvcG1lbnQuaW5pIiwiZXhwaXJlcyI6MTQxMjI0NzMzMX0%3D--6d05e78340d010922908c2469997ccd01fc04d56
 cd /etc/default
 sudo wget -O jetty https://raw.githubusercontent.com/OpenDevelopmentMekong/odm-scripting/deployment-scripts/deployment-scripts/ckan_deployment/jetty?token=384894__eyJzY29wZSI6IlJhd0Jsb2I6T3BlbkRldmVsb3BtZW50TWVrb25nL29kbS1zY3JpcHRpbmcvZGVwbG95bWVudC1zY3JpcHRzL2RlcGxveW1lbnQtc2NyaXB0cy9ja2FuX2RlcGxveW1lbnQvamV0dHkiLCJleHBpcmVzIjoxNDEyMTcwMTMwfQ%3D%3D--18b9c4caa2e60fb2ffac45c0285c309d79f95483
 
@@ -183,6 +181,10 @@ echo '----------------------------------'
 sudo -u postgres createuser -S -D -R datastore_default
 sudo -u postgres createdb -O ckan_default datastore_default -E utf-8
 sudo /usr/lib/ckan/default/bin/paster --plugin=ckan datastore set-permissions postgres --config=/etc/ckan/default/production.ini
+
+# THIS PART SHOULD NOT BE RUN BY TRAVIS
+
+if [ $RUN_ON_TRAVIS==1 ] then exit 1 fi
 
 echo 'Download WSGI script file from odm-scripting repo'
 echo '----------------------------------'
