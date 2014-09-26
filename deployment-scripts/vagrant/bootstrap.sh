@@ -149,7 +149,7 @@ git clone https://github.com/OpenDevelopmentMekong/ckanext-odm_theme.git .
 python setup.py develop
 
 # THE LINES FROM HERE SHOULD NOT BE RUN BY TRAVIS
-if [ $?RUN_ON_TRAVIS == 1 ] then exit 0 fi
+if [[ -z "$RUN_ON_TRAVIS" ]] then
 
 # go back to ckan dir
 cd /usr/lib/ckan/default/
@@ -236,3 +236,5 @@ sudo /etc/init.d/nfs-kernel-server restart
 echo 'Create CKAN test data'
 echo '----------------------------------'
 sudo /usr/lib/ckan/default/bin/paster --plugin=ckan create-test-data -c /etc/ckan/default/production.ini
+
+fi
