@@ -148,6 +148,9 @@ cd /usr/lib/ckan/default/src/ckanext-odm_theme/
 git clone https://github.com/OpenDevelopmentMekong/ckanext-odm_theme.git .
 python setup.py develop
 
+# THE LINES FROM HERE SHOULD NOT BE RUN BY TRAVIS
+if [ $?RUN_ON_TRAVIS == 1 ] then exit 0 fi
+
 # go back to ckan dir
 cd /usr/lib/ckan/default/
 
@@ -181,10 +184,6 @@ echo '----------------------------------'
 sudo -u postgres createuser -S -D -R datastore_default
 sudo -u postgres createdb -O ckan_default datastore_default -E utf-8
 sudo /usr/lib/ckan/default/bin/paster --plugin=ckan datastore set-permissions postgres --config=/etc/ckan/default/production.ini
-
-# THIS PART SHOULD NOT BE RUN BY TRAVIS
-
-if [ $?RUN_ON_TRAVIS == 1 ] then exit 1 fi
 
 echo 'Download WSGI script file from odm-scripting repo'
 echo '----------------------------------'
@@ -237,4 +236,3 @@ sudo /etc/init.d/nfs-kernel-server restart
 echo 'Create CKAN test data'
 echo '----------------------------------'
 sudo /usr/lib/ckan/default/bin/paster --plugin=ckan create-test-data -c /etc/ckan/default/production.ini
-
