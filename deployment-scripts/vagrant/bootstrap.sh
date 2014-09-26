@@ -184,7 +184,7 @@ sudo /usr/lib/ckan/default/bin/paster --plugin=ckan datastore set-permissions po
 
 # THIS PART SHOULD NOT BE RUN BY TRAVIS
 
-if [ $RUN_ON_TRAVIS==1 ] then exit 1 fi
+if [ $?RUN_ON_TRAVIS == 1 ] then exit 1 fi
 
 echo 'Download WSGI script file from odm-scripting repo'
 echo '----------------------------------'
