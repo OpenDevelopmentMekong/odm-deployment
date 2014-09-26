@@ -30,7 +30,6 @@ echo 'Pasting password into ~/.pgpass to bypass password prompt while running cr
 echo '----------------------------------'
 # TODO: Hide password
 echo '*:*:*:*:odmadmin' > ~/.pgpass
-#sudo -u postgres createuser --no-password -S -D -R ckan_default
 sudo -u postgres createuser -S -D -R ckan_default
 sudo -u postgres createdb -O ckan_default ckan_default -E utf-8
 
@@ -40,7 +39,7 @@ cd /etc/postgresql/9.1/main/
 sudo wget -O pg_hba.conf https://raw.githubusercontent.com/OpenDevelopmentMekong/odm-scripting/deployment-scripts/deployment-scripts/ckan_deployment/pg_hba.conf?token=384894__eyJzY29wZSI6IlJhd0Jsb2I6T3BlbkRldmVsb3BtZW50TWVrb25nL29kbS1zY3JpcHRpbmcvZGVwbG95bWVudC1zY3JpcHRzL2RlcGxveW1lbnQtc2NyaXB0cy9ja2FuX2RlcGxveW1lbnQvcGdfaGJhLmNvbmYiLCJleHBpcmVzIjoxNDEyMjA0NzE5fQ%3D%3D--320252a6480b3084a1ee47b3b56e074de56fec49
 sudo service postgresql restart
 
-echo 'Create a CKAN config file'
+echo 'Create a CKAN config file, we actually download it'
 echo '----------------------------------'
 sudo mkdir -p /etc/ckan/default
 sudo chown -R `whoami` /etc/ckan/
@@ -78,46 +77,8 @@ echo 'Link to who.ini'
 echo '----------------------------------'
 ln -s /usr/lib/ckan/default/src/ckan/who.ini /etc/ckan/default/who.ini
 
-echo 'Installing extensions'
+echo 'Installing own extensions'
 echo '----------------------------------'
-
-# Install extra packages: libxml2-dev and libxslt-dev are needed by ckanext-spatial, apache2/nginx for deployment
-sudo apt-get install --yes libxml2-dev libxslt-dev
-sudo apt-get install --yes apache2 libapache2-mod-wsgi
-sudo apt-get install --yes nginx
-# sudo apt-get install -y postfix -> This breaks the script!!
-
-echo 'Install FileStore'
-echo '----------------------------------'
-sudo mkdir -p /var/lib/ckan/default
-sudo chown www-data /var/lib/ckan/default
-sudo chmod u+rwx /var/lib/ckan/default
-
-# echo 'OPTIONAL: Install Datapusher extension'
-# echo '----------------------------------'
-# sudo apt-get install python-dev python-virtualenv build-essential libxslt1-dev libxml2-dev git
-# sudo virtualenv /usr/lib/ckan/datapusher
-# sudo mkdir /usr/lib/ckan/datapusher/src
-# cd /usr/lib/ckan/datapusher/src
-# sudo git clone -b stable https://github.com/ckan/datapusher.git
-# cd datapusher
-# sudo /usr/lib/ckan/datapusher/bin/pip install -r requirements.txt
-# sudo /usr/lib/ckan/datapusher/bin/python setup.py develop
-# sudo cp deployment/datapusher /etc/apache2/sites-available/
-# sudo cp deployment/datapusher.wsgi /etc/ckan/
-# sudo cp deployment/datapusher_settings.py /etc/ckan/
-# sudo sh -c 'echo "NameVirtualHost *:8800" >> /etc/apache2/ports.conf'
-# sudo sh -c 'echo "Listen 8800" >> /etc/apache2/ports.conf'
-# sudo a2ensite datapusher
-
-# go back to ckan dir
-cd /usr/lib/ckan/default/
-
-echo 'Install Pages extension'
-echo '----------------------------------'
-sudo pip install -e 'git+https://github.com/ckan/ckanext-pages.git#egg=ckanext-pages'
-cd /usr/lib/ckan/default/src/ckanext-pages
-python setup.py develop
 
 # go back to ckan dir
 cd /usr/lib/ckan/default/
@@ -151,6 +112,47 @@ python setup.py develop
 # THE LINES FROM HERE SHOULD NOT BE RUN BY TRAVIS
 if [[ -z "$RUN_ON_TRAVIS" ]]
 then
+
+	echo 'Installing other extensions'
+	echo '----------------------------------'
+
+	# Install extra packages: libxml2-dev and libxslt-dev are needed by ckanext-spatial, apache2/nginx for deployment
+	sudo apt-get install --yes libxml2-dev libxslt-dev
+	sudo apt-get install --yes apache2 libapache2-mod-wsgi
+	sudo apt-get install --yes nginx
+	# sudo apt-get install -y postfix -> This breaks the script!!
+
+	echo 'Install FileStore'
+	echo '----------------------------------'
+	sudo mkdir -p /var/lib/ckan/default
+	sudo chown www-data /var/lib/ckan/default
+	sudo chmod u+rwx /var/lib/ckan/default
+
+	# echo 'OPTIONAL: Install Datapusher extension'
+	# echo '----------------------------------'
+	# sudo apt-get install python-dev python-virtualenv build-essential libxslt1-dev libxml2-dev git
+	# sudo virtualenv /usr/lib/ckan/datapusher
+	# sudo mkdir /usr/lib/ckan/datapusher/src
+	# cd /usr/lib/ckan/datapusher/src
+	# sudo git clone -b stable https://github.com/ckan/datapusher.git
+	# cd datapusher
+	# sudo /usr/lib/ckan/datapusher/bin/pip install -r requirements.txt
+	# sudo /usr/lib/ckan/datapusher/bin/python setup.py develop
+	# sudo cp deployment/datapusher /etc/apache2/sites-available/
+	# sudo cp deployment/datapusher.wsgi /etc/ckan/
+	# sudo cp deployment/datapusher_settings.py /etc/ckan/
+	# sudo sh -c 'echo "NameVirtualHost *:8800" >> /etc/apache2/ports.conf'
+	# sudo sh -c 'echo "Listen 8800" >> /etc/apache2/ports.conf'
+	# sudo a2ensite datapusher
+
+	# go back to ckan dir
+	cd /usr/lib/ckan/default/
+
+	echo 'Install Pages extension'
+	echo '----------------------------------'
+	sudo pip install -e 'git+https://github.com/ckan/ckanext-pages.git#egg=ckanext-pages'
+	cd /usr/lib/ckan/default/src/ckanext-pages
+	python setup.py develop
 
 	# go back to ckan dir
 	cd /usr/lib/ckan/default/
