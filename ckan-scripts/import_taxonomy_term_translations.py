@@ -11,15 +11,17 @@
 
 import sys
 sys.path.append('/usr/lib/ckan/default/src/ckanext-odm_utils/ckanext/odm_utils/utils')
-import geoserver_utils
 import ckanapi_utils
 import github_utils
 from odm_importer import ODMImporter
 
+# Initialise RealGithubApi
 githubutils = github_utils.RealGithubApi()
+
+# Initialise RealCkanApi (URL and APIKEY must be specified)
 ckanapiutils = ckanapi_utils.RealCkanApi('http://localhost','<CKAN_ADMIN_API_KEY')
 
 importer = ODMImporter()
-importer.import_taxonomy_tag_dictionaries(githubutils,ckanapiutils)
+importer.import_taxonomy_term_translations(githubutils,ckanapiutils)
 
 

@@ -8,6 +8,7 @@
 # Users (odmcambodia, odmlaos, odmthailand, odmvietnam, odmmyanmar)
 
 # NOTE: This script has to be run within a virtual environment!!!
+# Do not forget to set the correct API Key while initialising RealCkanApi
 # . /usr/lib/ckan/default/bin/activate
 
 import sys
@@ -17,7 +18,7 @@ import ckan
 from odm_importer import ODMImporter
 
 # Initialise RealCkanApi (APIKEY must be specified)
-ckanapiutils = ckanapi_utils.RealCkanApi('http://localhost','a7178e80-7065-45a6-ad07-c3c9accc7097')
+ckanapiutils = ckanapi_utils.RealCkanApi('http://localhost','<CKAN_ADMIN_API_KEY')
 
 # Add Users
 try:
