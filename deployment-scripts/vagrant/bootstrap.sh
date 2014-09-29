@@ -19,7 +19,7 @@ echo 'Cloning odm-scripting repo.'
 echo '----------------------------------'
 sudo apt-get install --yes git-core
 cd /vagrant/
-git clone -b odm-scripting-0.1 https://$github_user:$github_pass@github.com/OpenDevelopmentMekong/odm-scripting.git
+git clone -b odm-scripting-0.1.1 https://$github_user:$github_pass@github.com/OpenDevelopmentMekong/odm-scripting.git
 
 echo 'CKAN Basic installation'
 echo '----------------------------------'
