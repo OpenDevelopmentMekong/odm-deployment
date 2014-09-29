@@ -1,9 +1,28 @@
 #!/usr/bin/env bash
 
-echo 'Starting provisioning : Basic CKAN installation'
+echo 'Starting provisioning, updating Ubuntu packages repo'
+echo '----------------------------------'
+sudo apt-get update -qq
+
+echo 'Checking whether the config file is there'
 echo '----------------------------------'
 
-sudo apt-get update -qq
+if [ ! -f /vagrant/config.cfg ]
+then
+	echo 'config.cfg file not found!!!! Please make sure you have created it.'
+	exit 0
+fi
+
+source /vagrant/config.cfg
+
+echo 'Cloning odm-scripting repo.'
+echo '----------------------------------'
+sudo apt-get install --yes git-core
+cd /vagrant/
+git clone -b odm-scripting-0.1 https://$github_user:$github_pass@github.com/OpenDevelopmentMekong/odm-scripting.git
+
+echo 'CKAN Basic installation'
+echo '----------------------------------'
 sudo apt-get install --yes libpq5 python-dev postgresql libpq-dev python-pip python-virtualenv git-core solr-jetty openjdk-6-jdk
 
 sudo mkdir -p /usr/lib/ckan/default
@@ -33,10 +52,9 @@ echo '*:*:*:*:odmadmin' > ~/.pgpass
 sudo -u postgres createuser -S -D -R ckan_default
 sudo -u postgres createdb -O ckan_default ckan_default -E utf-8
 
-echo 'Download pg_hba.conf from odm-scripting repo to prevent FATAL: password authentication failed'
+echo 'Copy pg_hba.conf from odm-scripting to prevent FATAL: password authentication failed'
 echo '----------------------------------'
-cd /etc/postgresql/9.1/main/
-sudo wget -O pg_hba.conf https://raw.githubusercontent.com/OpenDevelopmentMekong/odm-scripting/deployment-scripts/deployment-scripts/ckan_deployment/pg_hba.conf?token=384894__eyJzY29wZSI6IlJhd0Jsb2I6T3BlbkRldmVsb3BtZW50TWVrb25nL29kbS1zY3JpcHRpbmcvZGVwbG95bWVudC1zY3JpcHRzL2RlcGxveW1lbnQtc2NyaXB0cy9ja2FuX2RlcGxveW1lbnQvcGdfaGJhLmNvbmYiLCJleHBpcmVzIjoxNDEyMjA0NzE5fQ%3D%3D--320252a6480b3084a1ee47b3b56e074de56fec49
+sudo cp -fr /vagrant/odm-scripting/deployment-scripts/ckan_deployment/postgresql/pg_hba.conf /etc/postgresql/9.1/main/pg_hba.conf
 sudo service postgresql restart
 
 echo 'Create a CKAN config file, we actually download it'
@@ -44,23 +62,13 @@ echo '----------------------------------'
 sudo mkdir -p /etc/ckan/default
 sudo chown -R `whoami` /etc/ckan/
 
-echo 'Download development.ini from github, instead of creating it using paster make-config'
+echo 'Copy development.ini from odm-scripting, instead of creating it using paster make-config'
 echo '----------------------------------'
-cd /etc/ckan/default
-sudo wget -O development.ini https://raw.githubusercontent.com/OpenDevelopmentMekong/odm-scripting/master/deployment-scripts/ckan_deployment/development.ini?token=384894__eyJzY29wZSI6IlJhd0Jsb2I6T3BlbkRldmVsb3BtZW50TWVrb25nL29kbS1zY3JpcHRpbmcvbWFzdGVyL2RlcGxveW1lbnQtc2NyaXB0cy9ja2FuX2RlcGxveW1lbnQvZGV2ZWxvcG1lbnQuaW5pIiwiZXhwaXJlcyI6MTQxMjMyNzAxOX0%3D--dcd943f93fb174f7ebc845484b5c6e0cf4b629d9
+sudo cp -fr /vagrant/odm-scripting/deployment-scripts/ckan_deployment/development.ini /etc/ckan/default/development.ini
 
-echo 'Download raw config files from github: jetty'
+echo 'Copy jetty config files from odm-scripting'
 echo '----------------------------------'
-cd /etc/default
-sudo wget -O jetty https://raw.githubusercontent.com/OpenDevelopmentMekong/odm-scripting/deployment-scripts/deployment-scripts/ckan_deployment/jetty?token=384894__eyJzY29wZSI6IlJhd0Jsb2I6T3BlbkRldmVsb3BtZW50TWVrb25nL29kbS1zY3JpcHRpbmcvZGVwbG95bWVudC1zY3JpcHRzL2RlcGxveW1lbnQtc2NyaXB0cy9ja2FuX2RlcGxveW1lbnQvamV0dHkiLCJleHBpcmVzIjoxNDEyMTcwMTMwfQ%3D%3D--18b9c4caa2e60fb2ffac45c0285c309d79f95483
-
-# TODO
-# Once the repo becomes public, instead of the lines above, we clone odm-scripting repo and copy config files to the path they belong: development.ini and jett
-#mkdir -p /usr/lib/ckan/default/src/odm-scripting
-#cd /usr/lib/ckan/default/src/odm-scripting
-#git clone -b deployment-scripts https://github.com/OpenDevelopmentMekong/odm-scripting.git .
-#cp -fr deployment-scripts/development.ini /etc/ckan/default
-#cp -fr deployment-scripts/jetty /etc/default
+sudo cp -fr /vagrant/odm-scripting/deployment-scripts/ckan_deployment/jetty/jetty /etc/default/jetty
 
 echo 'Start Jetty, link Solr schema.xml'
 echo '----------------------------------'
@@ -171,8 +179,7 @@ sudo python setup.py develop
 
 echo 'Deployment: Following this http://docs.ckan.org/en/latest/maintaining/installing/deployment.html'
 echo '----------------------------------'
-cd /etc/ckan/default
-sudo wget -O production.ini https://raw.githubusercontent.com/OpenDevelopmentMekong/odm-scripting/deployment-scripts/deployment-scripts/ckan_deployment/production.ini?token=384894__eyJzY29wZSI6IlJhd0Jsb2I6T3BlbkRldmVsb3BtZW50TWVrb25nL29kbS1zY3JpcHRpbmcvZGVwbG95bWVudC1zY3JpcHRzL2RlcGxveW1lbnQtc2NyaXB0cy9ja2FuX2RlcGxveW1lbnQvcHJvZHVjdGlvbi5pbmkiLCJleHBpcmVzIjoxNDEyMjU2NjM3fQ%3D%3D--2944fad9f8ec655d9d0e47c114b15ee00ed303c3
+sudo cp -fr /vagrant/odm-scripting/deployment-scripts/ckan_deployment/production.ini /etc/ckan/default/production.ini
 
 echo 'Set up the DataStore'
 echo '----------------------------------'
@@ -186,23 +193,19 @@ sudo /usr/lib/ckan/default/bin/paster --plugin=ckan datastore set-permissions po
 
 echo 'Download WSGI script file from odm-scripting repo'
 echo '----------------------------------'
-cd /etc/ckan/default
-sudo wget -O apache.wsgi https://raw.githubusercontent.com/OpenDevelopmentMekong/odm-scripting/deployment-scripts/deployment-scripts/ckan_deployment/apache.wsgi?token=384894__eyJzY29wZSI6IlJhd0Jsb2I6T3BlbkRldmVsb3BtZW50TWVrb25nL29kbS1zY3JpcHRpbmcvZGVwbG95bWVudC1zY3JpcHRzL2RlcGxveW1lbnQtc2NyaXB0cy9ja2FuX2RlcGxveW1lbnQvYXBhY2hlLndzZ2kiLCJleHBpcmVzIjoxNDEyMjUyNjAxfQ%3D%3D--c7f96687788b91c7f9017ba4ad179218abebac77
+sudo cp -fr /vagrant/odm-scripting/deployment-scripts/ckan_deployment/apache/apache.wsgi /etc/ckan/default/apache.wsgi
 
 echo 'Download the Apache config file'
 echo '----------------------------------'
-cd /etc/apache2/sites-available/
-sudo wget -O ckan_default https://raw.githubusercontent.com/OpenDevelopmentMekong/odm-scripting/deployment-scripts/deployment-scripts/ckan_deployment/apache_ckan_default?token=384894__eyJzY29wZSI6IlJhd0Jsb2I6T3BlbkRldmVsb3BtZW50TWVrb25nL29kbS1zY3JpcHRpbmcvZGVwbG95bWVudC1zY3JpcHRzL2RlcGxveW1lbnQtc2NyaXB0cy9ja2FuX2RlcGxveW1lbnQvYXBhY2hlX2NrYW5fZGVmYXVsdCIsImV4cGlyZXMiOjE0MTIyNTI2MjN9--0c0bda819ff3a99eeaacdc56e0de74a730732d26
+sudo cp -fr /vagrant/odm-scripting/deployment-scripts/ckan_deployment/apache/ckan_default /etc/apache2/sites-available/ckan_default
 
 echo 'Download the Apache ports.conf file'
 echo '----------------------------------'
-cd /etc/apache2/
-sudo wget -O ports.conf https://raw.githubusercontent.com/OpenDevelopmentMekong/odm-scripting/deployment-scripts/deployment-scripts/ckan_deployment/ports.conf?token=384894__eyJzY29wZSI6IlJhd0Jsb2I6T3BlbkRldmVsb3BtZW50TWVrb25nL29kbS1zY3JpcHRpbmcvZGVwbG95bWVudC1zY3JpcHRzL2RlcGxveW1lbnQtc2NyaXB0cy9ja2FuX2RlcGxveW1lbnQvcG9ydHMuY29uZiIsImV4cGlyZXMiOjE0MTIyNTI2NTZ9--452162a6c1af3348ce9b008df3b4c3d292daee2e
+sudo cp -fr /vagrant/odm-scripting/deployment-scripts/ckan_deployment/apache/ports.conf /etc/apache2/ports.conf
 
 echo 'Download the Nginx config file'
 echo '----------------------------------'
-cd /etc/nginx/sites-available/
-sudo wget -O ckan_default https://raw.githubusercontent.com/OpenDevelopmentMekong/odm-scripting/deployment-scripts/deployment-scripts/ckan_deployment/nginx_ckan_default?token=384894__eyJzY29wZSI6IlJhd0Jsb2I6T3BlbkRldmVsb3BtZW50TWVrb25nL29kbS1zY3JpcHRpbmcvZGVwbG95bWVudC1zY3JpcHRzL2RlcGxveW1lbnQtc2NyaXB0cy9ja2FuX2RlcGxveW1lbnQvbmdpbnhfY2thbl9kZWZhdWx0IiwiZXhwaXJlcyI6MTQxMjI1MjY4M30%3D--5e3df80d913038ca6c8ca5871938d95dd405ed60
+sudo cp -fr /vagrant/odm-scripting/deployment-scripts/ckan_deployment/nginx/ckan_default /etc/nginx/sites-available/ckan_default
 
 echo 'Enable CKAN site'
 echo '----------------------------------'
