@@ -1,4 +1,4 @@
-<VirtualHost 0.0.0.0:80>
+<VirtualHost 0.0.0.0:8080>
     ServerName 127.0.0.1
     ServerAlias 127.0.0.1
     WSGIScriptAlias / /etc/ckan/default/apache.wsgi
