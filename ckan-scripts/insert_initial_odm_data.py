@@ -18,7 +18,7 @@ import ckan
 from odm_importer import ODMImporter
 
 # Initialise RealCkanApi (APIKEY must be specified)
-ckanapiutils = ckanapi_utils.RealCkanApi('http://localhost','<CKAN_ADMIN_API_KEY')
+ckanapiutils = ckanapi_utils.RealCkanApi('http://localhost:8080','<CKAN_ADMIN_API_KEY>')
 
 # Add Users
 try:

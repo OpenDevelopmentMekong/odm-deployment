@@ -19,7 +19,7 @@ from odm_importer import ODMImporter
 githubutils = github_utils.RealGithubApi()
 
 # Initialise RealCkanApi (URL and APIKEY must be specified)
-ckanapiutils = ckanapi_utils.RealCkanApi('http://localhost','<CKAN_ADMIN_API_KEY')
+ckanapiutils = ckanapi_utils.RealCkanApi('http://localhost:8080','<CKAN_ADMIN_API_KEY>')
 
 importer = ODMImporter()
 importer.import_taxonomy_term_translations(githubutils,ckanapiutils)

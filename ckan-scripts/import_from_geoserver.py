@@ -17,7 +17,7 @@ import github_utils
 from odm_importer import ODMImporter
 
 geoserverutils = geoserver_utils.RealGeoserverRestApi('http://64.91.228.155:8181/geoserver/','Basic b2RjX3Rlc3Q6QCMlQCQjT3BlbmRBdGE=')
-ckanapiutils = ckanapi_utils.RealCkanApi('http://localhost','<CKAN_ADMIN_API_KEY')
+ckanapiutils = ckanapi_utils.RealCkanApi('http://localhost:8080','<CKAN_ADMIN_API_KEY>')
 
 importer = ODMImporter()
 importer.import_from_geoserver(geoserverutils,ckanapiutils)

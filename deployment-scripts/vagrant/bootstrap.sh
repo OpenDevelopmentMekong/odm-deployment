@@ -49,7 +49,8 @@ sudo -u postgres psql -f /tmp/postgres.sql
 echo 'Pasting password into ~/.pgpass to bypass password prompt while running createuser for ckan_default'
 echo '----------------------------------'
 # TODO: Hide password
-echo '*:*:*:*:odmadmin' > ~/.pgpass
+echo '*:*:*:*:odmadmin' > /home/vagrant/.pgpass
+sudo chmod 600 /home/vagrant/.pgpass
 sudo -u postgres createuser -S -D -R ckan_default
 sudo -u postgres createdb -O ckan_default ckan_default -E utf-8
 
@@ -58,7 +59,7 @@ echo '----------------------------------'
 sudo cp -fr /vagrant/odm-scripting/deployment-scripts/ckan_deployment/postgresql/pg_hba.conf /etc/postgresql/9.1/main/pg_hba.conf
 sudo service postgresql restart
 
-echo 'Create a CKAN config file, we actually download it'
+echo 'Create a CKAN config file, we actually copy it'
 echo '----------------------------------'
 sudo mkdir -p /etc/ckan/default
 sudo chown -R `whoami` /etc/ckan/
@@ -80,7 +81,8 @@ sudo service jetty restart
 
 echo 'Create database tables'
 echo '----------------------------------'
-sudo /usr/lib/ckan/default/bin/paster --plugin=ckan db init --config=/etc/ckan/default/development.ini
+cd /usr/lib/ckan/default/src/ckan
+paster --plugin=ckan db init --config=/etc/ckan/default/development.ini
 
 echo 'Link to who.ini'
 echo '----------------------------------'
@@ -155,7 +157,7 @@ cd /usr/lib/ckan/default/
 
 echo 'Install Pages extension'
 echo '----------------------------------'
-sudo pip install -e 'git+https://github.com/ckan/ckanext-pages.git#egg=ckanext-pages'
+pip install -e 'git+https://github.com/ckan/ckanext-pages.git#egg=ckanext-pages'
 cd /usr/lib/ckan/default/src/ckanext-pages
 python setup.py develop
 
@@ -164,7 +166,7 @@ cd /usr/lib/ckan/default/
 
 echo 'Install ckanext-spatial extension (Just for Preview for spatial formats)'
 echo '----------------------------------'
-sudo pip install -e "git+https://github.com/okfn/ckanext-spatial.git@stable#egg=ckanext-spatial"
+pip install -e "git+https://github.com/okfn/ckanext-spatial.git@stable#egg=ckanext-spatial"
 cd /usr/lib/ckan/default/src/ckanext-spatial/
 sudo pip install -r pip-requirements.txt
 sudo python setup.py develop
@@ -174,37 +176,34 @@ cd /usr/lib/ckan/default/
 
 echo 'Install Google Analytics extension'
 echo '----------------------------------'
-sudo pip install -e  "git+https://github.com/ckan/ckanext-googleanalytics.git#egg=ckanext-googleanalytics"
+pip install -e  "git+https://github.com/ckan/ckanext-googleanalytics.git#egg=ckanext-googleanalytics"
 cd /usr/lib/ckan/default/src/ckanext-googleanalytics
 sudo python setup.py develop
+
+echo 'Set up the DataStore'
+echo '----------------------------------'
+sudo -u postgres createuser -S -D -R datastore_default
+sudo -u postgres createdb -O ckan_default datastore_default -E utf-8
+cd /usr/lib/ckan/default/src/ckan
+paster --plugin=ckan datastore set-permissions postgres --config=/etc/ckan/default/development.ini
 
 echo 'Deployment: Following this http://docs.ckan.org/en/latest/maintaining/installing/deployment.html'
 echo '----------------------------------'
 sudo cp -fr /vagrant/odm-scripting/deployment-scripts/ckan_deployment/production.ini /etc/ckan/default/production.ini
 
-echo 'Set up the DataStore'
-echo '----------------------------------'
-# Pasting password into ~/.pgpass to bypass password prompt while running createuser for datastore_default
-# TODO: Hide password
-#echo '*:*:*:datastore_default:odmadmin' >> ~/.pgpass
-#sudo -u postgres createuser --no-password -S -D -R datastore_default
-sudo -u postgres createuser -S -D -R datastore_default
-sudo -u postgres createdb -O ckan_default datastore_default -E utf-8
-sudo /usr/lib/ckan/default/bin/paster --plugin=ckan datastore set-permissions postgres --config=/etc/ckan/default/production.ini
-
-echo 'Download WSGI script file from odm-scripting repo'
+echo 'Copy WSGI script file from odm-scripting repo'
 echo '----------------------------------'
 sudo cp -fr /vagrant/odm-scripting/deployment-scripts/ckan_deployment/apache/apache.wsgi /etc/ckan/default/apache.wsgi
 
-echo 'Download the Apache config file'
+echo 'Copy the Apache config file from odm-scripting repo'
 echo '----------------------------------'
 sudo cp -fr /vagrant/odm-scripting/deployment-scripts/ckan_deployment/apache/ckan_default /etc/apache2/sites-available/ckan_default
 
-echo 'Download the Apache ports.conf file'
+echo 'Copy the Apache ports.conf file from odm-scripting repo'
 echo '----------------------------------'
 sudo cp -fr /vagrant/odm-scripting/deployment-scripts/ckan_deployment/apache/ports.conf /etc/apache2/ports.conf
 
-echo 'Download the Nginx config file'
+echo 'Copy the Nginx config file from odm-scripting repo'
 echo '----------------------------------'
 sudo cp -fr /vagrant/odm-scripting/deployment-scripts/ckan_deployment/nginx/ckan_default /etc/nginx/sites-available/ckan_default
 
@@ -227,7 +226,8 @@ echo '----------------------------------'
 pip install -r /usr/lib/ckan/default/src/ckan/dev-requirements.txt
 sudo -u postgres createdb -O ckan_default ckan_test -E utf-8
 sudo -u postgres createdb -O ckan_default datastore_test -E utf-8
-sudo /usr/lib/ckan/default/bin/paster --plugin=ckan datastore set-permissions postgres -c /usr/lib/ckan/default/src/ckan/test-core.ini
+cd /usr/lib/ckan/default/src/ckan
+paster --plugin=ckan datastore set-permissions postgres -c /usr/lib/ckan/default/src/ckan/test-core.ini
 
 echo 'Configure NFS mountpoint to access for development'
 echo '----------------------------------'
@@ -238,5 +238,6 @@ sudo /etc/init.d/nfs-kernel-server restart
 
 echo 'Create CKAN test data'
 echo '----------------------------------'
-sudo /usr/lib/ckan/default/bin/paster --plugin=ckan create-test-data -c /etc/ckan/default/production.ini
+cd /usr/lib/ckan/default/src/ckan
+paster --plugin=ckan create-test-data -c /etc/ckan/default/development.ini
 
