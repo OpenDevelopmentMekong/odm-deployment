@@ -20,7 +20,7 @@ echo '----------------------------------'
 sudo apt-get install --yes git-core
 cd /vagrant/
 rm -rf odm-scripting
-git clone -b odm-scripting-0.2 https://$github_user:$github_pass@github.com/OpenDevelopmentMekong/odm-scripting.git
+git clone -b integrating-wp https://$github_user:$github_pass@github.com/OpenDevelopmentMekong/odm-scripting.git
 
 echo 'Install mysql server'
 echo '----------------------------------'
