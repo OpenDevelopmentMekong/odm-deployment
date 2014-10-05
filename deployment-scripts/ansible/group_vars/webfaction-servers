@@ -1,0 +1,17 @@
+
+admin_username: admin
+admin_password: admin_secret
+
+ansible_python_interpreter: python2.7
+
+ansible_ssh_user: opendevmk
+
+home_dir: /home/opendevmk
+src_dir: "{{ home_dir }}/src"
+virtual_envs: "{{ home_dir }}/.virtualenvs"
+
+tomcat_dir: "{{ home_dir }}/webapps/ckan_tomcat"
+tomcat_port: 25879
+
+ckan_src: "{{src_dir}}/ckan"
+ckan_env: "{{virtual_envs}}/ckan"

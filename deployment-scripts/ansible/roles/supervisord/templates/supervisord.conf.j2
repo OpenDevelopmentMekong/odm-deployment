@@ -1,0 +1,19 @@
+[unix_http_server]
+file={{home_dir}}/tmp/supervisor.sock
+
+[supervisord]
+logfile={{home_dir}}/logs/user/cron/supervisord.log
+logfile_maxbytes=50MB
+logfile_backups=10
+loglevel=info
+pidfile={{home_dir}}/tmp/supervisord.pid
+
+[rpcinterface:supervisor]
+supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
+
+[supervisorctl]
+serverurl=unix://{{home_dir}}/tmp/supervisor.sock
+
+[program:tomcat]
+directory={{ tomcat_dir }}/bin
+command={{ tomcat_dir }}/bin/catalina.sh run

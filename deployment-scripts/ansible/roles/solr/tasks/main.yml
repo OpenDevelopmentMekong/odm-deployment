@@ -1,0 +1,24 @@
+---
+- name: Download Solr
+  get_url: url=http://apache.spinellicreations.com/lucene/solr/4.7.2/solr-4.7.2.tgz dest="{{src_dir}}/solr-4.7.2.tgz" sha256sum=08fb5f33a5629a2a71487123523626d263d6b1817c7cee2d54e41d2898eb4040
+
+- name: Extract Solr
+  unarchive: src="{{src_dir}}/solr-4.7.2.tgz" dest="{{src_dir}}" copy=no
+
+- name: Copy Solr directory to tomcat
+  synchronize: src=solr dest="{{tomcat_dir}}"
+
+- name: Copy solr.war to tomcat/solr
+  command: cp {{src_dir}}/solr-4.7.2/dist/solr-4.7.2.war {{tomcat_dir}}/solr/solr.war
+  
+- name: Copy solr libraries to tomcat/solr
+  shell: cp {{src_dir}}/solr-4.7.2/example/lib/ext/*.jar {{tomcat_dir}}/lib
+
+- name: Copy tomcat context fragment
+  template: src=solrckan.xml.j2 dest={{ tomcat_dir }}/conf/Catalina/localhost/solrckan.xml
+  
+- name: Create data directory
+  file: path="{{tomcat_dir}}/data" state=directory
+  
+- name: Restart tomcat
+  command: supervisorctl restart tomcat

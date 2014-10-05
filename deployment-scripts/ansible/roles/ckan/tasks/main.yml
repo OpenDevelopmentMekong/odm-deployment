@@ -1,0 +1,27 @@
+---
+- name: Checkout CKAN 2.2 from git
+  git: repo=https://github.com/ckan/ckan.git
+         dest="{{ckan_src}}"
+         version=ckan-2.2
+
+- name: Download patch for CKAN
+  get_url: url=https://github.com/ckan/ckan/commit/fa60dc947eb6db612218d8d89affec7d6df3b096.patch dest="{{src_dir}}/ckan_fix.patch"
+  
+
+- name: Patch CKAN
+  command: git apply {{src_dir}}/ckan_fix.patch
+  args:
+    chdir: "{{ckan_src}}"
+    
+
+- name: install pip
+  easy_install: name=pip executable=easy_install-2.7
+
+- name: install virtualenv
+  easy_install: name=virtualenv executable=easy_install-2.7
+
+- name: Install CKAN dependencies
+  pip: requirements={{ckan_src}}/requirements.txt virtualenv="{{virtual_envs}}/ckan"
+
+- name: Install CKAN
+  pip: name="{{ckan_src}}/." virtualenv="{{virtual_envs}}/ckan"
