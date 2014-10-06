@@ -6,13 +6,11 @@
 
 - name: Download patch for CKAN
   get_url: url=https://github.com/ckan/ckan/commit/fa60dc947eb6db612218d8d89affec7d6df3b096.patch dest="{{src_dir}}/ckan_fix.patch"
-  
 
 - name: Patch CKAN
   command: git apply {{src_dir}}/ckan_fix.patch
   args:
     chdir: "{{ckan_src}}"
-    
 
 - name: install pip
   easy_install: name=pip executable=easy_install-2.7
@@ -25,3 +23,36 @@
 
 - name: Install CKAN
   pip: name="{{ckan_src}}/." virtualenv="{{virtual_envs}}/ckan"
+
+- name: Create ckan etc default
+  file: path="{{ ckan_etc }}/default" state=directory
+
+- name: Generate development.ini
+  shell: source {{ckan_env}}/bin/activate && paster make-config ckan {{ckan_ini}}
+  
+- name: Edit development.ini
+  ini_file: dest="{{ckan_ini}}"
+              section=server:main
+              option=host
+              value=127.0.0.1
+
+- ini_file: dest="{{ckan_ini}}"
+              section=server:main
+              option=port
+              value="{{ckan_port}}"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=sqlalchemy.url
+              value=postgresql://ckan_default:ckan_test1@localhost/ckan_default
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=solr_url
+              value="{{solr_schema}}"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=ckan.site_url
+              value="{{ckan_url}}"
+
