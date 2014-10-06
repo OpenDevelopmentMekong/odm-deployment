@@ -20,7 +20,7 @@ echo '----------------------------------'
 sudo apt-get install --yes git-core
 cd /vagrant/
 rm -rf odm-scripting
-git clone -b odm-scripting-0.2 https://$github_user:$github_pass@github.com/OpenDevelopmentMekong/odm-scripting.git
+git clone -b odm-scripting-0.3 https://$github_user:$github_pass@github.com/OpenDevelopmentMekong/odm-scripting.git
 
 echo 'CKAN Basic installation'
 echo '----------------------------------'
@@ -240,4 +240,3 @@ echo 'Create CKAN test data'
 echo '----------------------------------'
 cd /usr/lib/ckan/default/src/ckan
 paster --plugin=ckan create-test-data -c /etc/ckan/default/development.ini
-
