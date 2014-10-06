@@ -74,6 +74,11 @@ echo '----------------------------------'
 sudo echo "NameVirtualHost *:8081" >> /etc/apache2/ports.conf
 sudo echo "Listen 8081" >> /etc/apache2/ports.conf
 
+echo 'Add virtual host on port 80, wordpress instance is also available through port 80/wp'
+echo '----------------------------------'
+sudo echo "NameVirtualHost *:80" >> /etc/apache2/ports.conf
+sudo echo "Listen 80" >> /etc/apache2/ports.conf
+
 echo 'Create WP DB'
 echo '----------------------------------'
 cd /var/www/wp/
