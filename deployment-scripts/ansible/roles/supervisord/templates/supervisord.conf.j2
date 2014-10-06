@@ -17,3 +17,4 @@ serverurl=unix://{{home_dir}}/tmp/supervisor.sock
 [program:tomcat]
 directory={{ tomcat_dir }}/bin
 command={{ tomcat_dir }}/bin/catalina.sh run
+environment=CATALINA_OPTS="-Xms64m -Xmx64m"
