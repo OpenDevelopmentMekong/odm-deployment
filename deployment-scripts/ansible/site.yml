@@ -1,0 +1,7 @@
+---
+- hosts: webfaction-servers
+  roles:
+  - supervisord
+  - tomcat
+  - solr
+  - ckan

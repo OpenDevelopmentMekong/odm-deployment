@@ -1,0 +1,4 @@
+---
+- hosts: webfaction-servers
+  roles:
+  - tomcat

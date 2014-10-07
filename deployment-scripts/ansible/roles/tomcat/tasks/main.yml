@@ -1,0 +1,19 @@
+---
+# This file in part based on the ansible standalone tomcat exmaple.
+
+- name: Create src directory
+  file: path={{ src_dir }} state=directory
+
+- name: Download Tomcat
+  get_url: url=http://www.us.apache.org/dist/tomcat/tomcat-7/v7.0.55/bin/apache-tomcat-7.0.55.tar.gz dest="{{ src_dir }}/apache-tomcat-7.0.55.tar.gz" sha256sum=c20934fda63bc7311e2d8e067d67f886890c8be72280425c5f6f8fdd7a376c15
+  
+
+- name: Extract archive
+  command: chdir="{{ tomcat_dir }}" /bin/gtar xvf {{ src_dir }}/apache-tomcat-7.0.55.tar.gz --strip-components=1
+  
+
+- name: Configure Tomcat-users.xml
+  template: src=tomcat-users.xml dest="{{ tomcat_dir }}/conf/tomcat-users.xml"
+
+- name: Configure Tomcat server.xml
+  template: src=server.xml.j2 dest="{{ tomcat_dir }}/conf/server.xml"
