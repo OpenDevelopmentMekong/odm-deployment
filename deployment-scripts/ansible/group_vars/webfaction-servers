@@ -14,7 +14,7 @@ tomcat_dir: "{{ home_dir }}/webapps/ckan_tomcat"
 tomcat_ip: 127.0.0.1
 tomcat_port: 25879
 
-solr_url: http://{{tomcat_ip}}:{{tomcat_port}}/solrckan
+solr_url: http://{{tomcat_ip}}:{{tomcat_port}}/solr
 solr_schema: "{{solr_url}}/schema"
 
 ckan_src: "{{src_dir}}/ckan"
