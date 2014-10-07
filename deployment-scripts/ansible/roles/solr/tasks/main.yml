@@ -15,7 +15,7 @@
   shell: cp {{src_dir}}/solr-4.7.2/example/lib/ext/*.jar {{tomcat_dir}}/lib
 
 - name: Copy tomcat context fragment
-  template: src=solrckan.xml.j2 dest={{ tomcat_dir }}/conf/Catalina/localhost/solrckan.xml
+  template: src=solr.xml.j2 dest={{ tomcat_dir }}/conf/Catalina/localhost/solr.xml
   
 - name: Create data directory
   file: path="{{tomcat_dir}}/data" state=directory

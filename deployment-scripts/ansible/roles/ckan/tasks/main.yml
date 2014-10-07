@@ -55,7 +55,7 @@
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
               option=solr_url
-              value="{{solr_schema}}"
+              value="{{solr_url}}"
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
