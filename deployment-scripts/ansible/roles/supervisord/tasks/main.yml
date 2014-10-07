@@ -18,5 +18,8 @@
 - name: Add supervisord to cron
   cron: name="supervisord" minute="*/5" job="{{home_dir}}/bin/supervisord > {{home_dir}}/logs/user/cron/supervisord.log 2>&1"
 
-- name: Restart supervisord
-  shell: "killall supervisord ; {{home_dir}}/bin/supervisord > {{home_dir}}/logs/user/cron/supervisord.log 2>&1"
+- name: Stop supervisord
+  shell: "pkill -HUP -u `whoami` supervisord || exit 0"
+  
+- name: Start supervisord
+  shell: "{{home_dir}}/bin/supervisord > {{home_dir}}/logs/user/cron/supervisord.log 2>&1 || exit 0"
