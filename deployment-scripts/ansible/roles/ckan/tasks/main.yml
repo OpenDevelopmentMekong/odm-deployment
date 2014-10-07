@@ -1,4 +1,7 @@
 ---
+- name: Stop CKAN
+  command: supervisorctl stop ckan
+  
 - name: Checkout CKAN 2.2 from git
   git: repo=https://github.com/ckan/ckan.git
          dest="{{ckan_src}}"
@@ -26,6 +29,9 @@
 
 - name: Create ckan etc default
   file: path="{{ ckan_etc }}/default" state=directory
+
+- name: Remove development.ini
+  file: path="{{ckan_ini}}" state=absent
 
 - name: Generate development.ini
   shell: source {{ckan_env}}/bin/activate && paster make-config ckan {{ckan_ini}}
@@ -56,3 +62,11 @@
               option=ckan.site_url
               value="{{ckan_url}}"
 
+- name: Link who.ini
+  file: src="{{ckan_env}}/lib/python2.7/site-packages/ckan/config/who.ini" dest="{{ ckan_etc }}/default/who.ini" state=link
+
+- name: Initialize database
+  shell: source {{ckan_env}}/bin/activate && paster --plugin=ckan db init --config={{ckan_ini}}
+
+- name: Start CKAN
+  command: supervisorctl start ckan
