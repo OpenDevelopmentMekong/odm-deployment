@@ -1,0 +1,27 @@
+
+admin_username: <tomcat_admin>
+admin_password: <tomcat_admin_pass>
+
+ansible_python_interpreter: python2.7
+
+ansible_ssh_user: <ssh_user>
+
+home_dir: /home/lfa
+src_dir: "{{ home_dir }}/src"
+virtual_envs: "{{ home_dir }}/.virtualenvs"
+
+tomcat_dir: "{{ home_dir }}/webapps/ckan_tomcat"
+tomcat_ip: 127.0.0.1
+tomcat_port: <tomcat_port>
+
+solr_url: http://{{tomcat_ip}}:{{tomcat_port}}/solr
+solr_schema: "{{solr_url}}/schema"
+
+ckan_src: "{{src_dir}}/ckan"
+ckan_env: "{{virtual_envs}}/ckan"
+ckan_etc: "{{ home_dir }}/etc/ckan"
+ckan_ini: "{{ ckan_etc }}/default/development.ini"
+ckan_port: <ckan_port>
+ckan_url: <http://ckan.lfa.webfactional.com>
+
+wp_dir: "{{home_dir}}/webapps/wp"
