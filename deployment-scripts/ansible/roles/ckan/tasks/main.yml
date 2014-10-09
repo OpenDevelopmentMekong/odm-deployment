@@ -67,6 +67,14 @@
 
 - name: Initialize database
   shell: source {{ckan_env}}/bin/activate && paster --plugin=ckan db init --config={{ckan_ini}}
+  
+- name: Install CKAN Api
+  pip: name="git+https://github.com/ckan/ckanapi.git@ckanapi-3.3#egg=ckanapi" virtualenv="{{virtual_envs}}/ckan"
+  
+- name: Develop
+  command: python setup.py develop
+  args:
+    chdir: "{{virtual_envs}}/ckan/src/ckanapi"
 
 - name: Start CKAN
   command: supervisorctl start ckan
