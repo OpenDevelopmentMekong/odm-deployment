@@ -17,4 +17,7 @@
 - name: Copy config.php file
   template: src=wp-config.php dest="{{wp_dir}}/wp-config.php"
 
+- name: Remove index.html
+  file: path="{{wp_dir}}/index.html" state=absent
+
 # Install plugins and templates to complete provisioning
