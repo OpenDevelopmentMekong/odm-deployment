@@ -61,20 +61,44 @@
               section=app:main
               option=ckan.site_url
               value="{{ckan_url}}"
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=ckan.plugins
+              value="stats text_preview recline_preview pdf_preview datastore datapusher resource_proxy multilingual_dataset multilingual_group multilingual_tag odm_theme odm_utils"
 
 - name: Link who.ini
   file: src="{{ckan_env}}/lib/python2.7/site-packages/ckan/config/who.ini" dest="{{ ckan_etc }}/default/who.ini" state=link
 
-- name: Initialize database
-  shell: source {{ckan_env}}/bin/activate && paster --plugin=ckan db init --config={{ckan_ini}}
-  
 - name: Install CKAN Api
   pip: name="git+https://github.com/ckan/ckanapi.git@ckanapi-3.3#egg=ckanapi" virtualenv="{{virtual_envs}}/ckan"
   
-- name: Develop
-  command: python setup.py develop
+- name: CKAN Api Develop
+  shell: source {{ckan_env}}/bin/activate && python setup.py develop
   args:
     chdir: "{{virtual_envs}}/ckan/src/ckanapi"
+
+- name: Install ckanext-odm_utils
+  file: path="{{ ckan_env }}/src/ckanext-odm_utils" state=directory
+  
+- git: repo=https://github.com/OpenDevelopmentMekong/ckanext-odm_utils.git
+        dest="{{ ckan_env }}/src/ckanext-odm_utils"
+
+- shell: source {{ckan_env}}/bin/activate && python setup.py develop
+  args:
+    chdir: "{{ ckan_env }}/src/ckanext-odm_utils"
+       
+- name: Install ckanext-odm_theme
+  file: path="{{ ckan_env }}/src/ckanext-odm_theme" state=directory
+  
+- git: repo=https://github.com/OpenDevelopmentMekong/ckanext-odm_theme.git
+        dest="{{ ckan_env }}/src/ckanext-odm_theme"
+
+- shell: source {{ckan_env}}/bin/activate && python setup.py develop
+  args:
+    chdir: "{{ ckan_env }}/src/ckanext-odm_theme"
+    
+- name: Initialize database
+  shell: source {{ckan_env}}/bin/activate && paster --plugin=ckan db init --config={{ckan_ini}}  
 
 - name: Start CKAN
   command: supervisorctl start ckan
