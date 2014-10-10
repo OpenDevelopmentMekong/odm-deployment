@@ -1,3 +1,7 @@
+**/webfaction-servers
+**/wp-config.php
+**/stage
+
 #OSX Gitignore
 
 .DS_Store
