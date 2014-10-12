@@ -26,3 +26,13 @@ ckan_url: <http://ckan.lfa.webfactional.com>
 datapusher_url: http://0.0.0.0:8800/
 
 wp_dir: "{{home_dir}}/webapps/wp"
+
+email_server: <smtp.webfaction.com>
+email_account: <notifications@ckan.lfa.webfactional.com>
+email_user: <user>
+email_password: <pass>
+
+googleanalytics_id: UA-10101010-1
+googleanalytics_account: <ODM Data Hub>
+googleanalytics_username: <email>
+googleanalytics_password: <pass>
