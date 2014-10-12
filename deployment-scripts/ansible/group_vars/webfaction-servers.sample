@@ -23,5 +23,6 @@ ckan_etc: "{{ home_dir }}/etc/ckan"
 ckan_ini: "{{ ckan_etc }}/default/development.ini"
 ckan_port: <ckan_port>
 ckan_url: <http://ckan.lfa.webfactional.com>
+datapusher_url: http://0.0.0.0:8800/
 
 wp_dir: "{{home_dir}}/webapps/wp"

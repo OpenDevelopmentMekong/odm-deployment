@@ -1,7 +1,7 @@
 ---
 - name: Stop CKAN
   command: supervisorctl stop ckan
-  
+
 - name: Checkout CKAN 2.2 from git
   git: repo=https://github.com/ckan/ckan.git
          dest="{{ckan_src}}"
@@ -35,7 +35,7 @@
 
 - name: Generate development.ini
   shell: source {{ckan_env}}/bin/activate && paster make-config ckan {{ckan_ini}}
-  
+
 - name: Edit development.ini
   ini_file: dest="{{ckan_ini}}"
               section=server:main
@@ -54,24 +54,86 @@
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
+              option=ckan.datastore.write_url
+              value=postgresql://ckan_default:ckan_test1@localhost/datastore_default
+
+# Commented to enable legacy mode and solve set-permission.sql not found issue
+# - ini_file: dest="{{ckan_ini}}"
+#               section=app:main
+#               option=ckan.datastore.read_url
+#               value=postgresql://datastore_default:ckan_test1@localhost/datastore_default
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
               option=solr_url
               value="{{solr_url}}"
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
+              option=ckan.datapusher.url
+              value="{{datapusher_url}}"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=ckan.storage_path
+              value="{{ckan_env}}"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
               option=ckan.site_url
               value="{{ckan_url}}"
+
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
               option=ckan.plugins
               value="stats text_preview recline_preview pdf_preview datastore datapusher resource_proxy multilingual_dataset multilingual_group multilingual_tag odm_theme odm_utils"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=ckan.auth.anon_create_dataset
+              value="false"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=ckan.auth.create_unowned_dataset
+              value="false"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=ckan.auth.create_dataset_if_not_in_organization
+              value="false"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=ckan.auth.user_create_groups
+              value="false"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=ckan.auth.user_create_organizations
+              value="false"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=ckan.auth.user_delete_groups
+              value="false"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=ckan.auth.user_delete_organizations
+              value="false"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=ckan.datapusher.url
+              value="{{datapusher_url}}"
 
 - name: Link who.ini
   file: src="{{ckan_env}}/lib/python2.7/site-packages/ckan/config/who.ini" dest="{{ ckan_etc }}/default/who.ini" state=link
 
 - name: Install CKAN Api
   pip: name="git+https://github.com/ckan/ckanapi.git@ckanapi-3.3#egg=ckanapi" virtualenv="{{virtual_envs}}/ckan"
-  
+
 - name: CKAN Api Develop
   shell: source {{ckan_env}}/bin/activate && python setup.py develop
   args:
@@ -79,26 +141,57 @@
 
 - name: Install ckanext-odm_utils
   file: path="{{ ckan_env }}/src/ckanext-odm_utils" state=directory
-  
+
 - git: repo=https://github.com/OpenDevelopmentMekong/ckanext-odm_utils.git
         dest="{{ ckan_env }}/src/ckanext-odm_utils"
 
 - shell: source {{ckan_env}}/bin/activate && python setup.py develop
   args:
     chdir: "{{ ckan_env }}/src/ckanext-odm_utils"
-       
+
 - name: Install ckanext-odm_theme
   file: path="{{ ckan_env }}/src/ckanext-odm_theme" state=directory
-  
+
 - git: repo=https://github.com/OpenDevelopmentMekong/ckanext-odm_theme.git
         dest="{{ ckan_env }}/src/ckanext-odm_theme"
 
 - shell: source {{ckan_env}}/bin/activate && python setup.py develop
   args:
     chdir: "{{ ckan_env }}/src/ckanext-odm_theme"
-    
+
+- name: Install Datapusher extension
+  git: repo=https://github.com/ckan/datapusher.git version=stable
+        dest="{{ ckan_env }}/src/datapusher"
+
+- pip: requirements={{ckan_env}}/src/datapusher/requirements.txt virtualenv="{{virtual_envs}}/ckan"
+
+- shell: source {{ckan_env}}/bin/activate && python setup.py develop
+  args:
+    chdir: "{{ ckan_env }}/src/datapusher"
+
+# - name: Install ckanext-spatial extension (Just for Preview for spatial formats)
+#   pip: name="git+https://github.com/okfn/ckanext-spatial.git@stable#egg=ckanext-spatial" virtualenv="{{virtual_envs}}/ckan"
+#
+# - name: Install  ckanext-spatial extension dependencies
+#   pip: requirements={{ckan_src}}/ckanext-spatial/pip-requirements.txt virtualenv="{{virtual_envs}}/ckan"
+#
+# - shell: source {{ckan_env}}/bin/activate && python setup.py develop
+#   args:
+#     chdir: "{{ ckan_env }}/src/ckanext-spatial"
+#
+# - name: Install Google Analytics extension
+#   pip: name="git+https://github.com/ckan/ckanext-googleanalytics.git#egg=ckanext-googleanalytics" virtualenv="{{virtual_envs}}/ckan"
+#
+# - shell: source {{ckan_env}}/bin/activate && python setup.py develop
+#   args:
+#     chdir: "{{ ckan_env }}/src/ckanext-googleanalytics"
+
 - name: Initialize database
-  shell: source {{ckan_env}}/bin/activate && paster --plugin=ckan db init --config={{ckan_ini}}  
+  shell: source {{ckan_env}}/bin/activate && paster --plugin=ckan db init --config={{ckan_ini}}
+
+# Uncomment when legacy mode is disabled again
+# - name: Setup the DataStore
+#   shell: source {{ckan_env}}/bin/activate && paster --plugin=ckan datastore set-permissions postgres --config={{ckan_ini}}
 
 - name: Start CKAN
   command: supervisorctl start ckan
