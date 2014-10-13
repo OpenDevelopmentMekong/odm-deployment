@@ -90,6 +90,11 @@
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
+              option=ckan.locales_offered
+              value="vi km en th"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
               option=ckan.auth.anon_create_dataset
               value="false"
 
