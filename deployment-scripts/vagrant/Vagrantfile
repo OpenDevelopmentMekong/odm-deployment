@@ -14,6 +14,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # provisioning
   config.vm.provision :shell, path: "bootstrap.sh"
+  config.vm.provision :shell, path: "wordpress.sh"
 
   # config.vm.provision "ansible" do |ansible|
   #   ansible.playbook = "odm-scripting/deployment-scripts/ansible/wordpress-vagrant.yml"

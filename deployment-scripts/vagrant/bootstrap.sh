@@ -240,4 +240,3 @@ echo 'Create CKAN test data'
 echo '----------------------------------'
 cd /usr/lib/ckan/default/src/ckan
 paster --plugin=ckan create-test-data -c /etc/ckan/default/development.ini
-
