@@ -9,7 +9,7 @@ Repository to host utility scripts to add/migrate/update data in the different m
 * ckan-scripts/import_taxonomy_term_translations.py
 * ckan-scripts/insert_initial_odm_data.py
 
-### Config files for ckan deployment
+### Config files for ckan deployment (Vagrant)
 * deployment-scripts/ckan_deployment/apache/apache.wsgi
 * deployment-scripts/ckan_deployment/apache/ckan_default
 * deployment-scripts/ckan_deployment/apache/ports.conf
@@ -18,6 +18,11 @@ Repository to host utility scripts to add/migrate/update data in the different m
 * deployment-scripts/ckan_deployment/postgresql/pg_hba.conf
 * deployment-scripts/ckan_deployment/development.ini
 * deployment-scripts/ckan_deployment/production.ini
+
+## Config files for wp deployment (Vagrant)
+* deployment-scripts/wp_deployment/apache/wp
+* deployment-scripts/wp_deployment/nginx/wp
+* deployment-scripts/wp_deployment/wp-config.php
 
 ### Vagrantfile & bootstrap for setting up the development environment automatically
 * vagrant/Vagrantfile
