@@ -1,5 +1,5 @@
-**/webfaction-servers
-**/vagrant
+**/group_vars/webfaction-servers
+**/group_vars/vagrant-box
 **/wp-config.php
 **/stage
 

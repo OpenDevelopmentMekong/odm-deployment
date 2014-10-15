@@ -10,7 +10,6 @@
 - name: Extract archive
   command: chdir="{{ tomcat_dir }}" /bin/gtar xvf {{ src_dir }}/apache-tomcat-7.0.55.tar.gz --strip-components=1
 
-
 - name: Configure Tomcat-users.xml
   template: src=tomcat-users.xml dest="{{ tomcat_dir }}/conf/tomcat-users.xml"
 
