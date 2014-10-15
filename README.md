@@ -9,6 +9,11 @@ Repository to host utility scripts to add/migrate/update data in the different m
 * ckan-scripts/import_taxonomy_term_translations.py
 * ckan-scripts/insert_initial_odm_data.py
 
+## Ansible playbooks, roles and templates
+* deployment-scripts/ansible/group_vars
+* deployment-scripts/ansible/roles
+* deployment-scripts/ansible/...
+
 ### Config files for ckan deployment (Vagrant)
 * deployment-scripts/ckan_deployment/apache/apache.wsgi
 * deployment-scripts/ckan_deployment/apache/ckan_default
@@ -25,7 +30,7 @@ Repository to host utility scripts to add/migrate/update data in the different m
 * deployment-scripts/wp_deployment/wp-config.php
 
 ### Vagrantfile & bootstrap for setting up the development environment automatically
-* vagrant/Vagrantfile
-* vagrant/bootstrap.sh
-* vagrant/wordpress.sh
-* vagrant/config.cfg.sample
+* deployment-scripts/vagrant/Vagrantfile
+* deployment-scripts/vagrant/bootstrap.sh
+* deployment-scripts/vagrant/wordpress.sh
+* deployment-scripts/vagrant/config.cfg.sample
