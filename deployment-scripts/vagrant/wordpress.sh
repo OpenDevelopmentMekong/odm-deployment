@@ -56,17 +56,17 @@ sudo chown -R vagrant:vagrant /var/www/wp
 
 echo 'copy wp-config.php file from odm-scripting'
 echo '----------------------------------'
-cp -fr /vagrant/odm-scripting/deployment-scripts/wp_deployment/wp-config.php /var/www/wp/wp-config.php
+cp -fr /vagrant/odm-scripting/deployment-scripts/vagrant/wp_deployment/wp-config.php /var/www/wp/wp-config.php
 sudo chown -R vagrant:vagrant /var/www/wp/wp-config.php
 
 echo 'copy apache2/sites-available/wp from odm-scripting'
 echo '----------------------------------'
-sudo cp -fr /vagrant/odm-scripting/deployment-scripts/wp_deployment/apache/wp /etc/apache2/sites-available/wp
+sudo cp -fr /vagrant/odm-scripting/deployment-scripts/vagrant/wp_deployment/apache/wp /etc/apache2/sites-available/wp
 sudo ln -s /etc/apache2/sites-available/wp /etc/apache2/sites-enabled
 
 echo 'copy nginx/sites-available/wp from odm-scripting'
 echo '----------------------------------'
-sudo cp -fr /vagrant/odm-scripting/deployment-scripts/wp_deployment/nginx/wp /etc/nginx/sites-available/wp
+sudo cp -fr /vagrant/odm-scripting/deployment-scripts/vagrant/wp_deployment/nginx/wp /etc/nginx/sites-available/wp
 sudo ln -s /etc/nginx/sites-available/wp /etc/nginx/sites-enabled
 
 echo 'Add virtual host on port 8081'

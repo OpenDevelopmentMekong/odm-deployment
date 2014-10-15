@@ -56,7 +56,7 @@ sudo -u postgres createdb -O ckan_default ckan_default -E utf-8
 
 echo 'Copy pg_hba.conf from odm-scripting to prevent FATAL: password authentication failed'
 echo '----------------------------------'
-sudo cp -fr /vagrant/odm-scripting/deployment-scripts/ckan_deployment/postgresql/pg_hba.conf /etc/postgresql/9.1/main/pg_hba.conf
+sudo cp -fr /vagrant/odm-scripting/deployment-scripts/vagrant/ckan_deployment/postgresql/pg_hba.conf /etc/postgresql/9.1/main/pg_hba.conf
 sudo service postgresql restart
 
 echo 'Create a CKAN config file, we actually copy it'
@@ -66,11 +66,11 @@ sudo chown -R `whoami` /etc/ckan/
 
 echo 'Copy development.ini from odm-scripting, instead of creating it using paster make-config'
 echo '----------------------------------'
-sudo cp -fr /vagrant/odm-scripting/deployment-scripts/ckan_deployment/development.ini /etc/ckan/default/development.ini
+sudo cp -fr /vagrant/odm-scripting/deployment-scripts/vagrant/ckan_deployment/development.ini /etc/ckan/default/development.ini
 
 echo 'Copy jetty config files from odm-scripting'
 echo '----------------------------------'
-sudo cp -fr /vagrant/odm-scripting/deployment-scripts/ckan_deployment/jetty/jetty /etc/default/jetty
+sudo cp -fr /vagrant/odm-scripting/deployment-scripts/vagrant/ckan_deployment/jetty/jetty /etc/default/jetty
 
 echo 'Start Jetty, link Solr schema.xml'
 echo '----------------------------------'
@@ -189,23 +189,23 @@ paster --plugin=ckan datastore set-permissions postgres --config=/etc/ckan/defau
 
 echo 'Deployment: Following this http://docs.ckan.org/en/latest/maintaining/installing/deployment.html'
 echo '----------------------------------'
-sudo cp -fr /vagrant/odm-scripting/deployment-scripts/ckan_deployment/production.ini /etc/ckan/default/production.ini
+sudo cp -fr /vagrant/odm-scripting/deployment-scripts/vagrant/ckan_deployment/production.ini /etc/ckan/default/production.ini
 
 echo 'Copy WSGI script file from odm-scripting repo'
 echo '----------------------------------'
-sudo cp -fr /vagrant/odm-scripting/deployment-scripts/ckan_deployment/apache/apache.wsgi /etc/ckan/default/apache.wsgi
+sudo cp -fr /vagrant/odm-scripting/deployment-scripts/vagrant/ckan_deployment/apache/apache.wsgi /etc/ckan/default/apache.wsgi
 
 echo 'Copy the Apache config file from odm-scripting repo'
 echo '----------------------------------'
-sudo cp -fr /vagrant/odm-scripting/deployment-scripts/ckan_deployment/apache/ckan_default /etc/apache2/sites-available/ckan_default
+sudo cp -fr /vagrant/odm-scripting/deployment-scripts/vagrant/ckan_deployment/apache/ckan_default /etc/apache2/sites-available/ckan_default
 
 echo 'Copy the Apache ports.conf file from odm-scripting repo'
 echo '----------------------------------'
-sudo cp -fr /vagrant/odm-scripting/deployment-scripts/ckan_deployment/apache/ports.conf /etc/apache2/ports.conf
+sudo cp -fr /vagrant/odm-scripting/deployment-scripts/vagrant/ckan_deployment/apache/ports.conf /etc/apache2/ports.conf
 
 echo 'Copy the Nginx config file from odm-scripting repo'
 echo '----------------------------------'
-sudo cp -fr /vagrant/odm-scripting/deployment-scripts/ckan_deployment/nginx/ckan_default /etc/nginx/sites-available/ckan_default
+sudo cp -fr /vagrant/odm-scripting/deployment-scripts/vagrant/ckan_deployment/nginx/ckan_default /etc/nginx/sites-available/ckan_default
 
 echo 'Enable CKAN site'
 echo '----------------------------------'
