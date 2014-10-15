@@ -27,3 +27,5 @@ Repository to host utility scripts to add/migrate/update data in the different m
 ### Vagrantfile & bootstrap for setting up the development environment automatically
 * vagrant/Vagrantfile
 * vagrant/bootstrap.sh
+* vagrant/wordpress.sh
+* vagrant/config.cfg.sample
