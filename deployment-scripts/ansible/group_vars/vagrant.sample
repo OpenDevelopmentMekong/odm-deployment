@@ -1,18 +1,18 @@
 
-admin_username: <tomcat_admin>
-admin_password: <tomcat_admin_pass>
+admin_username: admin
+admin_password: tomcat_test
 
 ansible_python_interpreter: python2.7
 
-ansible_ssh_user: <ssh_user>
+ansible_ssh_user: vagrant
 
-home_dir: /home/lfa
-src_dir: "{{ home_dir }}/src"
+home_dir: /home/vagrant
+src_dir: "{{home_dir}}/src"
 virtual_envs: "{{ home_dir }}/.virtualenvs"
 
-tomcat_dir: "{{ home_dir }}/webapps/ckan_tomcat"
+tomcat_dir: "{{ home_dir }}/webapps/tomcat"
 tomcat_ip: 127.0.0.1
-tomcat_port: <tomcat_port>
+tomcat_port: 22625
 
 solr_url: http://{{tomcat_ip}}:{{tomcat_port}}/solr
 solr_schema: "{{solr_url}}/schema"
@@ -21,11 +21,11 @@ ckan_src: "{{src_dir}}/ckan"
 ckan_env: "{{virtual_envs}}/ckan"
 ckan_etc: "{{ home_dir }}/etc/ckan"
 ckan_ini: "{{ ckan_etc }}/default/development.ini"
-ckan_port: <ckan_port>
-ckan_url: <http://ckan.lfa.webfactional.com>
+ckan_port: 8080
+ckan_url: http://192.168.33.10
 
 datapusher_port: 8800
-datapusher_url: 0.0.0.0
+datapusher_url: http://192.168.33.10
 
 wp_dir: "{{home_dir}}/webapps/wp"
 
@@ -39,4 +39,4 @@ googleanalytics_account: <ODM Data Hub>
 googleanalytics_username: <email>
 googleanalytics_password: <pass>
 
-geoserver_url: http://64.91.228.155:8181
+geoserver_url: <url>

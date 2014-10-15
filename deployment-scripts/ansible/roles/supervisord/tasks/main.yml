@@ -2,7 +2,7 @@
 # Based on instructions from http://martinbrochhaus.com/solr.html
 - name: Install Supervisord
   pip: name="supervisor"
-  
+
 - name: Create the cron log directory
   file: path="{{home_dir}}/logs/user/cron" state=directory
 
@@ -12,14 +12,17 @@
 - name: Create the etc directory
   file: path="{{home_dir}}/etc" state=directory
 
-- name: Copy Template over
+- name: Copy supervisord.conf Template over
   template: src=supervisord.conf.j2 dest={{home_dir}}/etc/supervisord.conf
-  
+
+- name: Copy virtualenv_cmd.sh Template over
+  template: src=virtualenv_cmd.sh dest={{home_dir}}/virtualenv_cmd.sh
+
 - name: Add supervisord to cron
   cron: name="supervisord" minute="*/5" job="{{home_dir}}/bin/supervisord > {{home_dir}}/logs/user/cron/supervisord.log 2>&1"
 
 - name: Stop supervisord
   shell: "pkill -HUP -u `whoami` supervisord || exit 0"
-  
+
 - name: Start supervisord
   shell: "{{home_dir}}/bin/supervisord > {{home_dir}}/logs/user/cron/supervisord.log 2>&1 || exit 0"

@@ -71,7 +71,7 @@
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
               option=ckan.datapusher.url
-              value="{{datapusher_url}}"
+              value="{{datapusher_url}}:{{datapusher_port}}"
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
@@ -218,6 +218,12 @@
 
 - pip: requirements="{{ckan_env}}/src/datapusher/requirements.txt" extra_args="-e {{ckan_env}}/src/datapusher/" virtualenv="{{virtual_envs}}/ckan"
 
+- name: Remove datapusher_settings.py, will be copied in the next step
+  file: path="{{ckan_env}}/src/datapusher/deployment/datapusher_settings.py" state=absent
+
+- name: Copy datapusher_settings.py Template over
+  template: src=datapusher_settings.py dest={{ckan_env}}/src/datapusher/deployment/datapusher_settings.py
+
 - name: Install pages extension
   pip: name="git+https://github.com/ckan/ckanext-pages.git#egg=ckanext-pages" virtualenv="{{virtual_envs}}/ckan"
 
@@ -251,3 +257,6 @@
 
 - name: Start CKAN
   command: supervisorctl start ckan
+
+- name: Start datapusher
+  command: supervisorctl start datapusher

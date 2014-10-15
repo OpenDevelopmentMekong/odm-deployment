@@ -20,4 +20,8 @@ command={{ tomcat_dir }}/bin/catalina.sh run
 environment=CATALINA_OPTS="-Xms64m -Xmx64m"
 
 [program:ckan]
-command=/bin/cat
+command={{home_dir}}/virtualenv_cmd.sh {{home_dir}}/.virtualenvs/ckan paster serve {{home_dir}}/etc/ckan/default/development.ini
+
+[program:datapusher]
+command={{home_dir}}/virtualenv_cmd.sh {{home_dir}}/.virtualenvs/ckan datapusher datapusher_settings.py
+directory={{home_dir}}/.virtualenvs/ckan/src/datapusher/deployment/
