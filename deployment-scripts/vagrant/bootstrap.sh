@@ -135,23 +135,6 @@ sudo mkdir -p /var/lib/ckan/default
 sudo chown www-data /var/lib/ckan/default
 sudo chmod u+rwx /var/lib/ckan/default
 
-echo 'OPTIONAL: Install Datapusher extension'
-echo '----------------------------------'
-sudo apt-get install python-dev python-virtualenv build-essential libxslt1-dev libxml2-dev git
-sudo virtualenv /usr/lib/ckan/datapusher
-sudo mkdir /usr/lib/ckan/datapusher/src
-cd /usr/lib/ckan/datapusher/src
-sudo git clone -b stable https://github.com/ckan/datapusher.git
-cd datapusher
-sudo /usr/lib/ckan/datapusher/bin/pip install -r requirements.txt
-sudo /usr/lib/ckan/datapusher/bin/python setup.py develop
-sudo cp deployment/datapusher /etc/apache2/sites-available/
-sudo cp deployment/datapusher.wsgi /etc/ckan/
-sudo cp deployment/datapusher_settings.py /etc/ckan/
-sudo sh -c 'echo "NameVirtualHost *:8800" >> /etc/apache2/ports.conf'
-sudo sh -c 'echo "Listen 8800" >> /etc/apache2/ports.conf'
-sudo a2ensite datapusher
-
 # go back to ckan dir
 cd /usr/lib/ckan/default/
 
@@ -182,10 +165,27 @@ sudo python setup.py develop
 
 echo 'Set up the DataStore'
 echo '----------------------------------'
-sudo -u postgres createuser -S -D -R datastore_default
+sudo -u postgres createuser -S -D -R -l datastore_default
 sudo -u postgres createdb -O ckan_default datastore_default -E utf-8
 cd /usr/lib/ckan/default/src/ckan
 paster --plugin=ckan datastore set-permissions postgres --config=/etc/ckan/default/development.ini
+
+echo 'OPTIONAL: Install Datapusher extension'
+echo '----------------------------------'
+sudo apt-get install python-dev python-virtualenv build-essential libxslt1-dev libxml2-dev git
+sudo virtualenv /usr/lib/ckan/datapusher
+sudo mkdir /usr/lib/ckan/datapusher/src
+cd /usr/lib/ckan/datapusher/src
+sudo git clone -b stable https://github.com/ckan/datapusher.git
+cd datapusher
+sudo /usr/lib/ckan/datapusher/bin/pip install -r requirements.txt
+sudo /usr/lib/ckan/datapusher/bin/python setup.py develop
+sudo cp deployment/datapusher /etc/apache2/sites-available/
+sudo cp deployment/datapusher.wsgi /etc/ckan/
+sudo cp deployment/datapusher_settings.py /etc/ckan/
+sudo sh -c 'echo "NameVirtualHost *:8800" >> /etc/apache2/ports.conf'
+sudo sh -c 'echo "Listen 8800" >> /etc/apache2/ports.conf'
+sudo a2ensite datapusher
 
 echo 'Deployment: Following this http://docs.ckan.org/en/latest/maintaining/installing/deployment.html'
 echo '----------------------------------'
