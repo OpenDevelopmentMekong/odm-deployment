@@ -10,20 +10,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "hashicorp/precise64"
+  config.vm.box = "ubuntu/trusty64"
 
   # provisioning
-  config.vm.provision :shell, path: "bootstrap.sh"
-  config.vm.provision :shell, path: "wordpress.sh"
+  # config.vm.provision :shell, path: "bootstrap.sh"
+  # config.vm.provision :shell, path: "wordpress.sh"
 
-  # config.vm.provision "ansible" do |ansible|
-  #   ansible.playbook = "odm-scripting/deployment-scripts/ansible/wordpress-vagrant.yml"
-  #   ansible.inventory_path= "odm-scripting/deployment-scripts/ansible/stage"
-  #   ansible.extra_vars = { ansible_ssh_user: 'vagrant' }
-  #   ansible.limit = "default"
-  #   ansible.sudo = true
-  #   # ansible.verbose = 'vvv'
-  # end
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "../ansible/site-vagrant.yml"
+    ansible.inventory_path= "../ansible/stage"
+    ansible.extra_vars = { ansible_ssh_user: 'vagrant' }
+  end
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs

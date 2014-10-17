@@ -195,9 +195,10 @@
 - name: Adding/removing Apache virtual hosts
   include: vhost.yml
 
-- name: Setting permissions to /var/www
+- name: Adding vagrant to the www-data group
   user: name="{{ansible_ssh_user}}" groups=vagrant,www-data
   sudo: yes
 
-- file: path=/var/www/html owner=vagrant group=www-data mode=0644
+- name: Setting permissions to /var/www
+  file: path=/var/www/html owner=vagrant group=www-data mode=0655
   sudo: yes

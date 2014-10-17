@@ -3,6 +3,8 @@
 **/wp-config.php
 **/stage
 
+.vagrant
+
 #OSX Gitignore
 
 .DS_Store
