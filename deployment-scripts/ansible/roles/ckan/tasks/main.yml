@@ -1,6 +1,9 @@
 ---
 - name: Stop CKAN
-  command: supervisorctl stop ckan
+  shell: source {{ckan_env}}/bin/activate && {{supervisor_bin}}/supervisorctl stop ckan executable=/bin/bash
+
+- name: Ensure that ckan_src is there
+  file: path="{{ckan_src}}" state=directory
 
 - name: Checkout CKAN 2.2 from git
   git: repo=https://github.com/ckan/ckan.git
@@ -34,7 +37,7 @@
   file: path="{{ckan_ini}}" state=absent
 
 - name: Generate development.ini
-  shell: source {{ckan_env}}/bin/activate && paster make-config ckan {{ckan_ini}}
+  shell: source {{ckan_env}}/bin/activate && paster make-config ckan {{ckan_ini}} executable=/bin/bash
 
 - name: Edit development.ini
   ini_file: dest="{{ckan_ini}}"
@@ -188,7 +191,7 @@
   pip: name="git+https://github.com/ckan/ckanapi.git@ckanapi-3.3#egg=ckanapi" virtualenv="{{virtual_envs}}/ckan"
 
 - name: CKAN Api Develop
-  shell: source {{ckan_env}}/bin/activate && python setup.py develop
+  shell: source {{ckan_env}}/bin/activate && python setup.py develop executable=/bin/bash
   args:
     chdir: "{{virtual_envs}}/ckan/src/ckanapi"
 
@@ -198,7 +201,7 @@
 - git: repo=https://github.com/OpenDevelopmentMekong/ckanext-odm_utils.git
         dest="{{ ckan_env }}/src/ckanext-odm_utils"
 
-- shell: source {{ckan_env}}/bin/activate && python setup.py develop
+- shell: source {{ckan_env}}/bin/activate && python setup.py develop executable=/bin/bash
   args:
     chdir: "{{ ckan_env }}/src/ckanext-odm_utils"
 
@@ -208,7 +211,7 @@
 - git: repo=https://github.com/OpenDevelopmentMekong/ckanext-odm_theme.git
         dest="{{ ckan_env }}/src/ckanext-odm_theme"
 
-- shell: source {{ckan_env}}/bin/activate && python setup.py develop
+- shell: source {{ckan_env}}/bin/activate && python setup.py develop executable=/bin/bash
   args:
     chdir: "{{ ckan_env }}/src/ckanext-odm_theme"
 
@@ -227,7 +230,7 @@
 - name: Install pages extension
   pip: name="git+https://github.com/ckan/ckanext-pages.git#egg=ckanext-pages" virtualenv="{{virtual_envs}}/ckan"
 
-- shell: source {{ckan_env}}/bin/activate && python setup.py develop
+- shell: source {{ckan_env}}/bin/activate && python setup.py develop executable=/bin/bash
   args:
     chdir: "{{ ckan_env }}/src/ckanext-pages"
 
@@ -237,26 +240,26 @@
 - name: Install  ckanext-spatial extension dependencies
   pip: requirements={{ckan_env}}/src/ckanext-spatial/pip-requirements.txt virtualenv="{{virtual_envs}}/ckan"
 
-- shell: source {{ckan_env}}/bin/activate && python setup.py develop
+- shell: source {{ckan_env}}/bin/activate && python setup.py develop executable=/bin/bash
   args:
     chdir: "{{ ckan_env }}/src/ckanext-spatial"
 
 - name: Install Google Analytics extension
   pip: name="git+https://github.com/ckan/ckanext-googleanalytics.git#egg=ckanext-googleanalytics" virtualenv="{{virtual_envs}}/ckan"
 
-- shell: source {{ckan_env}}/bin/activate && python setup.py develop
+- shell: source {{ckan_env}}/bin/activate && python setup.py develop executable=/bin/bash
   args:
     chdir: "{{ ckan_env }}/src/ckanext-googleanalytics"
 
 - name: Initialize database
-  shell: source {{ckan_env}}/bin/activate && paster --plugin=ckan db init --config={{ckan_ini}}
+  shell: source {{ckan_env}}/bin/activate && paster --plugin=ckan db init --config={{ckan_ini}} executable=/bin/bash
 
 # Uncomment when legacy mode is disabled
 # - name: Setup the DataStore
 #   shell: source {{ckan_env}}/bin/activate && paster --plugin=ckan datastore set-permissions postgres --config={{ckan_ini}}
 
 - name: Start CKAN
-  command: supervisorctl start ckan
+  shell: source {{ckan_env}}/bin/activate && {{supervisor_bin}}/supervisorctl start ckan executable=/bin/bash
 
 - name: Start datapusher
-  command: supervisorctl start datapusher
+  shell: source {{ckan_env}}/bin/activate && {{supervisor_bin}}/supervisorctl start datapusher executable=/bin/bash

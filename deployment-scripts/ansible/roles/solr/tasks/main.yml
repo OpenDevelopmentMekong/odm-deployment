@@ -10,15 +10,18 @@
 
 - name: Copy solr.war to tomcat/solr
   command: cp {{src_dir}}/solr-4.7.2/dist/solr-4.7.2.war {{tomcat_dir}}/solr/solr.war
-  
+
 - name: Copy solr libraries to tomcat/solr
   shell: cp {{src_dir}}/solr-4.7.2/example/lib/ext/*.jar {{tomcat_dir}}/lib
 
+- name: Ensure that conf dir is present
+  file: path="{{solr_conf}}" state=directory
+
 - name: Copy tomcat context fragment
-  template: src=solr.xml.j2 dest={{ tomcat_dir }}/conf/Catalina/localhost/solr.xml
-  
+  template: src=solr.xml.j2 dest="{{solr_conf}}/solr.xml"
+
 - name: Create data directory
   file: path="{{tomcat_dir}}/data" state=directory
-  
+
 - name: Restart tomcat
-  command: supervisorctl restart tomcat
+  shell: source {{ckan_env}}/bin/activate && {{supervisor_bin}}/supervisorctl restart tomcat executable=/bin/bash

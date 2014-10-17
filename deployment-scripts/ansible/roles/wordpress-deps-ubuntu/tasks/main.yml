@@ -1,27 +1,36 @@
 ---
 - name: Refresh ubuntu repo and install apache2
   apt: name=apache2 update_cache=yes
+  sudo: yes
 
 - name: Install libapache2
   apt: name=libapache2-mod-wsgi state=present
+  sudo: yes
 
 - name: Install mysql-server
   apt: name=mysql-server state=present
+  sudo: yes
 
 - name: Install php5
   apt: name=php5 state=present
+  sudo: yes
 
 - name: Install php5-mysql
   apt: name=php5-mysql state=present
+  sudo: yes
 
 - name: Install python-mysqldb
   apt: name=python-mysqldb state=present
+  sudo: yes
 
 - name: Create DB User
   mysql_user: name=odmadmin password=odmadmin priv=*.*:ALL state=present
+  sudo: yes
 
 - name: Create DB
   mysql_db: name=odmwp login_user=odmadmin login_password=odmadmin state=present
+  sudo: yes
 
 - name: Restart apache
   shell: service apache2 reload
+  sudo: yes

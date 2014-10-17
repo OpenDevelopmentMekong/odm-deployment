@@ -1,0 +1,10 @@
+---
+- hosts: vagrant-box
+  roles:
+  - ckan-deps-ubuntu
+  - supervisord
+  - tomcat
+  - solr
+  - ckan
+  - wordpress-deps-ubuntu
+  - wordpress

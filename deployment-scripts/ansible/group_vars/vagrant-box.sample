@@ -6,6 +6,8 @@ ansible_python_interpreter: python2.7
 
 ansible_ssh_user: vagrant
 
+pg_main: /etc/postgresql/9.3/main
+
 home_dir: /home/vagrant
 src_dir: "{{home_dir}}/src"
 virtual_envs: "{{ home_dir }}/.virtualenvs"
@@ -16,6 +18,7 @@ tomcat_port: 22625
 
 solr_url: http://{{tomcat_ip}}:{{tomcat_port}}/solr
 solr_schema: "{{solr_url}}/schema"
+solr_conf: "{{ tomcat_dir }}/conf/Catalina/localhost"
 
 ckan_src: "{{src_dir}}/ckan"
 ckan_env: "{{virtual_envs}}/ckan"
@@ -24,10 +27,12 @@ ckan_ini: "{{ ckan_etc }}/default/development.ini"
 ckan_port: 8080
 ckan_url: http://192.168.33.10
 
+supervisor_bin: "{{ ckan_env }}/bin"
+
 datapusher_port: 8800
 datapusher_url: http://192.168.33.10
 
-wp_dir: "{{home_dir}}/webapps/wp"
+wp_dir: "/var/www/html"
 
 email_server: <smtp.webfaction.com>
 email_account: <notifications@ckan.lfa.webfactional.com>

@@ -4,11 +4,14 @@
 - name: Create src directory
   file: path={{ src_dir }} state=directory
 
+- name: Ensure that tomcat_dir is there
+  file: path="{{tomcat_dir}}" state=directory
+
 - name: Download Tomcat
-  get_url: url=http://www.us.apache.org/dist/tomcat/tomcat-7/v7.0.56/bin/apache-tomcat-7.0.56.tar.gz dest="{{ src_dir }}/apache-tomcat-7.0.55.tar.gz" sha256sum=c0ca44be20bccebbb043ccd7ab5ea4d94060fdde6bb84812f3da363955dae5bb
+  get_url: url=http://www.us.apache.org/dist/tomcat/tomcat-7/v7.0.56/bin/apache-tomcat-7.0.56.tar.gz dest="{{ src_dir }}/apache-tomcat-7.0.56.tar.gz" sha256sum=c0ca44be20bccebbb043ccd7ab5ea4d94060fdde6bb84812f3da363955dae5bb
 
 - name: Extract archive
-  command: chdir="{{ tomcat_dir }}" /bin/gtar xvf {{ src_dir }}/apache-tomcat-7.0.55.tar.gz --strip-components=1
+  shell: tar -xzvf {{ src_dir }}/apache-tomcat-7.0.56.tar.gz --strip-components=1 chdir="{{ tomcat_dir }}"
 
 - name: Configure Tomcat-users.xml
   template: src=tomcat-users.xml dest="{{ tomcat_dir }}/conf/tomcat-users.xml"

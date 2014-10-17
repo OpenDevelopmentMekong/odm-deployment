@@ -3,13 +3,7 @@
   get_url: url=http://wordpress.org/wordpress-4.0.tar.gz dest="{{wp_dir}}/wordpress-4.0.tar.gz" force=true sha256sum=03a8437ca9ae14c9a7f6d4062672e9685d45e1aaad6c020af2673cb42a34c0ac
 
 - name: Extract contents
-  shell: "tar -xzvf {{wp_dir}}/wordpress-4.0.tar.gz -C {{wp_dir}}"
-
-- name: Move contents
-  shell: "cp -a {{wp_dir}}/wordpress/. {{wp_dir}}"
-
-- name: Remove wordpress folder
-  file: path="{{wp_dir}}/wordpress/" state=absent
+  shell: tar -xzvf {{wp_dir}}/wordpress-4.0.tar.gz --strip-components=1 chdir="{{ wp_dir }}"
 
 - name: Remove wordpress-4.0.tar.gz
   file: path="{{wp_dir}}/wordpress-4.0.tar.gz" state=absent
