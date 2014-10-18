@@ -7,6 +7,10 @@
   apt: name=libapache2-mod-wsgi state=present
   sudo: yes
 
+- name: Install mysql-server-5.5
+  apt: name=mysql-server-5.5 state=present
+  sudo: yes
+
 - name: Install mysql-server
   apt: name=mysql-server state=present
   sudo: yes
