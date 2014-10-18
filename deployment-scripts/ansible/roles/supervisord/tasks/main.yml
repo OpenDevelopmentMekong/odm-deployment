@@ -16,13 +16,13 @@
   template: src=supervisord.conf.j2 dest={{home_dir}}/etc/supervisord.conf
 
 - name: Copy virtualenv_cmd.sh Template over
-  template: src=virtualenv_cmd.sh dest={{home_dir}}/virtualenv_cmd.sh mode=655
+  template: src=virtualenv_cmd.sh dest={{home_dir}}/virtualenv_cmd.sh mode=0755
 
 - name: Add supervisord to cron
-  cron: name="supervisord" minute="*/5" job="{{supervisor_bin}}/supervisord > {{home_dir}}/logs/user/cron/supervisord.log 2>&1"
+  cron: name="supervisord" minute="*/5" job="{{supervisor_bin}}/supervisord -c {{home_dir}}/etc/supervisord.conf > {{home_dir}}/logs/user/cron/supervisord.log 2>&1"
 
 - name: Stop supervisord
   shell: "pkill -HUP -u `whoami` supervisord || exit 0"
 
 - name: Start supervisord
-  shell: "{{supervisor_bin}}/supervisord > {{home_dir}}/logs/user/cron/supervisord.log 2>&1 || exit 0"
+  shell: "{{supervisor_bin}}/supervisord -c {{home_dir}}/etc/supervisord.conf > {{home_dir}}/logs/user/cron/supervisord.log 2>&1 || exit 0"

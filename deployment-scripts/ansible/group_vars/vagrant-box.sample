@@ -32,7 +32,7 @@ supervisor_bin: "{{ ckan_env }}/bin"
 datapusher_port: 8800
 datapusher_url: http://192.168.33.10
 
-wp_dir: "/var/www/html"
+wp_dir: "{{home_dir}}/webapps/wp"
 
 email_server: <smtp.webfaction.com>
 email_account: <notifications@ckan.lfa.webfactional.com>

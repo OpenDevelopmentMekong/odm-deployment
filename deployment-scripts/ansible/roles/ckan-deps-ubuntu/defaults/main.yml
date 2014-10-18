@@ -6,8 +6,8 @@ apache:
     - backend
   listen:
     - '*:80'
-    - '127.0.0.1:8080'
-  default_vhost_path: /etc/apache2/sites-available/000-default.conf
+    - '127.0.0.1:80'
+  default_vhost_path: /etc/apache2/sites-available/wp.vagrantbox.conf
   modules:
     required:
       - authn_core
@@ -36,51 +36,63 @@ apache:
       - deflate
 
 vhosts:
+  'wp.vagrantbox':
+    enabled: yes
+    listen:
+      - '*:80'
+      - '127.0.0.1:80'
+    root: "{{wp_dir}}"
+    name: wp.vagrantbox
+    aliases:
+      - wp.vagrantbox
+      - 127.0.0.1:80
+    settings: |
   'tomcat.vagrantbox':
     enabled: yes
     listen:
-      - '*:8080'
-      - '127.0.0.1:8080'
+      - '*:{{tomcat_port}}'
+      - '127.0.0.1:tomcat_port'
     root: "{{tomcat_dir}}"
     name: tomcat.vagrantbox
     aliases:
       - tomcat.vagrantbox
-      - 127.0.0.1
+      - 127.0.0.1:{{tomcat_port}}
     settings: |
-      <IfModule proxy_http_module>
-        ProxyPass /Content http://n.km-school.ru:8085/Content
-        ProxyPassReverse /Content http://n.km-school.ru:8085/Content
-      </IfModule>
-      Alias /Content2 /var/www/content2
   'ckan.vagrantbox':
     enabled: yes
     listen:
-      - '*:8081'
-      - '127.0.0.1:8081'
+      - '*:{{ckan_port}}'
+      - '127.0.0.1:{{ckan_port}}'
     root: "{{ckan_src}}"
     name: ckan.vagrantbox
     aliases:
       - ckan.vagrantbox
-      - 127.0.0.1
+      - 127.0.0.1:{{ckan_port}}
     settings: |
-      <IfModule proxy_http_module>
-        ProxyPass /Content http://n.km-school.ru:8085/Content
-        ProxyPassReverse /Content http://n.km-school.ru:8085/Content
-      </IfModule>
-      Alias /Content2 /var/www/content2
   'datapusher.vagrantbox':
     enabled: yes
     listen:
-      - '*:8800'
-      - '127.0.0.1:8800'
-    root: "{{ckan_src}}/datapusher"
+      - '*:{{datapusher_port}}'
+      - '127.0.0.1:{{datapusher_port}}'
+    root: "{{ckan_src}}/ckanext/datapusher"
     name: datapusher.vagrantbox
     aliases:
       - datapusher.vagrantbox
-      - 127.0.0.1
+      - 127.0.0.1:{{datapusher_port}}
     settings: |
-      <IfModule proxy_http_module>
-        ProxyPass /Content http://n.km-school.ru:8085/Content
-        ProxyPassReverse /Content http://n.km-school.ru:8085/Content
-      </IfModule>
-      Alias /Content2 /var/www/content2
+  # 'example.vagrantbox':
+  #   enabled: yes
+  #   listen:
+  #     - '*:8800'
+  #     - '127.0.0.1:8800'
+  #   root: "{{ckan_src}}/ckanext/datapusher"
+  #   name: datapusher.vagrantbox
+  #   aliases:
+  #     - datapusher.vagrantbox
+  #     - 127.0.0.1
+  #   settings: |
+  #     <IfModule proxy_http_module>
+  #       ProxyPass /Content http://n.km-school.ru:8085/Content
+  #       ProxyPassReverse /Content http://n.km-school.ru:8085/Content
+  #     </IfModule>
+  #     Alias /Content2 /var/www/content2

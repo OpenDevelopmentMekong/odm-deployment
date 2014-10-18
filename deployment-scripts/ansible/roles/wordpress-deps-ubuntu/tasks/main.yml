@@ -34,3 +34,6 @@
 - name: Restart apache
   shell: service apache2 reload
   sudo: yes
+
+- name: Ensure that wp directory is present
+  file: path="{{wp_dir}}" state=directory
