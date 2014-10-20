@@ -11,84 +11,37 @@
   easy_install: name=virtualenv executable=easy_install-2.7
   sudo: yes
 
-- name: Install git-core
-  apt: name=git-core state=present
+- name: Install required packages.
+  action: apt pkg={{ item }} state=present
   sudo: yes
-
-- name: Install libxslt-dev
-  apt: name=libxslt-dev state=present
-  sudo: yes
-
-- name: Install libxslt1-dev
-  apt: name=libxslt1-dev state=present
-  sudo: yes
-
-- name: Install libxslt1.1
-  apt: name=libxslt1.1 state=present
-  sudo: yes
-
-- name: Install libxml2
-  apt: name=libxml2 state=present
-  sudo: yes
-
-- name: Install libxml2-dev
-  apt: name=libxml2-dev state=present
-  sudo: yes
-
-- name: Install python-libxml2
-  apt: name=python-libxml2 state=present
-  sudo: yes
-
-- name: Install python-libxslt1
-  apt: name=python-libxslt1 state=present
-  sudo: yes
-
-- name: Install libssl-dev
-  apt: name=libssl-dev state=present
-  sudo: yes
-
-- name: Install build-essential
-  apt: name=build-essential state=present
-  sudo: yes
-
-- name: Install python-dev
-  apt: name=python-dev state=present
-  sudo: yes
-
-- name: Install postgresql
-  apt: name=postgresql state=present
-  sudo: yes
-
-- name: Install libpq-dev
-  apt: name=libpq-dev state=present
-  sudo: yes
-
-- name: Install libpq5
-  apt: name=libpq5 state=present
-  sudo: yes
-
-- name: Install zlib1g-dev
-  apt: name=zlib1g-dev state=present
-  sudo: yes
-
-- name: Install python-setuptools
-  apt: name=python-setuptools state=present
-  sudo: yes
-
-- name: Install openjdk-6-jdk
-  apt: name=openjdk-6-jdk state=present
-  sudo: yes
-
-- name: Install psycopg2
-  easy_install: name=psycopg2 executable=easy_install-2.7
-  sudo: yes
+  with_items:
+    - git-core
+    - libxslt-dev
+    - libxslt1.1
+    - libxml2
+    - libxml2-dev
+    - python-libxml2
+    - python-libxslt1
+    - libssl-dev
+    - build-essential
+    - python-dev
+    - postgresql
+    - libpq-dev
+    - libpq5
+    - zlib1g-dev
+    - python-setuptools
+    - openjdk-6-jdk
+    - python-psycopg2
+    - python-lxml
+    - apache2
 
 - name: Create virtualenv
   shell: virtualenv --no-site-packages {{virtual_envs}}/ckan
 
-- name: Install lxml
-  shell: source {{virtual_envs}}/ckan/bin/activate && CFLAGS="-O0" pip install lxml executable=/bin/bash
-  sudo: yes
+# Gives a GCC compile error, installing from APT instead
+#- name: Install lxml
+#  shell: source {{virtual_envs}}/ckan/bin/activate && CFLAGS="-O0" pip install lxml executable=/bin/bash
+#  sudo: yes
 
 - name: Replace pg_hba.conf
   template: src=pg_hba.conf.j2 dest="{{pg_main}}/pg_hba.conf"
@@ -109,10 +62,6 @@
 
 - name: Setup databases and users (datastore_default)
   postgresql_db: name=datastore_default owner=ckan_default encoding='UTF-8' state=present
-
-- name: Install Apache 2
-  apt: name=apache2 state=present
-  sudo: yes
 
 - name: Copy Apache configuration file
   template: src="{{ apache.profile }}.conf.j2" dest=/etc/apache2/conf-available/{{ apache.profile }}.conf mode=0644
