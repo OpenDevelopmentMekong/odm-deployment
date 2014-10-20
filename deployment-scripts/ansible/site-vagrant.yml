@@ -1,6 +1,7 @@
 ---
 - hosts: vagrant-box
   roles:
+  - common
   - ckan-deps-ubuntu
   - supervisord
   - tomcat

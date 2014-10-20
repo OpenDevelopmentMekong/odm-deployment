@@ -1,8 +1,4 @@
 ---
-- name: Update package list
-  apt: update_cache=yes
-  sudo: yes
-
 - name: Install python-pip
   apt: name=python-pip state=present
   sudo: yes
