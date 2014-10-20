@@ -32,16 +32,14 @@
     - python-setuptools
     - openjdk-6-jdk
     - python-psycopg2
-    - python-lxml
     - apache2
 
 - name: Create virtualenv
   shell: virtualenv --no-site-packages {{virtual_envs}}/ckan
 
-# Gives a GCC compile error, installing from APT instead
-#- name: Install lxml
-#  shell: source {{virtual_envs}}/ckan/bin/activate && CFLAGS="-O0" pip install lxml executable=/bin/bash
-#  sudo: yes
+- name: Install lxml
+  shell: source {{virtual_envs}}/ckan/bin/activate && CFLAGS="-O0" pip install lxml executable=/bin/bash
+  sudo: yes
 
 - name: Replace pg_hba.conf
   template: src=pg_hba.conf.j2 dest="{{pg_main}}/pg_hba.conf"
