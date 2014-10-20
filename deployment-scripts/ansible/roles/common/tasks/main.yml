@@ -6,3 +6,10 @@
 - name: Update package list
   apt: update_cache=yes
   sudo: yes
+  
+- name: Configure MySQL password
+  debconf: name='mysql-server-5.5' question='mysql-server/root_password' value='odmadmin' vtype='password'
+  sudo: yes
+
+- debconf: name='mysql-server-5.5' question='mysql-server/root_password_again' value='odmadmin' vtype='password'
+  sudo: yes
