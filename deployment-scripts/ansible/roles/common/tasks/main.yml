@@ -8,8 +8,8 @@
   sudo: yes
   
 - name: Configure MySQL password
-  debconf: name='mysql-server-5.5' question='mysql-server/root_password' value='odmadmin' vtype='password'
+  debconf: name='mysql-server-5.5' question='mysql-server/root_password' value='' vtype='password'
   sudo: yes
 
-- debconf: name='mysql-server-5.5' question='mysql-server/root_password_again' value='odmadmin' vtype='password'
+- debconf: name='mysql-server-5.5' question='mysql-server/root_password_again' value='' vtype='password'
   sudo: yes
