@@ -23,6 +23,10 @@
   template: src=wp.vagrantbox.conf.j2 dest=/etc/apache2/sites-available/wp.vagrantbox.conf
   sudo: yes
 
+- name: Disable default site
+  command: a2dissite 000-default
+  sudo: yes
+
 - name: Enable our new site
   command: a2ensite wp.vagrantbox
   sudo: yes

@@ -16,13 +16,13 @@
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define('DB_NAME', 'db_name');
+define('DB_NAME', 'odmwp');
 
 /** MySQL database username */
-define('DB_USER', 'db_user');
+define('DB_USER', 'odmadmin');
 
 /** MySQL database password */
-define('DB_PASSWORD', 'db_password');
+define('DB_PASSWORD', 'odmadmin');
 
 /** MySQL hostname */
 define('DB_HOST', 'localhost');
@@ -42,14 +42,14 @@ define('DB_COLLATE', '');
  *
  * @since 2.6.0
  */
-define('AUTH_KEY',         '13477812-4fb3-11e4-9e35-164230d1df67');
-define('SECURE_AUTH_KEY',  '13477a6a-4fb3-11e4-9e35-164230d1df67');
-define('LOGGED_IN_KEY',    '091ud0j10fn10fj019fdj019fj029dj10djdj1f');
-define('NONCE_KEY',        '13477bbe-4fb3-11e4-9e35-164230d1df67');
-define('AUTH_SALT',        '13477f1a-4fb3-11e4-9e35-164230d1df67');
-define('SECURE_AUTH_SALT', '13478064-4fb3-11e4-9e35-164230d1df67');
-define('LOGGED_IN_SALT',   '1347819a-4fb3-11e4-9e35-164230d1df67');
-define('NONCE_SALT',       '134782bc-4fb3-11e4-9e35-164230d1df67');
+define('AUTH_KEY',         '{{ lookup('password', 'credentials/' + 'wp' + '/auth_key length=40') }}');
+define('SECURE_AUTH_KEY',  '{{ lookup('password', 'credentials/' + 'wp' + '/secure_auth_key length=40') }}');
+define('LOGGED_IN_KEY',    '{{ lookup('password', 'credentials/' + 'wp' + '/logged_in_key length=40') }}');
+define('NONCE_KEY',        '{{ lookup('password', 'credentials/' + 'wp' + '/nonce_key length=40') }}');
+define('AUTH_SALT',        '{{ lookup('password', 'credentials/' + 'wp' + '/auth_salt length=40') }}');
+define('SECURE_AUTH_SALT', '{{ lookup('password', 'credentials/' + 'wp' + '/secure_auth_salt length=40') }}');
+define('LOGGED_IN_SALT',   '{{ lookup('password', 'credentials/' + 'wp' + '/logged_in_salt length=40') }}');
+define('NONCE_SALT',       '{{ lookup('password', 'credentials/' + 'wp' + '/nonce_salt length=40') }}');
 
 /**#@-*/
 

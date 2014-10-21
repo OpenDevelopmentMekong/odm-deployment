@@ -5,11 +5,12 @@
 - name: Extract contents
   shell: tar -xzvf {{wp_dir}}/wordpress-4.0.tar.gz --strip-components=1 chdir="{{ wp_dir }}"
 
-- name: Remove wordpress-4.0.tar.gz
-  file: path="{{wp_dir}}/wordpress-4.0.tar.gz" state=absent
+# No need to remove, for now
+# - name: Remove wordpress-4.0.tar.gz
+#   file: path="{{wp_dir}}/wordpress-4.0.tar.gz" state=absent
 
 - name: Copy config.php file
-  template: src=wp-config.php dest="{{wp_dir}}/wp-config.php"
+  template: src=wp-config.php.j2 dest="{{wp_dir}}/wp-config.php"
 
 - name: Remove index.html
   file: path="{{wp_dir}}/index.html" state=absent
