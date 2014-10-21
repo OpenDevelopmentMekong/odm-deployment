@@ -19,6 +19,14 @@
   mysql_db: name=odmwp login_user=odmadmin login_password=odmadmin state=present
   sudo: yes
 
+- name: Add vhost configuration file to sites-available
+  template: src=wp.vagrantbox.conf.j2 dest=/etc/apache2/sites-available/wp.vagrantbox.conf
+  sudo: yes
+
+- name: Enable our new site
+  command: a2ensite wp.vagrantbox
+  sudo: yes
+
 - name: Restart apache
   shell: service apache2 reload
   sudo: yes
