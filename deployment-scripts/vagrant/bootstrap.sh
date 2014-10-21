@@ -20,7 +20,7 @@ echo '----------------------------------'
 sudo apt-get install --yes git-core
 cd /vagrant/
 rm -rf odm-scripting
-git clone -b odm-scripting-0.3 https://$github_user:$github_pass@github.com/OpenDevelopmentMekong/odm-scripting.git
+source /vagrant/config.cfg && git clone -b odm-scripting-0.4 https://$github_user:$github_pass@github.com/OpenDevelopmentMekong/odm-scripting.git
 
 echo 'CKAN Basic installation'
 echo '----------------------------------'
@@ -56,7 +56,7 @@ sudo -u postgres createdb -O ckan_default ckan_default -E utf-8
 
 echo 'Copy pg_hba.conf from odm-scripting to prevent FATAL: password authentication failed'
 echo '----------------------------------'
-sudo cp -fr /vagrant/odm-scripting/deployment-scripts/ckan_deployment/postgresql/pg_hba.conf /etc/postgresql/9.1/main/pg_hba.conf
+sudo cp -fr /vagrant/odm-scripting/deployment-scripts/vagrant/ckan_deployment/postgresql/pg_hba.conf /etc/postgresql/9.1/main/pg_hba.conf
 sudo service postgresql restart
 
 echo 'Create a CKAN config file, we actually copy it'
@@ -66,11 +66,11 @@ sudo chown -R `whoami` /etc/ckan/
 
 echo 'Copy development.ini from odm-scripting, instead of creating it using paster make-config'
 echo '----------------------------------'
-sudo cp -fr /vagrant/odm-scripting/deployment-scripts/ckan_deployment/development.ini /etc/ckan/default/development.ini
+sudo cp -fr /vagrant/odm-scripting/deployment-scripts/vagrant/ckan_deployment/development.ini /etc/ckan/default/development.ini
 
 echo 'Copy jetty config files from odm-scripting'
 echo '----------------------------------'
-sudo cp -fr /vagrant/odm-scripting/deployment-scripts/ckan_deployment/jetty/jetty /etc/default/jetty
+sudo cp -fr /vagrant/odm-scripting/deployment-scripts/vagrant/ckan_deployment/jetty/jetty /etc/default/jetty
 
 echo 'Start Jetty, link Solr schema.xml'
 echo '----------------------------------'
@@ -135,23 +135,6 @@ sudo mkdir -p /var/lib/ckan/default
 sudo chown www-data /var/lib/ckan/default
 sudo chmod u+rwx /var/lib/ckan/default
 
-echo 'OPTIONAL: Install Datapusher extension'
-echo '----------------------------------'
-sudo apt-get install python-dev python-virtualenv build-essential libxslt1-dev libxml2-dev git
-sudo virtualenv /usr/lib/ckan/datapusher
-sudo mkdir /usr/lib/ckan/datapusher/src
-cd /usr/lib/ckan/datapusher/src
-sudo git clone -b stable https://github.com/ckan/datapusher.git
-cd datapusher
-sudo /usr/lib/ckan/datapusher/bin/pip install -r requirements.txt
-sudo /usr/lib/ckan/datapusher/bin/python setup.py develop
-sudo cp deployment/datapusher /etc/apache2/sites-available/
-sudo cp deployment/datapusher.wsgi /etc/ckan/
-sudo cp deployment/datapusher_settings.py /etc/ckan/
-sudo sh -c 'echo "NameVirtualHost *:8800" >> /etc/apache2/ports.conf'
-sudo sh -c 'echo "Listen 8800" >> /etc/apache2/ports.conf'
-sudo a2ensite datapusher
-
 # go back to ckan dir
 cd /usr/lib/ckan/default/
 
@@ -182,30 +165,47 @@ sudo python setup.py develop
 
 echo 'Set up the DataStore'
 echo '----------------------------------'
-sudo -u postgres createuser -S -D -R datastore_default
+sudo -u postgres createuser -S -D -R -l datastore_default
 sudo -u postgres createdb -O ckan_default datastore_default -E utf-8
 cd /usr/lib/ckan/default/src/ckan
 paster --plugin=ckan datastore set-permissions postgres --config=/etc/ckan/default/development.ini
 
+echo 'OPTIONAL: Install Datapusher extension'
+echo '----------------------------------'
+sudo apt-get install python-dev python-virtualenv build-essential libxslt1-dev libxml2-dev git
+sudo virtualenv /usr/lib/ckan/datapusher
+sudo mkdir /usr/lib/ckan/datapusher/src
+cd /usr/lib/ckan/datapusher/src
+sudo git clone -b stable https://github.com/ckan/datapusher.git
+cd datapusher
+sudo /usr/lib/ckan/datapusher/bin/pip install -r requirements.txt
+sudo /usr/lib/ckan/datapusher/bin/python setup.py develop
+sudo cp deployment/datapusher /etc/apache2/sites-available/
+sudo cp deployment/datapusher.wsgi /etc/ckan/
+sudo cp deployment/datapusher_settings.py /etc/ckan/
+sudo sh -c 'echo "NameVirtualHost *:8800" >> /etc/apache2/ports.conf'
+sudo sh -c 'echo "Listen 8800" >> /etc/apache2/ports.conf'
+sudo a2ensite datapusher
+
 echo 'Deployment: Following this http://docs.ckan.org/en/latest/maintaining/installing/deployment.html'
 echo '----------------------------------'
-sudo cp -fr /vagrant/odm-scripting/deployment-scripts/ckan_deployment/production.ini /etc/ckan/default/production.ini
+sudo cp -fr /vagrant/odm-scripting/deployment-scripts/vagrant/ckan_deployment/production.ini /etc/ckan/default/production.ini
 
 echo 'Copy WSGI script file from odm-scripting repo'
 echo '----------------------------------'
-sudo cp -fr /vagrant/odm-scripting/deployment-scripts/ckan_deployment/apache/apache.wsgi /etc/ckan/default/apache.wsgi
+sudo cp -fr /vagrant/odm-scripting/deployment-scripts/vagrant/ckan_deployment/apache/apache.wsgi /etc/ckan/default/apache.wsgi
 
 echo 'Copy the Apache config file from odm-scripting repo'
 echo '----------------------------------'
-sudo cp -fr /vagrant/odm-scripting/deployment-scripts/ckan_deployment/apache/ckan_default /etc/apache2/sites-available/ckan_default
+sudo cp -fr /vagrant/odm-scripting/deployment-scripts/vagrant/ckan_deployment/apache/ckan_default /etc/apache2/sites-available/ckan_default
 
 echo 'Copy the Apache ports.conf file from odm-scripting repo'
 echo '----------------------------------'
-sudo cp -fr /vagrant/odm-scripting/deployment-scripts/ckan_deployment/apache/ports.conf /etc/apache2/ports.conf
+sudo cp -fr /vagrant/odm-scripting/deployment-scripts/vagrant/ckan_deployment/apache/ports.conf /etc/apache2/ports.conf
 
 echo 'Copy the Nginx config file from odm-scripting repo'
 echo '----------------------------------'
-sudo cp -fr /vagrant/odm-scripting/deployment-scripts/ckan_deployment/nginx/ckan_default /etc/nginx/sites-available/ckan_default
+sudo cp -fr /vagrant/odm-scripting/deployment-scripts/vagrant/ckan_deployment/nginx/ckan_default /etc/nginx/sites-available/ckan_default
 
 echo 'Enable CKAN site'
 echo '----------------------------------'

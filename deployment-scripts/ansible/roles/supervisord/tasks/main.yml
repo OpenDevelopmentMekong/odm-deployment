@@ -1,0 +1,28 @@
+---
+# Based on instructions from http://martinbrochhaus.com/solr.html
+- name: Install Supervisord
+  easy_install: name=supervisor virtualenv={{virtual_envs}}/ckan
+
+- name: Create the cron log directory
+  file: path="{{home_dir}}/logs/user/cron" state=directory
+
+- name: Create the temp directory
+  file: path="{{home_dir}}/tmp" state=directory
+
+- name: Create the etc directory
+  file: path="{{home_dir}}/etc" state=directory
+
+- name: Copy supervisord.conf Template over
+  template: src=supervisord.conf.j2 dest={{home_dir}}/etc/supervisord.conf
+
+- name: Copy virtualenv_cmd.sh Template over
+  template: src=virtualenv_cmd.sh dest={{home_dir}}/virtualenv_cmd.sh mode=0755
+
+- name: Add supervisord to cron
+  cron: name="supervisord" minute="*/5" job="{{supervisor_bin}}/supervisord -c {{home_dir}}/etc/supervisord.conf > {{home_dir}}/logs/user/cron/supervisord.log 2>&1"
+
+- name: Stop supervisord
+  shell: "pkill -HUP -u `whoami` supervisord || exit 0"
+
+- name: Start supervisord
+  shell: "{{supervisor_bin}}/supervisord -c {{home_dir}}/etc/supervisord.conf > {{home_dir}}/logs/user/cron/supervisord.log 2>&1 || exit 0"

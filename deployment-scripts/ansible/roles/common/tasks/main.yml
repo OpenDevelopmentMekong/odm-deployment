@@ -1,0 +1,15 @@
+---
+- name: add new sources.list that checks for mirror
+  copy: src=sources.list dest=/etc/apt/sources.list owner=root group=root mode=0644
+  sudo: yes
+  
+- name: Update package list
+  apt: update_cache=yes
+  sudo: yes
+  
+- name: Configure MySQL password
+  debconf: name='mysql-server-5.5' question='mysql-server/root_password' value='' vtype='password'
+  sudo: yes
+
+- debconf: name='mysql-server-5.5' question='mysql-server/root_password_again' value='' vtype='password'
+  sudo: yes

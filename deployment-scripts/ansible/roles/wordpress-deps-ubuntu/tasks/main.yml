@@ -1,0 +1,39 @@
+---
+- name: Install required packages.
+  action: apt pkg={{ item }} state=present
+  sudo: yes
+  with_items:
+    - apache2
+    - libapache2-mod-wsgi
+    - mysql-server-5.5
+    - mysql-server
+    - php5
+    - php5-mysql
+    - python-mysqldb
+
+- name: Create DB User
+  mysql_user: name=odmadmin password=odmadmin priv=*.*:ALL state=present
+  sudo: yes
+
+- name: Create DB
+  mysql_db: name=odmwp login_user=odmadmin login_password=odmadmin state=present
+  sudo: yes
+
+- name: Add vhost configuration file to sites-available
+  template: src=wp.vagrantbox.conf.j2 dest=/etc/apache2/sites-available/wp.vagrantbox.conf
+  sudo: yes
+
+- name: Disable default site
+  command: a2dissite 000-default
+  sudo: yes
+
+- name: Enable our new site
+  command: a2ensite wp.vagrantbox
+  sudo: yes
+
+- name: Restart apache
+  shell: service apache2 reload
+  sudo: yes
+
+- name: Ensure that wp directory is present
+  file: path="{{wp_dir}}" state=directory

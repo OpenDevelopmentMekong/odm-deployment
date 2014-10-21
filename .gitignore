@@ -1,3 +1,9 @@
+**/group_vars/webfaction-servers
+**/group_vars/vagrant-box
+**/stage
+
+.vagrant
+
 #OSX Gitignore
 
 .DS_Store

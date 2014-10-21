@@ -10,7 +10,7 @@
 # . /usr/lib/ckan/default/bin/activate
 
 import sys
-sys.path.append('/usr/lib/ckan/default/src/ckanext-odm_utils/ckanext/odm_utils/utils')
+sys.path.append('<PATH_TO_ODM_UTILS_PLUGIN>/ckanext/odm_utils/utils')
 import ckanapi_utils
 import github_utils
 from odm_importer import ODMImporter
@@ -19,9 +19,7 @@ from odm_importer import ODMImporter
 githubutils = github_utils.RealGithubApi()
 
 # Initialise RealCkanApi (URL and APIKEY must be specified)
-ckanapiutils = ckanapi_utils.RealCkanApi('http://localhost:8080','<CKAN_ADMIN_API_KEY>')
+ckanapiutils = ckanapi_utils.RealCkanApi('<CKAN_URL_AND_PORT>','<CKAN_ADMIN_API_KEY>')
 
 importer = ODMImporter()
 importer.import_taxonomy_term_translations(githubutils,ckanapiutils)
-
-

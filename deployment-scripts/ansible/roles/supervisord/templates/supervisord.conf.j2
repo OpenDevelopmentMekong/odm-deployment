@@ -1,0 +1,27 @@
+[unix_http_server]
+file={{home_dir}}/tmp/supervisor.sock
+
+[supervisord]
+logfile={{home_dir}}/logs/user/cron/supervisord.log
+logfile_maxbytes=50MB
+logfile_backups=10
+loglevel=info
+pidfile={{home_dir}}/tmp/supervisord.pid
+
+[rpcinterface:supervisor]
+supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
+
+[supervisorctl]
+serverurl=unix://{{home_dir}}/tmp/supervisor.sock
+
+[program:tomcat]
+directory={{ tomcat_dir }}/bin
+command={{ tomcat_dir }}/bin/catalina.sh run
+environment=CATALINA_OPTS="-Xms64m -Xmx64m"
+
+[program:ckan]
+command={{home_dir}}/virtualenv_cmd.sh {{home_dir}}/.virtualenvs/ckan paster serve {{home_dir}}/etc/ckan/default/development.ini
+
+[program:datapusher]
+command={{home_dir}}/virtualenv_cmd.sh {{home_dir}}/.virtualenvs/ckan datapusher datapusher_settings.py
+directory={{home_dir}}/.virtualenvs/ckan/src/datapusher/deployment/

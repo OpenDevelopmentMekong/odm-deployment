@@ -1,0 +1,47 @@
+
+admin_username: admin
+admin_password: tomcat_test
+
+ansible_python_interpreter: python2.7
+
+ansible_ssh_user: vagrant
+
+pg_main: /etc/postgresql/9.3/main
+
+home_dir: /home/vagrant
+src_dir: "{{home_dir}}/src"
+virtual_envs: "{{ home_dir }}/.virtualenvs"
+
+tomcat_dir: "{{ home_dir }}/webapps/tomcat"
+tomcat_ip: 127.0.0.1
+tomcat_port: 22625
+
+solr_url: http://{{tomcat_ip}}:{{tomcat_port}}/solr
+solr_schema: "{{solr_url}}/schema"
+solr_conf: "{{ tomcat_dir }}/conf/Catalina/localhost"
+
+ckan_src: "{{src_dir}}/ckan"
+ckan_env: "{{virtual_envs}}/ckan"
+ckan_etc: "{{ home_dir }}/etc/ckan"
+ckan_ini: "{{ ckan_etc }}/default/development.ini"
+ckan_port: 8080
+ckan_url: http://192.168.33.10
+
+supervisor_bin: "{{ ckan_env }}/bin"
+
+datapusher_port: 8800
+datapusher_url: http://192.168.33.10
+
+wp_dir: "{{home_dir}}/webapps/wp"
+
+email_server: <smtp.webfaction.com>
+email_account: <notifications@ckan.lfa.webfactional.com>
+email_user: <user>
+email_password: <pass>
+
+googleanalytics_id: UA-10101010-1
+googleanalytics_account: <ODM Data Hub>
+googleanalytics_username: <email>
+googleanalytics_password: <pass>
+
+geoserver_url: <url>
