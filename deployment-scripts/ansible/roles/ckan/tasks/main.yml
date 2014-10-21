@@ -43,7 +43,7 @@
   ini_file: dest="{{ckan_ini}}"
               section=server:main
               option=host
-              value=127.0.0.1
+              value=0.0.0.0
 
 - ini_file: dest="{{ckan_ini}}"
               section=server:main
