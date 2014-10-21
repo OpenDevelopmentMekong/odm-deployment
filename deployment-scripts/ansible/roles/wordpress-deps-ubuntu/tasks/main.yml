@@ -1,31 +1,15 @@
 ---
-- name: Refresh ubuntu repo and install apache2
-  apt: name=apache2 update_cache=yes
+- name: Install required packages.
+  action: apt pkg={{ item }} state=present
   sudo: yes
-
-- name: Install libapache2
-  apt: name=libapache2-mod-wsgi state=present
-  sudo: yes
-
-- name: Install mysql-server-5.5
-  apt: name=mysql-server-5.5 state=present
-  sudo: yes
-
-- name: Install mysql-server
-  apt: name=mysql-server state=present
-  sudo: yes
-
-- name: Install php5
-  apt: name=php5 state=present
-  sudo: yes
-
-- name: Install php5-mysql
-  apt: name=php5-mysql state=present
-  sudo: yes
-
-- name: Install python-mysqldb
-  apt: name=python-mysqldb state=present
-  sudo: yes
+  with_items:
+    - apache2
+    - libapache2-mod-wsgi
+    - mysql-server-5.5
+    - mysql-server
+    - php5
+    - php5-mysql
+    - python-mysqldb
 
 - name: Create DB User
   mysql_user: name=odmadmin password=odmadmin priv=*.*:ALL state=present
