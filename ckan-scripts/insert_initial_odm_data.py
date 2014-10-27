@@ -67,6 +67,8 @@ try:
 	ckanapiutils.add_group('thailand_group','Thailand','Group for Thailand')
 	ckanapiutils.add_group('vietnam_group','Vietnam','Group for Vietnam')
 	ckanapiutils.add_group('myanmar_group','Myanmar','Group for Myanmar')
+	ckanapiutils.add_group('maps_group','Maps','Group for Maps')
+	ckanapiutils.add_group('library_group','Library','Group for Library')
 
 except ckan.logic.ValidationError:
 

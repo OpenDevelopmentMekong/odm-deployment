@@ -20,4 +20,4 @@ githubutils = github_utils.RealGithubApi()
 ckanapiutils = ckanapi_utils.RealCkanApi('<CKAN_URL_AND_PORT>','<CKAN_ADMIN_API_KEY>')
 
 importer = ODMImporter()
-importer.import_marc21_library_records(githubutils,ckanapiutils)
+importer.import_marc21_library_records(githubutils,ckanapiutils,"<ORGA_NAME>","<GROUP_NAME>")
