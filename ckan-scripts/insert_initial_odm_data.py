@@ -23,53 +23,53 @@ ckanapiutils = ckanapi_utils.RealCkanApi('<CKAN_URL_AND_PORT>','<CKAN_ADMIN_API_
 # Add Users
 try:
 
-	ckanapiutils.add_user('odmcambodia','cambodia@opendevelopmentmekong.net','Khcam#%Mkong','ODM Cambodia admin')
-	ckanapiutils.add_user('odmlaos','laos@opendevelopmentmekong.net','LoLa#%Mkong','ODM Laos admin')
-	ckanapiutils.add_user('odmthailand','thailand@opendevelopmentmekong.net','ThTH#%Mkong','ODM Thailand admin')
-	ckanapiutils.add_user('odmvietnam','vietnam@opendevelopmentmekong.net','Vivn#%Mkong','ODM Vietnam admin')
-	ckanapiutils.add_user('odmmyanmar','myanmar@opendevelopmentmekong.net','MMMy#%Mkong','ODM Myanmar admin')
+    ckanapiutils.add_user('odmcambodia','cambodia@opendevelopmentmekong.net','Khcam#%Mkong','ODM Cambodia admin')
+    ckanapiutils.add_user('odmlaos','laos@opendevelopmentmekong.net','LoLa#%Mkong','ODM Laos admin')
+    ckanapiutils.add_user('odmthailand','thailand@opendevelopmentmekong.net','ThTH#%Mkong','ODM Thailand admin')
+    ckanapiutils.add_user('odmvietnam','vietnam@opendevelopmentmekong.net','Vivn#%Mkong','ODM Vietnam admin')
+    ckanapiutils.add_user('odmmyanmar','myanmar@opendevelopmentmekong.net','MMMy#%Mkong','ODM Myanmar admin')
 
 except ckan.logic.ValidationError:
 
-	print 'Users already added'
+    print 'Users already added'
 
 # Add organizations
 try:
 
-	ckanapiutils.add_organization('cambodia_organization','ODM Cambodia','organization for Cambodia')
-	ckanapiutils.add_organization('laos_organization','ODM Laos','organization for Laos')
-	ckanapiutils.add_organization('thailand_organization','ODM Thailand','organization for Thailand')
-	ckanapiutils.add_organization('vietnam_organization','ODM Vietnam','organization for Vietnam')
-	ckanapiutils.add_organization('myanmar_organization','ODM Myanmar','organization for Myanmar')
+    ckanapiutils.add_organization('cambodia_organization','ODM Cambodia','organization for Cambodia')
+    ckanapiutils.add_organization('laos_organization','ODM Laos','organization for Laos')
+    ckanapiutils.add_organization('thailand_organization','ODM Thailand','organization for Thailand')
+    ckanapiutils.add_organization('vietnam_organization','ODM Vietnam','organization for Vietnam')
+    ckanapiutils.add_organization('myanmar_organization','ODM Myanmar','organization for Myanmar')
 
 except ckan.logic.ValidationError:
 
-	print 'Organizations already added'
+    print 'Organizations already added'
 
 # Add admins to organizations
 try:
 
-	ckanapiutils.add_admin_to_organization('cambodia_organization','odmcambodia','admin')
-	ckanapiutils.add_admin_to_organization('laos_organization','odmlaos','admin')
-	ckanapiutils.add_admin_to_organization('thailand_organization','odmthailand','admin')
-	ckanapiutils.add_admin_to_organization('vietnam_organization','odmvietnam','admin')
-	ckanapiutils.add_admin_to_organization('myanmar_organization','odmmyanmar','admin')
+    ckanapiutils.add_admin_to_organization('cambodia_organization','odmcambodia','admin')
+    ckanapiutils.add_admin_to_organization('laos_organization','odmlaos','admin')
+    ckanapiutils.add_admin_to_organization('thailand_organization','odmthailand','admin')
+    ckanapiutils.add_admin_to_organization('vietnam_organization','odmvietnam','admin')
+    ckanapiutils.add_admin_to_organization('myanmar_organization','odmmyanmar','admin')
 
 except ckan.logic.ValidationError:
 
-	print 'Users already admined'
+    print 'Users already admined'
 
 # Add groups
 try:
 
-	ckanapiutils.add_group('cambodia_group','Cambodia','Group for Cambodia')
-	ckanapiutils.add_group('laos_group','Laos','Group for Laos')
-	ckanapiutils.add_group('thailand_group','Thailand','Group for Thailand')
-	ckanapiutils.add_group('vietnam_group','Vietnam','Group for Vietnam')
-	ckanapiutils.add_group('myanmar_group','Myanmar','Group for Myanmar')
-	ckanapiutils.add_group('maps_group','Maps','Group for Maps')
-	ckanapiutils.add_group('library_group','Library','Group for Library')
+    ckanapiutils.add_group('cambodia_group','Cambodia','Group for Cambodia')
+    ckanapiutils.add_group('laos_group','Laos','Group for Laos')
+    ckanapiutils.add_group('thailand_group','Thailand','Group for Thailand')
+    ckanapiutils.add_group('vietnam_group','Vietnam','Group for Vietnam')
+    ckanapiutils.add_group('myanmar_group','Myanmar','Group for Myanmar')
+    ckanapiutils.add_group('maps_group','Maps','Group for Maps')
+    ckanapiutils.add_group('library_group','Library','Group for Library')
 
 except ckan.logic.ValidationError:
 
-	print 'Groups already added'
+    print 'Groups already added'
