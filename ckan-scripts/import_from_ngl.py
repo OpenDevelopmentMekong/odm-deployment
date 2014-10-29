@@ -14,10 +14,12 @@ sys.path.append('<PATH_TO_ODM_UTILS_PLUGIN>/ckanext/odm_utils/utils')
 import github_utils
 import ckanapi_utils
 import github_utils
+import ngl_utils
 from odm_importer import ODMImporter
 
 githubutils = github_utils.RealGithubApi()
 ckanapiutils = ckanapi_utils.RealCkanApi('<CKAN_URL_AND_PORT>','<CKAN_ADMIN_API_KEY>')
+nglutils = ngl_utils.RealNGLApi('<NGL_URL>')
 
 importer = ODMImporter()
-importer.import_marc21_library_records(githubutils,ckanapiutils,"<ORGA_NAME>","<GROUP_NAME>")
+importer.import_marc21_library_records(githubutils,ckanapiutils,nglutils,"<ORGA_NAME>","<GROUP_NAME>")
