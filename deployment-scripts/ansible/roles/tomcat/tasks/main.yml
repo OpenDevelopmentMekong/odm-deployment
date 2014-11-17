@@ -8,7 +8,7 @@
   file: path="{{tomcat_dir}}" state=directory
 
 - name: Download Tomcat
-  get_url: url=http://www.us.apache.org/dist/tomcat/tomcat-7/v7.0.56/bin/apache-tomcat-7.0.56.tar.gz dest="{{ src_dir }}/apache-tomcat-7.0.56.tar.gz" sha256sum=c0ca44be20bccebbb043ccd7ab5ea4d94060fdde6bb84812f3da363955dae5bb
+  get_url: url=http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.56/bin/apache-tomcat-7.0.56.tar.gz dest="{{ src_dir }}/apache-tomcat-7.0.56.tar.gz" sha256sum=c0ca44be20bccebbb043ccd7ab5ea4d94060fdde6bb84812f3da363955dae5bb
 
 - name: Extract archive
   shell: tar -xzvf {{ src_dir }}/apache-tomcat-7.0.56.tar.gz --strip-components=1 chdir="{{ tomcat_dir }}"
