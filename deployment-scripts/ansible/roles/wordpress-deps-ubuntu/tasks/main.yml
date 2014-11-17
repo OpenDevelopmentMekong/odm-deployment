@@ -9,6 +9,7 @@
     - mysql-server
     - php5
     - php5-mysql
+    - php5-curl
     - python-mysqldb
 
 - name: Create DB User
