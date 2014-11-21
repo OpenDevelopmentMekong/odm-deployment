@@ -12,16 +12,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "ubuntu/trusty64"
 
+  config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'" # avoids 'stdin: is not a tty' error.
+
   # provisioning
   # config.vm.provision :shell, path: "bootstrap.sh"
   # config.vm.provision :shell, path: "wordpress.sh"
 
-  config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "../ansible/site-vagrant.yml"
-    ansible.inventory_path= "../ansible/stage"
-    ansible.extra_vars = { ansible_ssh_user: 'vagrant' }
-    # ansible.verbose = "vvv"
-  end
+
+  config.vm.provision :shell, path: "bootstrap.sh"
+  config.vm.synced_folder ".", "/vagrant", mount_options: ['dmode=777','fmode=666']
 
   config.vm.provider "virtualbox" do |v|
     v.memory = 1024

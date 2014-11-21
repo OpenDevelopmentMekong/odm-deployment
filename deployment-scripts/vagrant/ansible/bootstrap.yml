@@ -1,0 +1,20 @@
+---
+# This playbook installs git and checks out the PoC repo
+# If files need to be copied from the host instead of cloning
+# from a public repo, this is where to place that step.
+# The operation should be limited to copying only if at all possible
+# to prevent the Windows/Linux issues noted in the README
+
+- name: Download the vagrant-bootstrap repo
+  hosts: local
+
+  tasks:
+  - name: Install git
+    apt: name=git state=present
+
+  - name: Checkout the bootstrap project
+    git: repo=git://github.com/scorpionresponse/vagrant-bootstrap.git
+         dest=/home/vagrant/vagrant-bootstrap
+         accept_hostkey=True
+    sudo: yes
+    sudo_user: vagrant
