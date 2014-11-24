@@ -11,7 +11,6 @@ apt-get update
 apt-get install -y ansible
 # Run playbook to provision up VM
 # This just installs git and checks out this repo
-ansible-playbook /vagrant/ansible/bootstrap.yml -i /vagrant/ansible/hosts --connection=local
+sudo ansible-playbook /vagrant/ansible/bootstrap.yml -i /vagrant/ansible/stage --connection=local
 # Run Noop for a Proof of concept
-cd vagrant-bootstrap
-ansible-playbook ansible/site-vagrant.yml -i ansible/hosts --connection=local
+ansible-playbook /vagrant/ansible/site-vagrant.yml -i /vagrant/ansible/stage --connection=local

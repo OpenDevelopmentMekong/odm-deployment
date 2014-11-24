@@ -6,7 +6,7 @@
 # to prevent the Windows/Linux issues noted in the README
 
 - name: Download the vagrant-bootstrap repo
-  hosts: local
+  hosts: localhost
 
   tasks:
   - name: Install git
@@ -17,4 +17,4 @@
          dest=/home/vagrant/vagrant-bootstrap
          accept_hostkey=True
     sudo: yes
-    sudo_user: vagrant
+#    sudo_user: vagrant
