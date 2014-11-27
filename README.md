@@ -3,34 +3,24 @@ scripting
 
 Repository to host utility scripts to add/migrate/update data in the different modules.
 
+## Installation
+
+http://wiki.opendevelopmentmekong.net/setting_up_test_development_environment
+
+## Inventory
+
 ### Scripts to insert/import data into CKAN
 * ckan-scripts/import_from_geoserver.py
+* ckan-scripts/import_from_ngl.py
 * ckan-scripts/import_taxonomy_tag_dictionaries.py
 * ckan-scripts/import_taxonomy_term_translations.py
 * ckan-scripts/insert_initial_odm_data.py
 
-## Ansible playbooks, roles and templates
-* deployment-scripts/ansible/group_vars
-* deployment-scripts/ansible/roles
-* deployment-scripts/ansible/...
+### Ansible playbooks, roles and templates
+* deployment-scripts/vagrant/ansible/group_vars
+* deployment-scripts/vagrant/ansible/roles
+* deployment-scripts/vagrant/ansible/...
 
-### Config files for ckan deployment (Vagrant)
-* deployment-scripts/ckan_deployment/apache/apache.wsgi
-* deployment-scripts/ckan_deployment/apache/ckan_default
-* deployment-scripts/ckan_deployment/apache/ports.conf
-* deployment-scripts/ckan_deployment/jetty/jetty
-* deployment-scripts/ckan_deployment/nginx/ckan_default
-* deployment-scripts/ckan_deployment/postgresql/pg_hba.conf
-* deployment-scripts/ckan_deployment/development.ini
-* deployment-scripts/ckan_deployment/production.ini
+## License
 
-## Config files for wp deployment (Vagrant)
-* deployment-scripts/wp_deployment/apache/wp
-* deployment-scripts/wp_deployment/nginx/wp
-* deployment-scripts/wp_deployment/wp-config.php
-
-### Vagrantfile & bootstrap for setting up the development environment automatically
-* deployment-scripts/vagrant/Vagrantfile
-* deployment-scripts/vagrant/bootstrap.sh
-* deployment-scripts/vagrant/wordpress.sh
-* deployment-scripts/vagrant/config.cfg.sample
+TBD
