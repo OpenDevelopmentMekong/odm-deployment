@@ -3,10 +3,6 @@ scripting
 
 Repository to host utility scripts to add/migrate/update data in the different modules.
 
-## Installation
-
-http://wiki.opendevelopmentmekong.net/setting_up_test_development_environment
-
 ## Inventory
 
 ### Scripts to insert/import data into CKAN
@@ -16,10 +12,16 @@ http://wiki.opendevelopmentmekong.net/setting_up_test_development_environment
 * ckan-scripts/import_taxonomy_term_translations.py
 * ckan-scripts/insert_initial_odm_data.py
 
-### Ansible playbooks, roles and templates
-* deployment-scripts/vagrant/ansible/group_vars
-* deployment-scripts/vagrant/ansible/roles
-* deployment-scripts/vagrant/ansible/...
+### Ansible provisioning for Vagrant, Webfaction or other Servers
+* deployment/bootstrap.sh
+* deployment/Vagrantfile
+* deployment/ansible/group_vars
+* deployment/ansible/roles
+* deployment/ansible/...
+
+## Installation
+
+http://wiki.opendevelopmentmekong.net/setting_up_test_development_environment
 
 ## License
 
