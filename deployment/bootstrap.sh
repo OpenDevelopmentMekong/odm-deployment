@@ -12,7 +12,7 @@ sudo easy_install pip
 sudo pip install paramiko PyYAML Jinja2 httplib2
 
 # Clone mishari's patched version of ansible
-git clone -b fix-synchronize-local https://github.com/mishari/ansible.git --recursive
+git clone -b release1.8.1_sync_fix https://github.com/mishari/ansible.git --recursive
 cd ./ansible
 source ./hacking/env-setup
 
