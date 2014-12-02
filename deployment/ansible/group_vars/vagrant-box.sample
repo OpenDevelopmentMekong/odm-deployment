@@ -14,7 +14,7 @@ virtual_envs: "{{ home_dir }}/.virtualenvs"
 
 tomcat_dir: "{{ home_dir }}/webapps/tomcat"
 tomcat_ip: 127.0.0.1
-tomcat_port: 22625
+tomcat_port: 8080
 
 solr_url: http://{{tomcat_ip}}:{{tomcat_port}}/solr
 solr_schema: "{{solr_url}}/schema"
@@ -24,7 +24,7 @@ ckan_src: "{{src_dir}}/ckan"
 ckan_env: "{{virtual_envs}}/ckan"
 ckan_etc: "{{ home_dir }}/etc/ckan"
 ckan_ini: "{{ ckan_etc }}/default/development.ini"
-ckan_port: 8080
+ckan_port: 8081
 ckan_url: http://192.168.33.10
 
 supervisor_bin: "{{ ckan_env }}/bin"
