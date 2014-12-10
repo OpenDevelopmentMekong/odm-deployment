@@ -5,10 +5,10 @@
 - name: Ensure that ckan_src is there
   file: path="{{ckan_src}}" state=directory
 
-- name: Checkout CKAN 2.2 from git
-  git: repo=https://github.com/ckan/ckan.git
+- name: Checkout CKAN 2.2 (ODM fork) from git
+  git: repo=https://github.com/OpenDevelopmentMekong/ckan.git
          dest="{{ckan_src}}"
-         version=ckan-2.2
+         version=ckan-2.2_lang_ext
 
 - name: Download patch for CKAN
   get_url: url=https://github.com/ckan/ckan/commit/fa60dc947eb6db612218d8d89affec7d6df3b096.patch dest="{{src_dir}}/ckan_fix.patch"
