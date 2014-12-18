@@ -41,5 +41,3 @@ googleanalytics_id: UA-10101010-1
 googleanalytics_account: <ODM Data Hub>
 googleanalytics_username: <email>
 googleanalytics_password: <pass>
-
-geoserver_url: http://64.91.228.155:8181
