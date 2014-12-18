@@ -23,6 +23,10 @@ Repository to host utility scripts to add/migrate/update data in the different m
 
 http://wiki.opendevelopmentmekong.net/setting_up_test_development_environment
 
-## License
+# Copyright and License
 
-TBD
+This material is copyright (c) 2014-2015 East-West Management Institute, Inc. (EWMI).
+
+It is open and licensed under the GNU General Public License (GPL) v3.0 whose full text may be found at:
+
+http://www.fsf.org/licensing/licenses/gpl-3.0.html
