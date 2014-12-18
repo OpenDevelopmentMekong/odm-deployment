@@ -16,4 +16,4 @@
          recursive=yes
 
 - name: Remove index.html
- file: path="{{wp_dir}}/index.html" state=absent
+  file: path="{{wp_dir}}/index.html" state=absent
