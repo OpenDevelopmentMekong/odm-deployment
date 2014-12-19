@@ -5,19 +5,12 @@ Repository to host utility scripts to add/migrate/update data in the different m
 
 ## Inventory
 
-### Scripts to insert/import data into CKAN
-* ckan-scripts/import_from_geoserver.py
-* ckan-scripts/import_from_ngl.py
-* ckan-scripts/import_taxonomy_tag_dictionaries.py
-* ckan-scripts/import_taxonomy_term_translations.py
-* ckan-scripts/insert_initial_odm_data.py
-
 ### Ansible provisioning for Vagrant, Webfaction or other Servers
-* deployment/bootstrap.sh
-* deployment/Vagrantfile
-* deployment/ansible/group_vars
-* deployment/ansible/roles
-* deployment/ansible/...
+* bootstrap.sh
+* Vagrantfile
+* ansible/group_vars
+* ansible/roles
+* ansible/...
 
 ## Installation
 
