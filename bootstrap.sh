@@ -9,7 +9,7 @@ sudo apt-get update
 sudo apt-get install -y git-core
 sudo apt-get install -y python-setuptools
 sudo easy_install pip
-sudo pip install paramiko PyYAML Jinja2 httplib2
+sudo pip install paramiko PyYAML jinja2 httplib2
 
 # Clone mishari's patched version of ansible
 git clone -b release1.8.1_sync_fix https://github.com/mishari/ansible.git --recursive
