@@ -33,9 +33,9 @@
   <user username="both" password="tomcat" roles="tomcat,role1"/>
   <user username="role1" password="tomcat" roles="role1"/>
 -->
-	<role rolename="manager-gui"/>
-	<role rolename="manager-script"/>
-	<role rolename="manager-jmx"/>
-	<role rolename="manager-status"/>
-	<user username="admin" password="tomcat_test" roles="manager-gui,manager-script,manager-jmx,manager-status"/>
+  <role rolename="manager-gui"/>
+  <role rolename="manager-script"/>
+  <role rolename="manager-jmx"/>
+  <role rolename="manager-status"/>
+  <user username="{{tomcat_admin_user}}" password="{{tomcat_admin_password}}" roles="manager-gui,manager-script,manager-jmx,manager-status"/>
 </tomcat-users>

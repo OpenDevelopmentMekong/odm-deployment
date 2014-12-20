@@ -1,0 +1,9 @@
+---
+- hosts: webfaction-servers
+  roles:
+  - common-webfaction
+  - supervisord
+  - tomcat
+  - solr
+  - ckan
+  - wordpress

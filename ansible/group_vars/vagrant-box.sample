@@ -1,9 +1,7 @@
-
-admin_username: admin
-admin_password: tomcat_test
+tomcat_admin_user: TOMCAT_ADMIN
+tomcat_admin_password: TOMCAT_ADMIN_PASS
 
 ansible_python_interpreter: python2.7
-
 ansible_ssh_user: vagrant
 
 pg_main: /etc/postgresql/9.3/main
@@ -29,19 +27,17 @@ ckan_url: http://192.168.33.10
 
 supervisor_bin: "{{ ckan_env }}/bin"
 
-datapusher_port: 8800
+datapusher_port: DATAPUSHER_PORT
 datapusher_url: http://192.168.33.10
 
 wp_dir: "{{home_dir}}/webapps/wp"
 
-email_server: <smtp.webfaction.com>
-email_account: <notifications@ckan.lfa.webfactional.com>
-email_user: <user>
-email_password: <pass>
+email_server: SMTP_URL
+email_account: ACCOUNT
+email_user: USER
+email_password: PASS
 
 googleanalytics_id: UA-10101010-1
-googleanalytics_account: <ODM Data Hub>
-googleanalytics_username: <email>
-googleanalytics_password: <pass>
-
-geoserver_url: <url>
+googleanalytics_account: ACCOUNT
+googleanalytics_username: USER
+googleanalytics_password: PASS

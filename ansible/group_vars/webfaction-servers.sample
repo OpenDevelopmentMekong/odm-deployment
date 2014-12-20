@@ -1,10 +1,8 @@
-
-admin_username: <tomcat_admin>
-admin_password: <tomcat_admin_pass>
+tomcat_admin_user: TOMCAT_ADMIN
+tomcat_admin_password: TOMCAT_ADMIN_PASS
 
 ansible_python_interpreter: python2.7
-
-ansible_ssh_user: <ssh_user>
+ansible_ssh_user: SSH_USER
 
 home_dir: /home/lfa
 src_dir: "{{ home_dir }}/src"
@@ -12,7 +10,7 @@ virtual_envs: "{{ home_dir }}/.virtualenvs"
 
 tomcat_dir: "{{ home_dir }}/webapps/ckan_tomcat"
 tomcat_ip: 127.0.0.1
-tomcat_port: <tomcat_port>
+tomcat_port: TOMCAT_PORT
 
 solr_url: http://{{tomcat_ip}}:{{tomcat_port}}/solr
 solr_schema: "{{solr_url}}/schema"
@@ -22,22 +20,22 @@ ckan_src: "{{src_dir}}/ckan"
 ckan_env: "{{virtual_envs}}/ckan"
 ckan_etc: "{{ home_dir }}/etc/ckan"
 ckan_ini: "{{ ckan_etc }}/default/development.ini"
-ckan_port: <ckan_port>
-ckan_url: <http://ckan.lfa.webfactional.com>
+ckan_port: CKAN_PORT
+ckan_url: CKAN_URL
 
-supervisor_bin: "{{ home_dir }}/bin"
+supervisor_bin: "{{ ckan_env }}/bin"
 
-datapusher_port: 8800
+datapusher_port: DATAPUSHER_PORT
 datapusher_url: 0.0.0.0
 
 wp_dir: "{{home_dir}}/webapps/wp"
 
-email_server: <smtp.webfaction.com>
-email_account: <notifications@ckan.lfa.webfactional.com>
-email_user: <user>
-email_password: <pass>
+email_server: SMTP_URL
+email_account: ACCOUNT
+email_user: USER
+email_password: PASS
 
 googleanalytics_id: UA-10101010-1
-googleanalytics_account: <ODM Data Hub>
-googleanalytics_username: <email>
-googleanalytics_password: <pass>
+googleanalytics_account: ACCOUNT
+googleanalytics_username: USER
+googleanalytics_password: PASS

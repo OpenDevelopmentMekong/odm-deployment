@@ -2,6 +2,7 @@
 **/group_vars/vagrant-box
 **/stage
 
+.remote-sync.json
 .vagrant
 
 #OSX Gitignore

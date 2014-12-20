@@ -180,7 +180,7 @@
   cron: name="Schedule email notifications" special_time="hourly" job="source {{ckan_env}}/bin/activate && echo '{}' | paster --plugin=ckan post -c {{ckan_ini}} /api/action/send_email_notifications > /dev/null" state="present"
 
 - name: Link who.ini
-  file: src="{{ckan_env}}/lib/python2.7/site-packages/ckan/config/who.ini" dest="{{ ckan_etc }}/default/who.ini" state=link
+  file: src="{{ckan_env}}/lib/{{ansible_python_interpreter}}/site-packages/ckan/config/who.ini" dest="{{ ckan_etc }}/default/who.ini" state=link
 
 - name: Install CKAN Api
   pip: name="git+https://github.com/ckan/ckanapi.git@ckanapi-3.3#egg=ckanapi" virtualenv="{{virtual_envs}}/ckan"
