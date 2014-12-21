@@ -9,3 +9,5 @@
   - ckan
   - wordpress-deps-ubuntu
   - wordpress
+  vars:
+    postgresql_enable_legacy_mode: true

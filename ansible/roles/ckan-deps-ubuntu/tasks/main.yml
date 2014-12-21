@@ -55,11 +55,12 @@
 - name: Setup databases and users (ckan_default)
   postgresql_db: name=ckan_default owner=ckan_default encoding='UTF-8' state=present
 
-# - name: Setup database users (datastore_default)
-#   postgresql_user: name=datastore_default password=ckan_test1 db=datastore_default role_attr_flags=NOSUPERUSER
-
 - name: Setup databases and users (datastore_default)
   postgresql_db: name=datastore_default owner=ckan_default encoding='UTF-8' state=present
+
+- name: Setup database users (datastore_default)
+  postgresql_user: name=datastore_default password=ckan_test1 db=datastore_default role_attr_flags=NOSUPERUSER
+  when: not postgresql_enable_legacy_mode
 
 - name: Setup databases and users (ckan_test)
   postgresql_db: name=ckan_test owner=ckan_default encoding='UTF-8' state=present
