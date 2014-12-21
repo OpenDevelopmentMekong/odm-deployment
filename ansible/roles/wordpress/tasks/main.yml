@@ -15,5 +15,12 @@
          force=yes
          recursive=yes
 
+- name: Clone mqtranslate plugin
+  git: repo=https://github.com/OpenDevelopmentMekong/mqtranslate.git
+         dest="{{wp_dir}}/wp-content/plugins/mqtranslate"
+         version=2.9
+         force=yes
+         recursive=yes
+
 - name: Remove index.html
   file: path="{{wp_dir}}/index.html" state=absent
