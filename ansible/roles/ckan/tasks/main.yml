@@ -203,6 +203,9 @@
 - name: Install ckanext-odm_utils extension dependencies
   pip: requirements="{{ ckan_env }}/src/ckanext-odm_utils/requirements.txt" virtualenv="{{virtual_envs}}/ckan"
 
+- name: Install ckanext-odm_utils extension dependencies (development)
+  pip: requirements="{{ ckan_env }}/src/ckanext-odm_utils/dev-requirements.txt" virtualenv="{{virtual_envs}}/ckan"
+
 - name: Install ckanext-odm_theme
   file: path="{{ ckan_env }}/src/ckanext-odm_theme" state=directory
 
