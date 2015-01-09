@@ -33,6 +33,7 @@
     - openjdk-6-jdk
     - python-psycopg2
     - apache2
+    - libgeos-dev
 
 - name: Create virtualenv
   shell: virtualenv --no-site-packages {{virtual_envs}}/ckan

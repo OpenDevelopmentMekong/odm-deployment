@@ -11,7 +11,7 @@
 - name: Clone wpckan plugin
   git: repo=https://github.com/OpenDevelopmentMekong/wpckan.git
          dest="{{wp_dir}}/wp-content/plugins/wpckan"
-         version=0.9
+         version=wpckan-0.9.1
          force=yes
          recursive=yes
 
