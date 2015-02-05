@@ -8,7 +8,7 @@
 - name: Checkout CKAN 2.2.1 (ODM fork) from git
   git: repo=https://github.com/OpenDevelopmentMekong/ckan.git
          dest="{{ckan_src}}"
-         version=ckan-2.2.1_lang_ext
+         version=master
 
 - name: install pip
   easy_install: name=pip executable=easy_install-2.7
