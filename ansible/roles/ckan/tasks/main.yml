@@ -5,7 +5,7 @@
 - name: Ensure that ckan_src is there
   file: path="{{ckan_src}}" state=directory
 
-- name: Checkout CKAN 2.2.1 (ODM fork) from git
+- name: Checkout CKAN (ODM fork) from git
   git: repo=https://github.com/OpenDevelopmentMekong/ckan.git
          dest="{{ckan_src}}"
          version=master
