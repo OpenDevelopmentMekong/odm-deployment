@@ -22,6 +22,7 @@ ckan_etc: "{{ home_dir }}/etc/ckan"
 ckan_ini: "{{ ckan_etc }}/default/development.ini"
 ckan_port: CKAN_PORT
 ckan_url: CKAN_URL
+ckan_licenses_url: URL_TO_LICENSES_JSON
 
 supervisor_bin: "{{ ckan_env }}/bin"
 
