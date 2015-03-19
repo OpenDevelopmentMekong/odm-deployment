@@ -11,6 +11,7 @@
     - php5-mysql
     - php5-curl
     - python-mysqldb
+    - git-core
 
 - name: Create DB User
   mysql_user: name=odmadmin password=odmadmin priv=*.*:ALL state=present
