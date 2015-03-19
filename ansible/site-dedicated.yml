@@ -1,0 +1,6 @@
+---
+- hosts: dedicated-server
+  roles:
+  - common-ubuntu
+  - wordpress-deps-ubuntu
+  - wordpress
