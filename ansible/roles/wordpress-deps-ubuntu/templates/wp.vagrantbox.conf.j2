@@ -1,10 +1,10 @@
 <VirtualHost *:80>
 
-  DocumentRoot /home/vagrant/webapps/wp
+  DocumentRoot {{wp_dir}}
   ErrorLog /var/log/apache2/wp.vagrantbox-error.log
   CustomLog /var/log/apache2/wp.vagrantbox-access.log combined
 
-  <Directory /home/vagrant/webapps/wp>
+  <Directory {{wp_dir}}>
     Options FollowSymLinks
     AllowOverride FileInfo
     Require all granted
