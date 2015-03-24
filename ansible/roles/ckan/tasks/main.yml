@@ -84,7 +84,7 @@
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
               option=ckan.plugins
-              value="stats text_preview recline_preview pdf_preview datastore datapusher resource_proxy multilingual_dataset multilingual_group multilingual_tag odm_theme odm_utils pages googleanalytics geojson_preview wms_preview"
+              value="stats text_preview recline_preview pdf_preview datastore datapusher resource_proxy multilingual_dataset multilingual_group multilingual_tag odm_theme pages googleanalytics geojson_preview wms_preview"
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
@@ -195,31 +195,22 @@
   args:
     chdir: "{{virtual_envs}}/ckan/src/ckanapi"
 
-- name: Install ckanext-odm_utils
-  file: path="{{ ckan_env }}/src/ckanext-odm_utils" state=directory
-
-- git: repo=https://github.com/OpenDevelopmentMekong/ckanext-odm_utils.git
-        dest="{{ ckan_env }}/src/ckanext-odm_utils"
-
-- shell: source {{ckan_env}}/bin/activate && python setup.py develop executable=/bin/bash
-  args:
-    chdir: "{{ ckan_env }}/src/ckanext-odm_utils"
-
-- name: Install ckanext-odm_utils extension dependencies
-  pip: requirements="{{ ckan_env }}/src/ckanext-odm_utils/requirements.txt" virtualenv="{{virtual_envs}}/ckan"
-
-- name: Install ckanext-odm_utils extension dependencies (development)
-  pip: requirements="{{ ckan_env }}/src/ckanext-odm_utils/dev-requirements.txt" virtualenv="{{virtual_envs}}/ckan"
-
 - name: Install ckanext-odm_theme
   file: path="{{ ckan_env }}/src/ckanext-odm_theme" state=directory
 
 - git: repo=https://github.com/OpenDevelopmentMekong/ckanext-odm_theme.git
         dest="{{ ckan_env }}/src/ckanext-odm_theme"
+        version=master
 
 - shell: source {{ckan_env}}/bin/activate && python setup.py develop executable=/bin/bash
   args:
     chdir: "{{ ckan_env }}/src/ckanext-odm_theme"
+
+- name: Install ckanext-odm_theme extension dependencies
+  pip: requirements="{{ ckan_env }}/src/ckanext-odm_theme/requirements.txt" virtualenv="{{virtual_envs}}/ckan"
+
+- name: Install ckanext-odm_theme extension dependencies (development)
+  pip: requirements="{{ ckan_env }}/src/ckanext-odm_theme/dev-requirements.txt" virtualenv="{{virtual_envs}}/ckan"
 
 - name: Install Datapusher extension
   git: repo=https://github.com/ckan/datapusher.git version=stable
