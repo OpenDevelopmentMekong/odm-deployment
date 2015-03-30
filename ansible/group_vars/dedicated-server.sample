@@ -25,6 +25,7 @@ ckan_ini: "{{ ckan_etc }}/default/development.ini"
 ckan_port: 8081
 ckan_url: http://data.opendevelopmentmekong.net
 ckan_licenses_url: http://192.168.33.10:8081/licenses.json
+ckan_favicon_url: http://192.168.33.10:8081/favicon.ico
 
 supervisor_bin: "{{ ckan_env }}/bin"
 

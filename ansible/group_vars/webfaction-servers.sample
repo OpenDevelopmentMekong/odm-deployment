@@ -23,6 +23,7 @@ ckan_ini: "{{ ckan_etc }}/default/development.ini"
 ckan_port: CKAN_PORT
 ckan_url: CKAN_URL
 ckan_licenses_url: URL_TO_LICENSES_JSON
+ckan_favicon_url: http://192.168.33.10:8081/favicon.ico
 
 supervisor_bin: "{{ ckan_env }}/bin"
 

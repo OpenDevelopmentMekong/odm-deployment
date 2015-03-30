@@ -1,5 +1,6 @@
 **/group_vars/webfaction-servers
 **/group_vars/vagrant-box
+**/group_vars/dedicated-server
 **/stage
 
 .remote-sync.json
