@@ -186,6 +186,11 @@
               option=ckan.favicon
               value="{{ckan_favicon_url}}"
 
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=ckan.resource_proxy.max_file_size
+              value="50 * 1024 * 1024"
+
 - name: Create cron job for sending out email notifications
   cron: name="Schedule email notifications" special_time="hourly" job="source {{ckan_env}}/bin/activate && echo '{}' | paster --plugin=ckan post -c {{ckan_ini}} /api/action/send_email_notifications > /dev/null" state="present"
 
