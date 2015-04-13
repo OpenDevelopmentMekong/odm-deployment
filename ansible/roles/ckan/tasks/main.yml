@@ -84,7 +84,7 @@
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
               option=ckan.plugins
-              value="stats text_preview recline_preview pdf_view datastore datapusher resource_proxy multilingual_dataset multilingual_group multilingual_tag odm_theme googleanalytics geojson_preview wms_preview"
+              value="stats text_view recline_view pdf_view datastore datapusher resource_proxy multilingual_dataset multilingual_group multilingual_tag odm_theme googleanalytics geojson_view wms_view"
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
