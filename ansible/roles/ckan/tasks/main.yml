@@ -84,7 +84,7 @@
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
               option=ckan.plugins
-              value="stats text_preview recline_preview pdf_preview datastore datapusher resource_proxy multilingual_dataset multilingual_group multilingual_tag odm_theme pages googleanalytics geojson_preview wms_preview"
+              value="stats text_preview recline_preview pdf_view datastore datapusher resource_proxy multilingual_dataset multilingual_group multilingual_tag odm_theme googleanalytics geojson_preview wms_preview"
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
@@ -239,12 +239,16 @@
 - name: Copy datapusher_settings.py Template over
   template: src=datapusher_settings.py dest={{ckan_env}}/src/datapusher/deployment/datapusher_settings.py
 
-- name: Install pages extension
-  pip: name="git+https://github.com/ckan/ckanext-pages.git#egg=ckanext-pages" virtualenv="{{virtual_envs}}/ckan"
+- name: Install pdfview extension
+  file: path="{{ ckan_env }}/src/ckanext-pdfview" state=directory
+
+- git: repo=https://github.com/ckan/ckanext-pdfview.git
+        dest="{{ ckan_env }}/src/ckanext-pdfview"
+        version=master
 
 - shell: source {{ckan_env}}/bin/activate && python setup.py develop executable=/bin/bash
   args:
-    chdir: "{{ ckan_env }}/src/ckanext-pages"
+    chdir: "{{ ckan_env }}/src/ckanext-pdfview"
 
 - name: Install ckanext-spatial extension (Just for Preview for spatial formats)
   pip: name="git+https://github.com/okfn/ckanext-spatial.git@stable#egg=ckanext-spatial" virtualenv="{{virtual_envs}}/ckan"
