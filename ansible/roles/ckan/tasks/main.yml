@@ -6,7 +6,7 @@
   file: path="{{ckan_src}}" state=directory
 
 - name: Checkout CKAN (ODM fork) from git
-  git: repo=https://github.com/OpenDevelopmentMekong/ckan.git
+  git: repo=https://github.com/OpenDevelopmentMekong/ckan-2.3.git
          dest="{{ckan_src}}"
          version=master
 
@@ -84,7 +84,12 @@
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
               option=ckan.plugins
-              value="stats text_preview recline_preview pdf_preview datastore datapusher resource_proxy multilingual_dataset multilingual_group multilingual_tag odm_theme googleanalytics geojson_preview wms_preview"
+              value="stats image_view text_view webpage_view recline_view recline_grid_view recline_graph_view recline_map_view pdf_view datastore datapusher resource_proxy multilingual_dataset multilingual_group multilingual_tag odm_theme geojson_view wms_view googleanalytics"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=ckan.views.default_views
+              value="image_view text_view webpage_view recline_view recline_grid_view recline_graph_view recline_map_view pdf_view geojson_view wms_view"
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
@@ -189,7 +194,7 @@
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
               option=ckan.resource_proxy.max_file_size
-              value="50 * 1024 * 1024"
+              value="52428800"
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
@@ -238,6 +243,17 @@
 
 - name: Copy datapusher_settings.py Template over
   template: src=datapusher_settings.py dest={{ckan_env}}/src/datapusher/deployment/datapusher_settings.py
+
+- name: Install pdfview extension
+  file: path="{{ ckan_env }}/src/ckanext-pdfview" state=directory
+
+- git: repo=https://github.com/ckan/ckanext-pdfview.git
+        dest="{{ ckan_env }}/src/ckanext-pdfview"
+        version=master
+
+- shell: source {{ckan_env}}/bin/activate && python setup.py develop executable=/bin/bash
+  args:
+    chdir: "{{ ckan_env }}/src/ckanext-pdfview"
 
 - name: Install ckanext-spatial extension (Just for Preview for spatial formats)
   pip: name="git+https://github.com/okfn/ckanext-spatial.git@stable#egg=ckanext-spatial" virtualenv="{{virtual_envs}}/ckan"

@@ -15,7 +15,6 @@ tomcat_ip: 127.0.0.1
 tomcat_port: 8080
 
 solr_url: http://{{tomcat_ip}}:{{tomcat_port}}/solr
-solr_schema: "{{solr_url}}/schema"
 solr_conf: "{{ tomcat_dir }}/conf/Catalina/localhost"
 
 ckan_src: "{{src_dir}}/ckan"
