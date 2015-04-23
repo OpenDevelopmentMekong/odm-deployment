@@ -101,7 +101,7 @@
               option=ckan.auth.anon_create_dataset
               value="false"
 
-- ini_file: dest="{{ckan_ini}}"hy
+- ini_file: dest="{{ckan_ini}}"
               section=app:main
               option=ckan.auth.create_unowned_dataset
               value="false"
