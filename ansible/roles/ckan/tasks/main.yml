@@ -84,7 +84,7 @@
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
               option=ckan.plugins
-              value="stats image_view text_view webpage_view recline_view recline_grid_view recline_graph_view recline_map_view pdf_view datastore datapusher resource_proxy multilingual_dataset multilingual_group multilingual_tag odm_theme geojson_view wms_view googleanalytics"
+              value="stats image_view text_view webpage_view recline_view recline_grid_view recline_graph_view recline_map_view pdf_view datastore datapusher resource_proxy odm_theme geojson_view wms_view googleanalytics"
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
@@ -101,7 +101,7 @@
               option=ckan.auth.anon_create_dataset
               value="false"
 
-- ini_file: dest="{{ckan_ini}}"
+- ini_file: dest="{{ckan_ini}}"hy
               section=app:main
               option=ckan.auth.create_unowned_dataset
               value="false"
