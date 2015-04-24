@@ -201,6 +201,16 @@
               option=ckan.max_resource_size
               value="50"
 
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=ckan.cors.origin_allow_all
+              value="False"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=ckan.cors.origin_whitelist
+              value="http://opendevelopmentmekong.net http://cambodia.opendevelopmentmekong.net http://vietnam.opendevelopmentmekong.net http://laos.opendevelopmentmekong.net http://myanmar.opendevelopmentmekong.net http://thailand.opendevelopmentmekong.net/"                        
+
 - name: Create cron job for sending out email notifications
   cron: name="Schedule email notifications" special_time="hourly" job="source {{ckan_env}}/bin/activate && echo '{}' | paster --plugin=ckan post -c {{ckan_ini}} /api/action/send_email_notifications > /dev/null" state="present"
 
