@@ -216,6 +216,11 @@
               option=ckan.cors.origin_whitelist
               value="http://opendevelopmentmekong.net http://cambodia.opendevelopmentmekong.net http://vietnam.opendevelopmentmekong.net http://laos.opendevelopmentmekong.net http://myanmar.opendevelopmentmekong.net http://thailand.opendevelopmentmekong.net/"
 
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=ckan.extra_resource_fields
+              value="odm_format odm_language odm_date_created odm_date_uploaded odm_date_modified odm_temporal_range odm_spatial_range odm_accuracy odm_logical_consistency odm_completeness odm_process odm_source odm_contact odm_contact_email odm_access_and_use_constraints odm_url odm_metadata_reference_information odm_attributes file_name_kh file_name_en adopted_date number_en number_kh published_date published_under marc21_020 marc21_022 marc21_084 marc21_100 marc21_110 marc21_245 marc21_246 marc21_250 marc21_260a marc21_260b marc21_260c marc21_300 marc21_500 marc21_520 marc21_650 marc21_651 marc21_653 marc21_700 marc21_710 marc21_850 marc21_852"
+
 - name: Create cron job for sending out email notifications
   cron: name="Schedule email notifications" special_time="hourly" job="source {{ckan_env}}/bin/activate && echo '{}' | paster --plugin=ckan post -c {{ckan_ini}} /api/action/send_email_notifications > /dev/null" state="present"
 
