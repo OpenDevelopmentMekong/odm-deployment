@@ -84,12 +84,17 @@
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
               option=ckan.plugins
-              value="stats image_view text_view webpage_view recline_view recline_grid_view recline_graph_view recline_map_view pdf_view datastore datapusher resource_proxy odm_theme geojson_view wms_view googleanalytics"
+              value="stats image_view text_view webpage_view recline_view recline_grid_view recline_graph_view recline_map_view pdf_view datastore datapusher resource_proxy odm_theme geo_view geojson_view googleanalytics"
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
               option=ckan.views.default_views
-              value="image_view text_view webpage_view recline_view recline_grid_view recline_graph_view recline_map_view pdf_view geojson_view wms_view"
+              value="image_view text_view webpage_view recline_view recline_grid_view recline_graph_view recline_map_view pdf_view geo_view geojson_view"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=ckanext.geoview.ol_viewer.formats
+              value="wms kml gml wfs arcgis_rest"
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
@@ -209,7 +214,7 @@
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
               option=ckan.cors.origin_whitelist
-              value="http://opendevelopmentmekong.net http://cambodia.opendevelopmentmekong.net http://vietnam.opendevelopmentmekong.net http://laos.opendevelopmentmekong.net http://myanmar.opendevelopmentmekong.net http://thailand.opendevelopmentmekong.net/"                        
+              value="http://opendevelopmentmekong.net http://cambodia.opendevelopmentmekong.net http://vietnam.opendevelopmentmekong.net http://laos.opendevelopmentmekong.net http://myanmar.opendevelopmentmekong.net http://thailand.opendevelopmentmekong.net/"
 
 - name: Create cron job for sending out email notifications
   cron: name="Schedule email notifications" special_time="hourly" job="source {{ckan_env}}/bin/activate && echo '{}' | paster --plugin=ckan post -c {{ckan_ini}} /api/action/send_email_notifications > /dev/null" state="present"
@@ -265,15 +270,15 @@
   args:
     chdir: "{{ ckan_env }}/src/ckanext-pdfview"
 
-- name: Install ckanext-spatial extension (Just for Preview for spatial formats)
-  pip: name="git+https://github.com/okfn/ckanext-spatial.git@stable#egg=ckanext-spatial" virtualenv="{{virtual_envs}}/ckan"
+- name: Install ckanext-geoview extension (Just for Preview for spatial formats)
+  pip: name="git+https://github.com/ckan/ckanext-geoview.git#egg=ckanext-geoview" virtualenv="{{virtual_envs}}/ckan"
 
 - name: Install  ckanext-spatial extension dependencies
-  pip: requirements={{ckan_env}}/src/ckanext-spatial/pip-requirements.txt virtualenv="{{virtual_envs}}/ckan"
+  pip: requirements={{ckan_env}}/src/ckanext-geoview/pip-requirements.txt virtualenv="{{virtual_envs}}/ckan"
 
 - shell: source {{ckan_env}}/bin/activate && python setup.py develop executable=/bin/bash
   args:
-    chdir: "{{ ckan_env }}/src/ckanext-spatial"
+    chdir: "{{ ckan_env }}/src/ckanext-geoview"
 
 - name: Install Google Analytics extension
   pip: name="git+https://github.com/ckan/ckanext-googleanalytics.git#egg=ckanext-googleanalytics" virtualenv="{{virtual_envs}}/ckan"
