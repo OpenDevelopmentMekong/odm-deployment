@@ -42,3 +42,6 @@ googleanalytics_id: UA-10101010-1
 googleanalytics_account: ACCOUNT
 googleanalytics_username: USER
 googleanalytics_password: PASS
+
+recaptcha_public_key: KEY
+recaptcha_private_key: KEY
