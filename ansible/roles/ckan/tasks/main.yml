@@ -84,7 +84,7 @@
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
               option=ckan.plugins
-              value="stats image_view text_view webpage_view recline_view recline_grid_view recline_graph_view recline_map_view pdf_view datastore datapusher resource_proxy odm_theme geo_view geojson_view googleanalytics"
+              value="stats image_view text_view webpage_view recline_view recline_grid_view recline_graph_view recline_map_view pdf_view datastore datapusher resource_proxy odm_theme geo_view geojson_view googleanalytics issues"
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
@@ -279,6 +279,16 @@
 - shell: source {{ckan_env}}/bin/activate && python setup.py develop executable=/bin/bash
   args:
     chdir: "{{ ckan_env }}/src/ckanext-geoview"
+
+- name: Install ckanext-issues extension (Just for Preview for spatial formats)
+  pip: name="git+https://github.com/OpenDevelopmentMekong/ckanext-issues.git#egg=ckanext-issues" virtualenv="{{virtual_envs}}/ckan"
+
+- name: Install  ckanext-issues extension dependencies
+  pip: requirements={{ckan_env}}/src/ckanext-issues/dev-requirements.txt virtualenv="{{virtual_envs}}/ckan"
+
+- shell: source {{ckan_env}}/bin/activate && python setup.py develop executable=/bin/bash
+  args:
+    chdir: "{{ ckan_env }}/src/ckanext-issues"
 
 - name: Install Google Analytics extension
   pip: name="git+https://github.com/ckan/ckanext-googleanalytics.git#egg=ckanext-googleanalytics" virtualenv="{{virtual_envs}}/ckan"
