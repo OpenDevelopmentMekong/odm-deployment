@@ -216,6 +216,16 @@
               option=ckan.cors.origin_whitelist
               value="http://opendevelopmentmekong.net http://cambodia.opendevelopmentmekong.net http://vietnam.opendevelopmentmekong.net http://laos.opendevelopmentmekong.net http://myanmar.opendevelopmentmekong.net http://thailand.opendevelopmentmekong.net/"
 
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=ckan.recaptcha.publickey
+              value="{{recaptcha_public_key}}"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=ckan.recaptcha.privatekey
+              value="{{recaptcha_private_key}}"                                   
+
 - name: Create cron job for sending out email notifications
   cron: name="Schedule email notifications" special_time="hourly" job="source {{ckan_env}}/bin/activate && echo '{}' | paster --plugin=ckan post -c {{ckan_ini}} /api/action/send_email_notifications > /dev/null" state="present"
 
