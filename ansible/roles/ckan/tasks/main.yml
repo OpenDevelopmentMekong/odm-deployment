@@ -84,7 +84,7 @@
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
               option=ckan.plugins
-              value="stats image_view text_view webpage_view recline_view recline_grid_view recline_graph_view recline_map_view pdf_view datastore datapusher resource_proxy odm_theme geo_view geojson_view googleanalytics"
+              value="stats image_view text_view webpage_view recline_view recline_grid_view recline_graph_view recline_map_view pdf_view datastore datapusher resource_proxy odm_theme geo_view geojson_view googleanalytics issues"
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
@@ -221,6 +221,16 @@
               option=ckan.extra_resource_fields
               value="odm_format odm_language odm_date_created odm_date_uploaded odm_date_modified odm_temporal_range odm_spatial_range odm_accuracy odm_logical_consistency odm_completeness odm_process odm_source odm_contact odm_contact_email odm_access_and_use_constraints odm_url odm_metadata_reference_information odm_attributes file_name_kh file_name_en adopted_date number_en number_kh published_date published_under marc21_020 marc21_022 marc21_084 marc21_100 marc21_110 marc21_245 marc21_246 marc21_250 marc21_260a marc21_260b marc21_260c marc21_300 marc21_500 marc21_520 marc21_650 marc21_651 marc21_653 marc21_700 marc21_710 marc21_850 marc21_852"
 
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=ckan.recaptcha.publickey
+              value="{{recaptcha_public_key}}"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=ckan.recaptcha.privatekey
+              value="{{recaptcha_private_key}}"                                   
+
 - name: Create cron job for sending out email notifications
   cron: name="Schedule email notifications" special_time="hourly" job="source {{ckan_env}}/bin/activate && echo '{}' | paster --plugin=ckan post -c {{ckan_ini}} /api/action/send_email_notifications > /dev/null" state="present"
 
@@ -284,6 +294,16 @@
 - shell: source {{ckan_env}}/bin/activate && python setup.py develop executable=/bin/bash
   args:
     chdir: "{{ ckan_env }}/src/ckanext-geoview"
+
+- name: Install ckanext-issues extension (Just for Preview for spatial formats)
+  pip: name="git+https://github.com/OpenDevelopmentMekong/ckanext-issues.git#egg=ckanext-issues" virtualenv="{{virtual_envs}}/ckan"
+
+- name: Install  ckanext-issues extension dependencies
+  pip: requirements={{ckan_env}}/src/ckanext-issues/dev-requirements.txt virtualenv="{{virtual_envs}}/ckan"
+
+- shell: source {{ckan_env}}/bin/activate && python setup.py develop executable=/bin/bash
+  args:
+    chdir: "{{ ckan_env }}/src/ckanext-issues"
 
 - name: Install Google Analytics extension
   pip: name="git+https://github.com/ckan/ckanext-googleanalytics.git#egg=ckanext-googleanalytics" virtualenv="{{virtual_envs}}/ckan"
