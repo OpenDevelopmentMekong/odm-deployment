@@ -84,7 +84,7 @@
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
               option=ckan.plugins
-              value="stats image_view text_view webpage_view recline_view recline_grid_view recline_graph_view recline_map_view pdf_view datastore datapusher resource_proxy odm_theme geo_view geojson_view googleanalytics issues"
+              value="stats image_view text_view webpage_view recline_view recline_grid_view recline_graph_view recline_map_view pdf_view datastore datapusher resource_proxy geo_view geojson_view googleanalytics issues odm_library odm_theme"
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
@@ -229,7 +229,7 @@
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
               option=ckan.recaptcha.privatekey
-              value="{{recaptcha_private_key}}"                                   
+              value="{{recaptcha_private_key}}"
 
 - name: Create cron job for sending out email notifications
   cron: name="Schedule email notifications" special_time="hourly" job="source {{ckan_env}}/bin/activate && echo '{}' | paster --plugin=ckan post -c {{ckan_ini}} /api/action/send_email_notifications > /dev/null" state="present"
@@ -261,6 +261,20 @@
 
 - name: Install ckanext-odm_theme extension dependencies (development)
   pip: requirements="{{ ckan_env }}/src/ckanext-odm_theme/dev-requirements.txt" virtualenv="{{virtual_envs}}/ckan"
+
+- name: Install ckanext-odm_library
+  file: path="{{ ckan_env }}/src/ckanext-odm_library" state=directory
+
+- git: repo=https://github.com/OpenDevelopmentMekong/ckanext-odm_library.git
+        dest="{{ ckan_env }}/src/ckanext-odm_library"
+        version=master
+
+- shell: source {{ckan_env}}/bin/activate && python setup.py develop executable=/bin/bash
+  args:
+    chdir: "{{ ckan_env }}/src/ckanext-odm_library"
+
+- name: Install ckanext-odm_library extension dependencies (development)
+  pip: requirements="{{ ckan_env }}/src/ckanext-odm_library/dev-requirements.txt" virtualenv="{{virtual_envs}}/ckan"
 
 - name: Install Datapusher extension
   git: repo=https://github.com/ckan/datapusher.git version=stable
