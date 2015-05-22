@@ -231,6 +231,11 @@
               option=ckan.recaptcha.privatekey
               value="{{recaptcha_private_key}}"
 
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=ckan.search.show_all_types
+              value="True"
+
 - name: Create cron job for sending out email notifications
   cron: name="Schedule email notifications" special_time="hourly" job="source {{ckan_env}}/bin/activate && echo '{}' | paster --plugin=ckan post -c {{ckan_ini}} /api/action/send_email_notifications > /dev/null" state="present"
 
