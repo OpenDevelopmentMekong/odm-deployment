@@ -236,6 +236,26 @@
               option=ckan.search.show_all_types
               value="True"
 
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=ckanext.issues.minimun_role_required
+              value="Admin"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=ckanext.issues.notify_admin
+              value="True"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=ckanext.issues.notify_owner
+              value="True"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=ckanext.issues.review_system
+              value="True"
+
 - name: Create cron job for sending out email notifications
   cron: name="Schedule email notifications" special_time="hourly" job="source {{ckan_env}}/bin/activate && echo '{}' | paster --plugin=ckan post -c {{ckan_ini}} /api/action/send_email_notifications > /dev/null" state="present"
 
