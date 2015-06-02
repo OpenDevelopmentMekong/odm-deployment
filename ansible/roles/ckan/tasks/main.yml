@@ -159,11 +159,11 @@
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
               option=smtp.user
-              value="{{email_user}}"
+              value="{{email_user}}"            
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
-              option=smtp.starttls
+              option=smtp.password
               value="{{email_password}}"
 
 - ini_file: dest="{{ckan_ini}}"
