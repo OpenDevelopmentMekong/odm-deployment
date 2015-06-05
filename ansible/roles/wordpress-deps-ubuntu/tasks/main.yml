@@ -14,11 +14,11 @@
     - git-core
 
 - name: Create DB User
-  mysql_user: name=odmadmin password=odmadmin priv=*.*:ALL state=present
+  mysql_user: name={{wp_db_name}} password={{wp_db_password}} priv=*.*:ALL state=present
   sudo: yes
 
 - name: Create DB
-  mysql_db: name=odmwp login_user=odmadmin login_password=odmadmin state=present
+  mysql_db: name=odmwp login_user={{wp_db_user}} login_password={{wp_db_password}} state=present
   sudo: yes
 
 - name: Add vhost configuration file to sites-available

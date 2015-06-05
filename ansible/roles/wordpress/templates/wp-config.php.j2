@@ -1,11 +1,10 @@
-<?php
 /**
  * The base configurations of the WordPress.
  *
  * This file has the following configurations: MySQL settings, Table Prefix,
- * Secret Keys, WordPress Language, and ABSPATH. You can find more information
- * by visiting {@link http://codex.wordpress.org/Editing_wp-config.php Editing
- * wp-config.php} Codex page. You can get the MySQL settings from your web host.
+ * Secret Keys, and ABSPATH. You can find more information by visiting
+ * {@link http://codex.wordpress.org/Editing_wp-config.php Editing wp-config.php}
+ * Codex page. You can get the MySQL settings from your web host.
  *
  * This file is used by the wp-config.php creation script during the
  * installation. You don't have to use the web site, you can just copy this file
@@ -16,13 +15,13 @@
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define('DB_NAME', 'odmwp');
+define('DB_NAME', '{{wp_db_name}}');
 
 /** MySQL database username */
-define('DB_USER', 'odmadmin');
+define('DB_USER', '{{wp_db_user}}');
 
 /** MySQL database password */
-define('DB_PASSWORD', 'odmadmin');
+define('DB_PASSWORD', '{{wp_db_password}}');
 
 /** MySQL hostname */
 define('DB_HOST', 'localhost');
@@ -33,6 +32,9 @@ define('DB_CHARSET', 'utf8');
 /** The Database Collate type. Don't change this if in doubt. */
 define('DB_COLLATE', '');
 
+/** Set time limit so @Alex's script doesn't timeout - Mishari 20150201 */
+set_time_limit(300);
+
 /**#@+
  * Authentication Unique Keys and Salts.
  *
@@ -42,14 +44,14 @@ define('DB_COLLATE', '');
  *
  * @since 2.6.0
  */
-define('AUTH_KEY',         '{{ lookup('password', 'credentials/' + 'wp' + '/auth_key length=40') }}');
-define('SECURE_AUTH_KEY',  '{{ lookup('password', 'credentials/' + 'wp' + '/secure_auth_key length=40') }}');
-define('LOGGED_IN_KEY',    '{{ lookup('password', 'credentials/' + 'wp' + '/logged_in_key length=40') }}');
-define('NONCE_KEY',        '{{ lookup('password', 'credentials/' + 'wp' + '/nonce_key length=40') }}');
-define('AUTH_SALT',        '{{ lookup('password', 'credentials/' + 'wp' + '/auth_salt length=40') }}');
-define('SECURE_AUTH_SALT', '{{ lookup('password', 'credentials/' + 'wp' + '/secure_auth_salt length=40') }}');
-define('LOGGED_IN_SALT',   '{{ lookup('password', 'credentials/' + 'wp' + '/logged_in_salt length=40') }}');
-define('NONCE_SALT',       '{{ lookup('password', 'credentials/' + 'wp' + '/nonce_salt length=40') }}');
+define('AUTH_KEY',         'a-fvXimf*sokYk>cJFjF3~:w4 MS}l-*u|g-1_<vFt&/%HQ:1&V++O0x$9!-mvRw');
+define('SECURE_AUTH_KEY',  '9.+Tq0u[Og|zXy,E|p6eQ)maZuL@i8[>ukTshZQ+5efp._T86Z2OiK?*^Vzx<&|?');
+define('LOGGED_IN_KEY',    'Vzo>(F&We8AV j$.AtS^|U~BaT?@_l`rMG^klVZwn?+~Z9?bZO7MeZ|~AxN%8Fsu');
+define('NONCE_KEY',        'zVC+?i0h,H,9cJ3.+GH&`,_J?*gP9UXw 8:D/7RP)-l5#^y{&U-0MSPc=Jf{d.Ji');
+define('AUTH_SALT',        'sdCCc[Pui;J!hq6q?<9+F o6+>Djp~bkY|GI_TYl/TvE>QQ+S!2[3i Upi*+BBxL');
+define('SECURE_AUTH_SALT', '7uE^r vc9.:dS}O!_GD-kMO}l_D@ICLXc3Pi-.r9WPhrl)Nx-`GgC8J6B-CgBy-O');
+define('LOGGED_IN_SALT',   'Psa0`-o%/b?d-tFhLi.QfA]?OUKmA9ng&C~v*.9`BAuS&SW^-k$FONUc|M4WCZTm');
+define('NONCE_SALT',       'EI![(_f;ucl}7:+;.gpj^Q?soPo!Y.YTlp%1HY:l<F{}{`S>>!OHGWVRw]ebtKkN');
 
 /**#@-*/
 
@@ -61,24 +63,20 @@ define('NONCE_SALT',       '{{ lookup('password', 'credentials/' + 'wp' + '/nonc
  */
 $table_prefix  = 'wp_';
 
-/**
- * For developers: WordPress debugging mode.
- *
- * Change this to true to enable the display of notices during development.
- * It is strongly recommended that plugin and theme developers use WP_DEBUG
- * in their development environments.
- */
+/* Debug*/
 define('WP_DEBUG', false);
-
 /* That's all, stop editing! Happy blogging. */
 
 /** Absolute path to the WordPress directory. */
 if ( !defined('ABSPATH') )
-  define('ABSPATH', dirname(__FILE__) . '/');
+	define('ABSPATH', dirname(__FILE__) . '/');
 
 /** Sets up WordPress vars and included files. */
 require_once(ABSPATH . 'wp-settings.php');
 
-
-/* Multisite */
-define( 'WP_ALLOW_MULTISITE', true );
+/** MultiSite **/
+define('WP_ALLOW_MULTISITE', true);
+/*define('SUBDOMAIN_INSTALL', true);
+define('DOMAIN_CURRENT_SITE', '{{wp_domain}}');
+define('PATH_CURRENT_SITE', '/');
+define('SITE_ID_CURRENT_SITE', 1);*/

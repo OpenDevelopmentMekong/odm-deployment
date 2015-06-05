@@ -43,3 +43,8 @@ googleanalytics_password: PASS
 
 recaptcha_public_key: KEY
 recaptcha_private_key: KEY
+
+wp_db_name: DBNAME
+wp_db_user: USER
+wp_db_password: PASS
+wp_domain: URL
