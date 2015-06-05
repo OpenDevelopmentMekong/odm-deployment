@@ -159,7 +159,7 @@
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
               option=smtp.user
-              value="{{email_user}}"            
+              value="{{email_user}}"
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
@@ -263,7 +263,7 @@
   file: src="{{ckan_env}}/lib/{{ansible_python_interpreter}}/site-packages/ckan/config/who.ini" dest="{{ ckan_etc }}/default/who.ini" state=link
 
 - name: Install CKAN Api
-  pip: name="git+https://github.com/ckan/ckanapi.git@ckanapi-3.3#egg=ckanapi" virtualenv="{{virtual_envs}}/ckan"
+  pip: name="git+https://github.com/ckan/ckanapi.git#egg=ckanapi" virtualenv="{{virtual_envs}}/ckan"
 
 - name: CKAN Api Develop
   shell: source {{ckan_env}}/bin/activate && python setup.py develop executable=/bin/bash
