@@ -22,16 +22,17 @@ ckan_env: "{{virtual_envs}}/ckan"
 ckan_etc: "{{ home_dir }}/etc/ckan"
 ckan_ini: "{{ ckan_etc }}/default/development.ini"
 ckan_port: 8081
-ckan_url: http://192.168.33.10
-ckan_licenses_url: http://192.168.33.10:8081/licenses.json
-ckan_favicon_url: http://192.168.33.10:8081/favicon.ico
+ckan_url: http://192.168.33.10 #See Vagrantfile:config.vm.network
+ckan_licenses_url: "{{ckan_url}}:{{ckan_port}}/licenses.json"
+ckan_favicon_url: "{{ckan_url}}:{{ckan_port}}/favicon.ico"
 
 supervisor_bin: "{{ ckan_env }}/bin"
 
 datapusher_port: DATAPUSHER_PORT
-datapusher_url: http://192.168.33.10
+datapusher_url: http://192.168.33.10 #See Vagrantfile:config.vm.network
 
 wp_dir: "{{home_dir}}/webapps/wp"
+wp_url: http://192.168.33.10 #See Vagrantfile:config.vm.network
 
 email_server: SMTP_URL
 email_account: ACCOUNT

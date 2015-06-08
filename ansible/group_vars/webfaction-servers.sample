@@ -21,8 +21,8 @@ ckan_etc: "{{ home_dir }}/etc/ckan"
 ckan_ini: "{{ ckan_etc }}/default/development.ini"
 ckan_port: CKAN_PORT
 ckan_url: CKAN_URL
-ckan_licenses_url: URL_TO_LICENSES_JSON
-ckan_favicon_url: http://192.168.33.10:8081/favicon.ico
+ckan_licenses_url: "{{ckan_url}}:{{ckan_port}}/licenses.json"
+ckan_favicon_url: "{{ckan_url}}:{{ckan_port}}/favicon.ico"
 
 supervisor_bin: "{{ ckan_env }}/bin"
 
@@ -30,6 +30,7 @@ datapusher_port: DATAPUSHER_PORT
 datapusher_url: 0.0.0.0
 
 wp_dir: "{{home_dir}}/webapps/wp"
+wp_url: http://192.168.33.10
 
 email_server: SMTP_URL
 email_account: ACCOUNT
