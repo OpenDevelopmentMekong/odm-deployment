@@ -12,7 +12,7 @@
     - php5-curl
     - python-mysqldb
     - git-core
-  #- dnsmasq
+    - dnsmasq
 
 - name: Create DB User
   mysql_user: name={{wp_db_user}} password={{wp_db_password}} priv=*.*:ALL state=present
@@ -78,13 +78,13 @@
 - name: Ensure that wp directory is present
   file: path="{{wp_dir}}" state=directory
 
-# - name: Enable wildcard for dnsmasq
-#   lineinfile: dest=/etc/dnsmasq.conf
-#               regexp='^'
-#               line='address=/.{{wp_domain}}/127.0.0.1'
-#               state=present
-#   sudo: yes
-#
-# - name: Restart dnsmasq
-#   service: name=dnsmasq state=restarted
-#   sudo: yes
+- name: Enable wildcard for dnsmasq
+  lineinfile: dest=/etc/dnsmasq.conf
+              regexp='^'
+              line='address=/.{{wp_domain}}/127.0.0.1'
+              state=present
+  sudo: yes
+
+- name: Restart dnsmasq
+  service: name=dnsmasq state=restarted
+  sudo: yes
