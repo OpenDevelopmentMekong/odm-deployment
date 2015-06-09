@@ -40,25 +40,25 @@
 
 # phpmyadmin
 
-# - name: debconf for pma
-#   debconf: name=phpmyadmin question='phpmyadmin/dbconfig-install' value='true' vtype='boolean'
-#   sudo: yes
-#
-# - name: debconf for pma
-#   debconf: name=phpmyadmin question='phpmyadmin/app-password-confirm' value='{{wp_db_password}}' vtype='password'
-#   sudo: yes
-#
-# - name: debconf for pma
-#   debconf: name=phpmyadmin question='phpmyadmin/mysql/admin-pass' value='{{wp_db_password}}' vtype='password'
-#   sudo: yes
-#
-# - name: debconf for pma
-#   debconf: name=phpmyadmin question='phpmyadmin/mysql/app-pass' value='{{wp_db_password}}' vtype='password'
-#   sudo: yes
-#
-# - name: debconf for pma
-#   debconf: name=phpmyadmin question='phpmyadmin/reconfigure-webserver' value='' vtype='multiselect'
-#   sudo: yes
+- name: debconf for pma
+  debconf: name=phpmyadmin question='phpmyadmin/dbconfig-install' value='true' vtype='boolean'
+  sudo: yes
+
+- name: debconf for pma
+  debconf: name=phpmyadmin question='phpmyadmin/app-password-confirm' value='{{wp_db_password}}' vtype='password'
+  sudo: yes
+
+- name: debconf for pma
+  debconf: name=phpmyadmin question='phpmyadmin/mysql/admin-pass' value='{{wp_db_password}}' vtype='password'
+  sudo: yes
+
+- name: debconf for pma
+  debconf: name=phpmyadmin question='phpmyadmin/mysql/app-pass' value='{{wp_db_password}}' vtype='password'
+  sudo: yes
+
+- name: debconf for pma
+  debconf: name=phpmyadmin question='phpmyadmin/reconfigure-webserver' value='' vtype='multiselect'
+  sudo: yes
 #
 - name: Enable mod_rewrite
   shell: a2enmod rewrite
