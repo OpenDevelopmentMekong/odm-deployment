@@ -8,8 +8,16 @@
 - name: Copy config.php file
   template: src=wp-config.php.j2 dest="{{wp_dir}}/wp-config.php"
 
-- name: Copy .htaccess file
-  template: src=wp-htaccess.j2 dest="{{wp_dir}}/.htaccess"
+# - name: Copy .htaccess file
+#   template: src=wp-htaccess.j2 dest="{{wp_dir}}/.htaccess"
 
 - name: Remove index.html
   file: path="{{wp_dir}}/index.html" state=absent
+
+- name: install pma
+  apt: pkg=phpmyadmin state=present
+  sudo: yes
+
+- name: configure site
+  file: path="{{wp_dir}}"/phpmyadmin src=/usr/share/phpmyadmin state=link
+  sudo: yes

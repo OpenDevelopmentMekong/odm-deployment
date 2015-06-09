@@ -1,6 +1,6 @@
 <VirtualHost *:80>
   ServerName {{wp_domain}}
-  ServerAlias *.{{wp_domain}}
+  ServerAlias {{wp_domain}}
   DocumentRoot {{wp_dir}}
   ErrorLog /var/log/apache2/wp.vagrantbox-error.log
   CustomLog /var/log/apache2/wp.vagrantbox-access.log combined

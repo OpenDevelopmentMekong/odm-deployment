@@ -12,7 +12,7 @@
     - php5-curl
     - python-mysqldb
     - git-core
-    - dnsmasq
+  #- dnsmasq
 
 - name: Create DB User
   mysql_user: name={{wp_db_user}} password={{wp_db_password}} priv=*.*:ALL state=present
@@ -40,33 +40,26 @@
 
 # phpmyadmin
 
-- name: debconf for pma
-  debconf: name=phpmyadmin question='phpmyadmin/dbconfig-install' value='true' vtype='boolean'
-  sudo: yes
-
-- name: debconf for pma
-  debconf: name=phpmyadmin question='phpmyadmin/app-password-confirm' value='{{wp_db_password}}' vtype='password'
-  sudo: yes
-
-- name: debconf for pma
-  debconf: name=phpmyadmin question='phpmyadmin/mysql/admin-pass' value='{{wp_db_password}}' vtype='password'
-  sudo: yes
-
-- name: debconf for pma
-  debconf: name=phpmyadmin question='phpmyadmin/mysql/app-pass' value='{{wp_db_password}}' vtype='password'
-  sudo: yes
-
-- name: debconf for pma
-  debconf: name=phpmyadmin question='phpmyadmin/reconfigure-webserver' value='' vtype='multiselect'
-  sudo: yes
-
-- name: install pma
-  apt: pkg=phpmyadmin state=present
-  sudo: yes
-
-- name: configure site
-  file: path="{{wp_dir}}"/phpmyadmin src=/usr/share/phpmyadmin state=link
-
+# - name: debconf for pma
+#   debconf: name=phpmyadmin question='phpmyadmin/dbconfig-install' value='true' vtype='boolean'
+#   sudo: yes
+#
+# - name: debconf for pma
+#   debconf: name=phpmyadmin question='phpmyadmin/app-password-confirm' value='{{wp_db_password}}' vtype='password'
+#   sudo: yes
+#
+# - name: debconf for pma
+#   debconf: name=phpmyadmin question='phpmyadmin/mysql/admin-pass' value='{{wp_db_password}}' vtype='password'
+#   sudo: yes
+#
+# - name: debconf for pma
+#   debconf: name=phpmyadmin question='phpmyadmin/mysql/app-pass' value='{{wp_db_password}}' vtype='password'
+#   sudo: yes
+#
+# - name: debconf for pma
+#   debconf: name=phpmyadmin question='phpmyadmin/reconfigure-webserver' value='' vtype='multiselect'
+#   sudo: yes
+#
 - name: Enable mod_rewrite
   shell: a2enmod rewrite
   sudo: yes
@@ -75,16 +68,23 @@
   service: name=apache2 state=restarted
   sudo: yes
 
+# - name: Add entry into hosts file
+#   lineinfile: dest=/etc/hosts
+#               regexp='^'
+#               line='127.0.0.1 {{wp_domain}}'
+#               state=present
+#   sudo: yes
+
 - name: Ensure that wp directory is present
   file: path="{{wp_dir}}" state=directory
 
-- name: Enable wildcard for dnsmasq
-  lineinfile: dest=/etc/dnsmasq.conf
-              regexp='^'
-              line='address=/.{{wp_domain}}/127.0.0.1'
-              state=present
-  sudo: yes
-
-- name: Restart dnsmasq
-  service: name=dnsmasq state=restarted
-  sudo: yes
+# - name: Enable wildcard for dnsmasq
+#   lineinfile: dest=/etc/dnsmasq.conf
+#               regexp='^'
+#               line='address=/.{{wp_domain}}/127.0.0.1'
+#               state=present
+#   sudo: yes
+#
+# - name: Restart dnsmasq
+#   service: name=dnsmasq state=restarted
+#   sudo: yes

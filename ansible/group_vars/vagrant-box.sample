@@ -32,7 +32,6 @@ datapusher_port: DATAPUSHER_PORT
 datapusher_url: http://192.168.33.10 #See Vagrantfile:config.vm.network
 
 wp_dir: "{{home_dir}}/webapps/wp"
-wp_url: http://192.168.33.10 #See Vagrantfile:config.vm.network
 
 email_server: SMTP_URL
 email_account: ACCOUNT

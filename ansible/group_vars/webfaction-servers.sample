@@ -30,7 +30,6 @@ datapusher_port: DATAPUSHER_PORT
 datapusher_url: 0.0.0.0
 
 wp_dir: "{{home_dir}}/webapps/wp"
-wp_url: http://192.168.33.10
 
 email_server: SMTP_URL
 email_account: ACCOUNT
