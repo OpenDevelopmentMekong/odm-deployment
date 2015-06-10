@@ -46,7 +46,10 @@ googleanalytics_password: PASS
 recaptcha_public_key: KEY
 recaptcha_private_key: KEY
 
-wp_db_name: DBNAME
-wp_db_user: USER
-wp_db_password: PASS
-wp_domain: URL
+# IMPORTAN: For vagrant, leave this values as they are.
+# During wordpress-deps-ubuntu task, a database dump is loaded with these values
+# Wordpress admin user and password are wp_odm
+wp_db_name: odmadmin
+wp_db_user: odmadmin
+wp_db_password: odmadmin
+wp_domain: odm.dev
