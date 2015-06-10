@@ -209,12 +209,12 @@
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
               option=ckan.cors.origin_allow_all
-              value="False"
+              value="True"
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
               option=ckan.cors.origin_whitelist
-              value="http://opendevelopmentmekong.net http://cambodia.opendevelopmentmekong.net http://vietnam.opendevelopmentmekong.net http://laos.opendevelopmentmekong.net http://myanmar.opendevelopmentmekong.net http://thailand.opendevelopmentmekong.net/"
+              value="http://odm.dev http://opendevelopmentmekong.net http://cambodia.opendevelopmentmekong.net http://vietnam.opendevelopmentmekong.net http://laos.opendevelopmentmekong.net http://myanmar.opendevelopmentmekong.net http://thailand.opendevelopmentmekong.net/"
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main

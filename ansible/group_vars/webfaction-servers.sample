@@ -21,8 +21,8 @@ ckan_etc: "{{ home_dir }}/etc/ckan"
 ckan_ini: "{{ ckan_etc }}/default/development.ini"
 ckan_port: CKAN_PORT
 ckan_url: CKAN_URL
-ckan_licenses_url: URL_TO_LICENSES_JSON
-ckan_favicon_url: http://192.168.33.10:8081/favicon.ico
+ckan_licenses_url: "{{ckan_url}}:{{ckan_port}}/licenses.json"
+ckan_favicon_url: "{{ckan_url}}:{{ckan_port}}/favicon.ico"
 
 supervisor_bin: "{{ ckan_env }}/bin"
 
@@ -43,3 +43,8 @@ googleanalytics_password: PASS
 
 recaptcha_public_key: KEY
 recaptcha_private_key: KEY
+
+wp_db_name: DBNAME
+wp_db_user: USER
+wp_db_password: PASS
+wp_domain: URL
