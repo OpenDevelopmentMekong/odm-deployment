@@ -8,7 +8,7 @@ pg_main: /etc/postgresql/9.3/main
 
 home_dir: /home/vagrant
 src_dir: "{{home_dir}}/src"
-installables_dir: "/vargrant/installables"
+installables_dir: "/vagrant/installables"
 virtual_envs: "{{ home_dir }}/.virtualenvs"
 
 tomcat_dir: "{{ home_dir }}/webapps/tomcat"
