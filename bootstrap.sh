@@ -17,4 +17,4 @@ cd ./ansible
 source ./hacking/env-setup
 
 # Run ansible playbooks with instructions to provision the VM
-ansible-playbook /vagrant/ansible/site-vagrant.yml -i /vagrant/ansible/stage --connection=local
+ansible-playbook /vagrant/ansible/site-vagrant.yml -i /vagrant/ansible/stage --connection=local -vvvv

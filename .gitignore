@@ -2,7 +2,6 @@
 **/group_vars/vagrant-box
 **/group_vars/dedicated-server
 **/stage
-
 .remote-sync.json
 .vagrant
 
