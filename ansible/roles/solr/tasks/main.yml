@@ -1,10 +1,15 @@
 ---
+
+- name: Check if solr_install_file exists
+  local_action: stat path={{solr_install_file}}
+  register: solr_install_file_exists
+  
 - name: Download Solr
-  get_url: url=http://archive.apache.org/dist/lucene/solr/4.7.2/solr-4.7.2.tgz dest="{{installables_dir}}/solr-4.7.2.tgz" sha256sum=08fb5f33a5629a2a71487123523626d263d6b1817c7cee2d54e41d2898eb4040
-  when: solr_install_file is not defined
+  get_url: url=http://archive.apache.org/dist/lucene/solr/4.7.2/solr-4.7.2.tgz dest="{{solr_install_file}}" sha256sum=08fb5f33a5629a2a71487123523626d263d6b1817c7cee2d54e41d2898eb4040
+  when: solr_install_file_exists != true
 
 - name: Extract Solr
-  unarchive: src="{{installables_dir}}/solr-4.7.2.tgz" dest="{{src_dir}}" copy=no
+  unarchive: src="{{solr_install_file}}" dest="{{src_dir}}" copy=no
 
 - name: Copy Solr directory to tomcat
   synchronize: src=solr dest="{{tomcat_dir}}"
