@@ -8,14 +8,17 @@ pg_main: /etc/postgresql/9.3/main
 
 home_dir: /home/vagrant
 src_dir: "{{home_dir}}/src"
+installables_dir: "/vagrant/installables"
 virtual_envs: "{{ home_dir }}/.virtualenvs"
 
 tomcat_dir: "{{ home_dir }}/webapps/tomcat"
 tomcat_ip: 127.0.0.1
 tomcat_port: 8080
+tomcat_install_file: "{{installables_dir}}/tomcat.tar.gz"
 
 solr_url: http://{{tomcat_ip}}:{{tomcat_port}}/solr
 solr_conf: "{{ tomcat_dir }}/conf/Catalina/localhost"
+solr_install_file: "{{installables_dir}}/solr.tgz"
 
 ckan_src: "{{src_dir}}/ckan"
 ckan_env: "{{virtual_envs}}/ckan"
