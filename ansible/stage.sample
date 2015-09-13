@@ -1,8 +1,0 @@
-[webfaction-servers]
-web409.webfaction.com
-
-[vagrant-box]
-default ansible_ssh_host=192.168.33.10
-
-[dedicated-server]
-0.0.0.0

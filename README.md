@@ -14,7 +14,8 @@ Repository to host utility scripts to add/migrate/update data in the different m
 
 ## Installation
 
-http://wiki.opendevelopmentmekong.net/setting_up_test_development_environment
+Please follow the **Setting up test & development environment** guide on OD Mekong's wiki.
+https://wiki.opendevelopmentmekong.net/public:setting_up_test_development_environment
 
 # Copyright and License
 
