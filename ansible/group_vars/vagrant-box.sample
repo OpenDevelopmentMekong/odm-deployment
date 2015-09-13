@@ -1,5 +1,5 @@
-tomcat_admin_user: TOMCAT_ADMIN
-tomcat_admin_password: TOMCAT_ADMIN_PASS
+tomcat_admin_user: tomcat_admin
+tomcat_admin_password: tomcat_pass
 
 ansible_python_interpreter: python2.7
 ansible_ssh_user: vagrant
@@ -31,7 +31,7 @@ ckan_favicon_url: "{{ckan_url}}:{{ckan_port}}/favicon.ico"
 
 supervisor_bin: "{{ ckan_env }}/bin"
 
-datapusher_port: DATAPUSHER_PORT
+datapusher_port: 8001
 datapusher_url: http://192.168.33.10 #See Vagrantfile:config.vm.network
 
 wp_dir: "{{home_dir}}/webapps/wp"
@@ -49,7 +49,7 @@ googleanalytics_password: PASS
 recaptcha_public_key: KEY
 recaptcha_private_key: KEY
 
-wp_db_name: NAME
-wp_db_user: USER
-wp_db_password: PWD
-wp_domain: DOMAIN
+wp_db_name: wp_odm
+wp_db_user: wp_odm
+wp_db_password: wp_odm
+wp_domain: odm.dev
