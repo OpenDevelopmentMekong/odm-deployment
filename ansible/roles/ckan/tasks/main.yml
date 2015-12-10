@@ -84,7 +84,7 @@
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
               option=ckan.plugins
-              value="stats image_view text_view webpage_view recline_view recline_grid_view recline_graph_view recline_map_view pdf_view datastore datapusher resource_proxy geo_view geojson_view googleanalytics issues odm_laws odm_library odm_theme"
+              value="stats image_view text_view webpage_view recline_view recline_grid_view recline_graph_view recline_map_view pdf_view datastore datapusher resource_proxy geo_view geojson_view googleanalytics issues fluent scheming_datasets odm_laws odm_library odm_theme"
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
@@ -320,6 +320,28 @@
 
 - name: Install ckanext-odm_laws extension dependencies (development)
   pip: requirements="{{ ckan_env }}/src/ckanext-odm_laws/dev-requirements.txt" virtualenv="{{virtual_envs}}/ckan"
+
+- name: Install ckanext-fluent
+  file: path="{{ ckan_env }}/src/ckanext-fluent" state=directory
+
+- git: repo=https://github.com/ckan/ckanext-fluent.git
+        dest="{{ ckan_env }}/src/ckanext-fluent"
+        version=master
+
+- shell: source {{ckan_env}}/bin/activate && python setup.py develop executable=/bin/bash
+  args:
+    chdir: "{{ ckan_env }}/src/ckanext-fluent"
+
+- name: Install ckanext-scheming
+  file: path="{{ ckan_env }}/src/ckanext-scheming" state=directory
+
+- git: repo=https://github.com/ckan/ckanext-scheming.git
+        dest="{{ ckan_env }}/src/ckanext-scheming"
+        version=master
+
+- shell: source {{ckan_env}}/bin/activate && python setup.py develop executable=/bin/bash
+  args:
+    chdir: "{{ ckan_env }}/src/ckanext-scheming"
 
 - name: Install Datapusher extension
   git: repo=https://github.com/ckan/datapusher.git version=stable
