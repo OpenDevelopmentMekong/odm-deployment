@@ -84,7 +84,7 @@
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
               option=ckan.plugins
-              value="stats image_view text_view webpage_view recline_view recline_grid_view recline_graph_view recline_map_view pdf_view datastore datapusher resource_proxy geo_view geojson_view googleanalytics issues fluent scheming_datasets odm_laws odm_library odm_theme"
+              value="stats image_view text_view webpage_view recline_view recline_grid_view recline_graph_view recline_map_view pdf_view datastore datapusher resource_proxy geo_view geojson_view googleanalytics issues fluent scheming_datasets odm_laws odm_library odm_dataset odm_nav"
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
@@ -270,22 +270,39 @@
   args:
     chdir: "{{virtual_envs}}/ckan/src/ckanapi"
 
-- name: Install ckanext-odm_theme
-  file: path="{{ ckan_env }}/src/ckanext-odm_theme" state=directory
+- name: Install ckanext-odm_nav
+  file: path="{{ ckan_env }}/src/ckanext-odm_nav" state=directory
 
-- git: repo=https://github.com/OpenDevelopmentMekong/ckanext-odm_theme.git
-        dest="{{ ckan_env }}/src/ckanext-odm_theme"
+- git: repo=https://github.com/OpenDevelopmentMekong/ckanext-odm_nav.git
+        dest="{{ ckan_env }}/src/ckanext-odm_nav"
         version=master
 
 - shell: source {{ckan_env}}/bin/activate && python setup.py develop executable=/bin/bash
   args:
-    chdir: "{{ ckan_env }}/src/ckanext-odm_theme"
+    chdir: "{{ ckan_env }}/src/ckanext-odm_nav"
 
-- name: Install ckanext-odm_theme extension dependencies
-  pip: requirements="{{ ckan_env }}/src/ckanext-odm_theme/requirements.txt" virtualenv="{{virtual_envs}}/ckan"
+- name: Install ckanext-odm_nav extension dependencies
+  pip: requirements="{{ ckan_env }}/src/ckanext-odm_nav/requirements.txt" virtualenv="{{virtual_envs}}/ckan"
 
-- name: Install ckanext-odm_theme extension dependencies (development)
-  pip: requirements="{{ ckan_env }}/src/ckanext-odm_theme/dev-requirements.txt" virtualenv="{{virtual_envs}}/ckan"
+- name: Install ckanext-odm_nav extension dependencies (development)
+  pip: requirements="{{ ckan_env }}/src/ckanext-odm_nav/dev-requirements.txt" virtualenv="{{virtual_envs}}/ckan"
+
+- name: Install ckanext-odm_dataset
+  file: path="{{ ckan_env }}/src/ckanext-odm_dataset" state=directory
+
+- git: repo=https://github.com/OpenDevelopmentMekong/ckanext-odm_dataset.git
+        dest="{{ ckan_env }}/src/ckanext-odm_dataset"
+        version=master
+
+- shell: source {{ckan_env}}/bin/activate && python setup.py develop executable=/bin/bash
+  args:
+    chdir: "{{ ckan_env }}/src/ckanext-odm_dataset"
+
+- name: Install ckanext-odm_dataset extension dependencies
+  pip: requirements="{{ ckan_env }}/src/ckanext-odm_dataset/requirements.txt" virtualenv="{{virtual_envs}}/ckan"
+
+- name: Install ckanext-odm_dataset extension dependencies (development)
+  pip: requirements="{{ ckan_env }}/src/ckanext-odm_dataset/dev-requirements.txt" virtualenv="{{virtual_envs}}/ckan"
 
 - name: Install ckanext-odm_library
   file: path="{{ ckan_env }}/src/ckanext-odm_library" state=directory
