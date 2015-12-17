@@ -256,6 +256,16 @@
               option=ckanext.issues.review_system
               value="True"
 
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=scheming.dataset_schemas
+              value="ckanext.odm_dataset:odm_dataset_schema.json ckanext.odm_library:odm_library_schema.json ckanext.odm_laws:odm_laws_schema.json"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=scheming.dataset_schemas
+              value="ckanext.fluent:presets.json ckanext.odm_dataset:odm_dataset_presets.json ckanext.odm_library:odm_library_presets.json ckanext.odm_laws:odm_laws_presets.json"
+
 - name: Create cron job for sending out email notifications
   cron: name="Schedule email notifications" special_time="hourly" job="source {{ckan_env}}/bin/activate && echo '{}' | paster --plugin=ckan post -c {{ckan_ini}} /api/action/send_email_notifications > /dev/null" state="present"
 
