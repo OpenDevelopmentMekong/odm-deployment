@@ -84,7 +84,7 @@
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
               option=ckan.plugins
-              value="stats image_view text_view webpage_view recline_view recline_grid_view recline_graph_view recline_map_view pdf_view datastore datapusher resource_proxy geo_view geojson_view googleanalytics issues fluent scheming_datasets odm_laws odm_library odm_dataset odm_nav"
+              value="stats image_view text_view webpage_view recline_view recline_grid_view recline_graph_view recline_map_view pdf_view datastore datapusher resource_proxy geo_view geojson_view googleanalytics issues fluent scheming_datasets odm_laws odm_library odm_dataset odm_nav odm_audit"
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
@@ -347,6 +347,23 @@
 
 - name: Install ckanext-odm_laws extension dependencies (development)
   pip: requirements="{{ ckan_env }}/src/ckanext-odm_laws/dev-requirements.txt" virtualenv="{{virtual_envs}}/ckan"
+
+- name: Install ckanext-odm_audit
+  file: path="{{ ckan_env }}/src/ckanext-odm_audit" state=directory
+
+- git: repo=https://github.com/OpenDevelopmentMekong/ckanext-odm_audit.git
+        dest="{{ ckan_env }}/src/ckanext-odm_audit"
+        version=master
+
+- shell: source {{ckan_env}}/bin/activate && python setup.py develop executable=/bin/bash
+  args:
+    chdir: "{{ ckan_env }}/src/ckanext-odm_audit"
+
+- name: Install ckanext-odm_audit extension dependencies
+  pip: requirements="{{ ckan_env }}/src/ckanext-odm_audit/requirements.txt" virtualenv="{{virtual_envs}}/ckan"
+
+- name: Install ckanext-odm_audit extension dependencies (development)
+  pip: requirements="{{ ckan_env }}/src/ckanext-odm_audit/dev-requirements.txt" virtualenv="{{virtual_envs}}/ckan"
 
 - name: Install ckanext-fluent
   file: path="{{ ckan_env }}/src/ckanext-fluent" state=directory
