@@ -55,11 +55,10 @@
               option=ckan.datastore.write_url
               value=postgresql://ckan_default:ckan_test1@localhost/datastore_default
 
-# Commented to enable legacy mode and solve set-permission.sql not found issue
-# - ini_file: dest="{{ckan_ini}}"
-#               section=app:main
-#               option=ckan.datastore.read_url
-#               value=postgresql://datastore_default:ckan_test1@localhost/datastore_default
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=ckan.datastore.read_url
+              value=postgresql://datastore_default:ckan_test1@localhost/datastore_default
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
