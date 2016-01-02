@@ -78,7 +78,7 @@
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
               option=ckan.site_url
-              value="{{ckan_url}}"
+              value="{{ckan_url}}:{{ckan_port}}/"
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
