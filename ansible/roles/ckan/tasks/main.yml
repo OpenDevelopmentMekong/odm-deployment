@@ -439,9 +439,8 @@
 - name: Initialize database
   shell: source {{ckan_env}}/bin/activate && paster --plugin=ckan db init --config={{ckan_ini}} executable=/bin/bash
 
-# Uncomment when legacy mode is disabled
-# - name: Setup the DataStore
-#   shell: source {{ckan_env}}/bin/activate && paster --plugin=ckan datastore set-permissions postgres --config={{ckan_ini}}
+- name: Setup the DataStore
+  shell: source {{ckan_env}}/bin/activate && paster --plugin=ckan datastore set-permissions postgres --config={{ckan_ini}}
 
 - name: Start CKAN
   shell: source {{ckan_env}}/bin/activate && {{supervisor_bin}}/supervisorctl start ckan executable=/bin/bash
