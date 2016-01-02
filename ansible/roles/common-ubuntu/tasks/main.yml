@@ -13,3 +13,11 @@
 
 - debconf: name='mysql-server-5.5' question='mysql-server/root_password_again' value='' vtype='password'
   sudo: yes
+
+- name: generate locales
+  shell: locale-gen en_US.UTF-8
+  sudo: yes
+
+- name: reconfigure locales
+  shell: dpkg-reconfigure locales
+  sudo: yes
