@@ -19,6 +19,10 @@
 - name: Install CKAN dependencies
   pip: requirements={{ckan_src}}/requirements.txt virtualenv="{{virtual_envs}}/ckan"
 
+- name: Install sqlalchemy 0.8.5
+  pip: name=sqlalchemy version=0.8.5  extra_args='--upgrade'
+  sudo: yes
+
 - name: Install CKAN dependencies for testing
   pip: requirements={{ckan_src}}/dev-requirements.txt virtualenv="{{virtual_envs}}/ckan"
 
@@ -262,7 +266,7 @@
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
-              option=scheming.dataset_schemas
+              option=scheming.presets
               value="ckanext.fluent:presets.json ckanext.odm_dataset:odm_dataset_presets.json ckanext.odm_library:odm_library_presets.json ckanext.odm_laws:odm_laws_presets.json"
 
 - name: Create cron job for sending out email notifications
@@ -440,7 +444,7 @@
   shell: source {{ckan_env}}/bin/activate && paster --plugin=ckan db init --config={{ckan_ini}} executable=/bin/bash
 
 - name: Setup the DataStore
-  shell: source {{ckan_env}}/bin/activate && paster --plugin=ckan datastore set-permissions postgres --config={{ckan_ini}}
+  shell: source {{ckan_env}}/bin/activate && paster --plugin=ckan datastore set-permissions --config={{ckan_ini}} | psql -U postgres executable=/bin/bash
 
 - name: Start CKAN
   shell: source {{ckan_env}}/bin/activate && {{supervisor_bin}}/supervisorctl start ckan executable=/bin/bash
