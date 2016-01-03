@@ -440,7 +440,7 @@
   shell: source {{ckan_env}}/bin/activate && paster --plugin=ckan db init --config={{ckan_ini}} executable=/bin/bash
 
 - name: Setup the DataStore
-  shell: source {{ckan_env}}/bin/activate && paster --plugin=ckan datastore set-permissions postgres --config={{ckan_ini}}
+  shell: source {{ckan_env}}/bin/activate && paster --plugin=ckan datastore set-permissions --config={{ckan_ini}} | psql -U postgres executable=/bin/bash
 
 - name: Start CKAN
   shell: source {{ckan_env}}/bin/activate && {{supervisor_bin}}/supervisorctl start ckan executable=/bin/bash
