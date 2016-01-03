@@ -19,6 +19,10 @@
 - name: Install CKAN dependencies
   pip: requirements={{ckan_src}}/requirements.txt virtualenv="{{virtual_envs}}/ckan"
 
+- name: Install sqlalchemy 0.8.5
+  pip: name=sqlalchemy version=0.8.5  extra_args='--upgrade'
+  sudo: yes
+
 - name: Install CKAN dependencies for testing
   pip: requirements={{ckan_src}}/dev-requirements.txt virtualenv="{{virtual_envs}}/ckan"
 
