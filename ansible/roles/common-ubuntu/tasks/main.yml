@@ -18,6 +18,9 @@
   shell: locale-gen en_US.UTF-8
   sudo: yes
 
+- name: set LC_ALL
+  shell: export LC_ALL=en_US.UTF-8
+
 - name: reconfigure locales
   shell: dpkg-reconfigure locales
   sudo: yes
