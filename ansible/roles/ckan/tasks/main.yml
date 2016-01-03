@@ -59,11 +59,10 @@
               option=ckan.datastore.write_url
               value=postgresql://ckan_default:ckan_test1@localhost/datastore_default
 
-# Commented to enable legacy mode and solve set-permission.sql not found issue
-# - ini_file: dest="{{ckan_ini}}"
-#               section=app:main
-#               option=ckan.datastore.read_url
-#               value=postgresql://datastore_default:ckan_test1@localhost/datastore_default
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=ckan.datastore.read_url
+              value=postgresql://datastore_default:ckan_test1@localhost/datastore_default
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
@@ -83,7 +82,7 @@
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
               option=ckan.site_url
-              value="{{ckan_url}}"
+              value="{{ckan_url}}:{{ckan_port}}/"
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
@@ -267,7 +266,7 @@
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
-              option=scheming.dataset_schemas
+              option=scheming.presets
               value="ckanext.fluent:presets.json ckanext.odm_dataset:odm_dataset_presets.json ckanext.odm_library:odm_library_presets.json ckanext.odm_laws:odm_laws_presets.json"
 
 - name: Create cron job for sending out email notifications
@@ -444,9 +443,8 @@
 - name: Initialize database
   shell: source {{ckan_env}}/bin/activate && paster --plugin=ckan db init --config={{ckan_ini}} executable=/bin/bash
 
-# Uncomment when legacy mode is disabled
-# - name: Setup the DataStore
-#   shell: source {{ckan_env}}/bin/activate && paster --plugin=ckan datastore set-permissions postgres --config={{ckan_ini}}
+- name: Setup the DataStore
+  shell: source {{ckan_env}}/bin/activate && paster --plugin=ckan datastore set-permissions --config={{ckan_ini}} | psql -U postgres executable=/bin/bash
 
 - name: Start CKAN
   shell: source {{ckan_env}}/bin/activate && {{supervisor_bin}}/supervisorctl start ckan executable=/bin/bash
