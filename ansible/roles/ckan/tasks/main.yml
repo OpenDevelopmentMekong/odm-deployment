@@ -87,7 +87,7 @@
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
               option=ckan.plugins
-              value="stats image_view text_view webpage_view recline_view recline_grid_view recline_graph_view recline_map_view pdf_view datastore datapusher resource_proxy geo_view geojson_view googleanalytics issues fluent scheming_datasets odm_laws odm_library odm_dataset odm_nav odm_audit"
+              value="stats image_view text_view webpage_view recline_view recline_grid_view recline_graph_view recline_map_view pdf_view datastore datapusher resource_proxy geo_view geojson_view googleanalytics issues fluent scheming_datasets odm_laws odm_library odm_dataset odm_nav odm_audit odm_migration"
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
@@ -367,6 +367,20 @@
 
 - name: Install ckanext-odm_audit extension dependencies (development)
   pip: requirements="{{ ckan_env }}/src/ckanext-odm_audit/dev-requirements.txt" virtualenv="{{virtual_envs}}/ckan"
+
+- name: Install ckanext-odm_migration
+  file: path="{{ ckan_env }}/src/ckanext-odm_migration" state=directory
+
+- git: repo=https://github.com/OpenDevelopmentMekong/ckanext-odm_migration.git
+        dest="{{ ckan_env }}/src/ckanext-odm_migration"
+        version=master
+
+- shell: source {{ckan_env}}/bin/activate && python setup.py develop executable=/bin/bash
+  args:
+    chdir: "{{ ckan_env }}/src/ckanext-odm_migration"
+
+- name: Install ckanext-odm_migration extension dependencies
+  pip: requirements="{{ ckan_env }}/src/ckanext-odm_migration/requirements.txt" virtualenv="{{virtual_envs}}/ckan"
 
 - name: Install ckanext-fluent
   file: path="{{ ckan_env }}/src/ckanext-fluent" state=directory
