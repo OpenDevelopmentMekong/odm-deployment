@@ -83,7 +83,7 @@
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
               option=ckan.plugins
-              value="stats image_view text_view webpage_view recline_view recline_grid_view recline_graph_view recline_map_view pdf_view datastore datapusher resource_proxy geo_view geojson_view googleanalytics issues fluent scheming_datasets odm_laws odm_library odm_dataset odm_nav odm_audit odm_migration"
+              value="stats image_view text_view webpage_view recline_view recline_grid_view recline_graph_view recline_map_view pdf_view datastore datapusher resource_proxy geo_view geojson_view googleanalytics issues fluent scheming_datasets odm_laws odm_library odm_dataset odm_nav odm_audit odm_migration dcat"
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
@@ -278,6 +278,17 @@
   shell: source {{ckan_env}}/bin/activate && python setup.py develop executable=/bin/bash
   args:
     chdir: "{{virtual_envs}}/ckan/src/ckanapi"
+
+- name: Install CKAN DCAT
+  pip: name="git+https://github.com/ckan/ckanext-dcat.git#egg=ckannext-dcat" virtualenv="{{virtual_envs}}/ckan"
+
+- name: CKAN DCAT Develop
+  shell: source {{ckan_env}}/bin/activate && python setup.py develop executable=/bin/bash
+  args:
+    chdir: "{{virtual_envs}}/ckan/src/ckannext-dcat"
+
+- name: Install ckanext-dcat extension dependencies
+  pip: requirements="{{ ckan_env }}/src/ckanext-dcat/requirements.txt" virtualenv="{{virtual_envs}}/ckan"
 
 - name: Install ckanext-odm_nav
   file: path="{{ ckan_env }}/src/ckanext-odm_nav" state=directory
