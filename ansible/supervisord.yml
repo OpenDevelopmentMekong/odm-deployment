@@ -1,4 +1,0 @@
----
-- hosts: webfaction-servers
-  roles:
-  - supervisord

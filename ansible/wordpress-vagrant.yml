@@ -1,5 +1,0 @@
----
-- hosts: vagrant-box
-  roles:
-  - wordpress-deps-ubuntu
-  - wordpress
