@@ -280,12 +280,12 @@
     chdir: "{{virtual_envs}}/ckan/src/ckanapi"
 
 - name: Install CKAN DCAT
-  pip: name="git+https://github.com/ckan/ckanext-dcat.git#egg=ckannext-dcat" virtualenv="{{virtual_envs}}/ckan"
+  pip: name="git+https://github.com/ckan/ckanext-dcat.git#egg=ckanext-dcat" virtualenv="{{virtual_envs}}/ckan"
 
 - name: CKAN DCAT Develop
   shell: source {{ckan_env}}/bin/activate && python setup.py develop executable=/bin/bash
   args:
-    chdir: "{{virtual_envs}}/ckan/src/ckannext-dcat"
+    chdir: "{{virtual_envs}}/ckan/src/ckanext-dcat"
 
 - name: Install ckanext-dcat extension dependencies
   pip: requirements="{{ ckan_env }}/src/ckanext-dcat/requirements.txt" virtualenv="{{virtual_envs}}/ckan"
