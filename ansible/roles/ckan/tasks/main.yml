@@ -411,6 +411,9 @@
   args:
     chdir: "{{ ckan_env }}/src/ckanext-scheming"
 
+- name: Install ckanext-scheming requirements
+  pip: requirements="{{ckan_env}}/src/ckanext-scheming/requirements.txt" virtualenv="{{virtual_envs}}/ckan"
+
 - name: Install Datapusher extension
   git: repo=https://github.com/ckan/datapusher.git version=stable
         dest="{{ ckan_env }}/src/datapusher"
