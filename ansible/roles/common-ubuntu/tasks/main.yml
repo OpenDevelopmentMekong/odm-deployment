@@ -21,6 +21,10 @@
 - name: set LC_ALL
   shell: export LC_ALL=en_US.UTF-8
 
+- name: set LC_ALL permanently
+  lineinfile: dest=/etc/environment line='LC_ALL="en_US.utf8"'
+  sudo: yes
+
 - name: reconfigure locales
   shell: dpkg-reconfigure locales
   sudo: yes
