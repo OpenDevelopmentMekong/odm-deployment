@@ -8,8 +8,9 @@ sudo apt-get update
 # Install git, easy_install, pip and extra packages needed by ansible
 sudo apt-get install -y git-core
 sudo apt-get install -y python-setuptools
+sudo apt-get install -y python-dev
 sudo easy_install pip
-sudo pip install paramiko PyYAML jinja2 httplib2
+sudo pip install jinja2 paramiko PyYAML httplib2
 
 # Clone mishari's patched version of ansible
 git clone -b release1.8.1_sync_fix https://github.com/mishari/ansible.git --recursive

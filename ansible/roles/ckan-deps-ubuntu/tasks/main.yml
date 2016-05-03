@@ -35,6 +35,7 @@
     - apache2
     - libgeos-dev
     - libmagickwand-dev
+    - python-jinja2
 
 - name: Create virtualenv
   shell: virtualenv --no-site-packages {{virtual_envs}}/ckan
