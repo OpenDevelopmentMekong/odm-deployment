@@ -36,6 +36,7 @@
     - libgeos-dev
     - libmagickwand-dev
     - python-jinja2
+    - libffi-dev
 
 - name: Create virtualenv
   shell: virtualenv --no-site-packages {{virtual_envs}}/ckan
