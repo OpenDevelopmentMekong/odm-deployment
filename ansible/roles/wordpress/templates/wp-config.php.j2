@@ -14,7 +14,9 @@
  * @package WordPress
  */
 
-// ** MySQL settings - You can get this info from your web host ** //
+/** To allow installing plugins directly from wp dashboard */
+define('FS_METHOD', 'direct');
+
 /** The name of the database for WordPress */
 define('DB_NAME', '{{wp_db_name}}');
 
