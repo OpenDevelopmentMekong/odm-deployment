@@ -3,7 +3,7 @@
   git: repo=https://github.com/OpenDevelopmentMekong/odm-frontend.git
          dest="{{wp_dir}}/"
          force=yes
-         recursive=yes
+         recursive=no
 
 - name: Copy config.php file
   template: src=wp-config.php.j2 dest="{{wp_dir}}/wp-config.php"
@@ -21,3 +21,8 @@
 - name: configure site
   file: path="{{wp_dir}}"/phpmyadmin src=/usr/share/phpmyadmin state=link
   sudo: yes
+
+- name: Run odm-automation for CKAN
+  shell: ./deploy.sh wp local
+  args:
+    chdir: "/tmp/odm-automation"
