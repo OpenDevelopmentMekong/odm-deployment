@@ -83,7 +83,7 @@
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
               option=ckan.plugins
-              value="stats image_view text_view webpage_view recline_view recline_grid_view recline_graph_view recline_map_view pdf_view datastore datapusher resource_proxy geo_view geojson_view googleanalytics issues fluent scheming_datasets odm_laws odm_library odm_dataset odm_nav odm_audit odm_migration dcat"
+              value="stats image_view text_view webpage_view recline_view recline_grid_view recline_graph_view recline_map_view pdf_view datastore datapusher resource_proxy geo_view geojson_view issues fluent scheming_datasets odm_agreement odm_laws odm_library odm_dataset odm_nav odm_audit odm_migration odm_notifications dcat spatial_metadata spatial_query sitemap"
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
@@ -237,6 +237,11 @@
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
+              option=ckan.search.default_include_private
+              value="True"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
               option=ckanext.issues.minimun_role_required
               value="Admin"
 
@@ -258,12 +263,97 @@
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
               option=scheming.dataset_schemas
-              value="ckanext.odm_dataset:odm_dataset_schema.json ckanext.odm_library:odm_library_schema.json ckanext.odm_laws:odm_laws_schema.json"
+              value="ckanext.fluent:presets.json ckanext.odm_dataset:odm_dataset_presets.json ckanext.odm_library:odm_library_presets.json ckanext.odm_laws:odm_laws_presets.json ckanext.odm_agreement:odm_agreement_presets.json"
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
               option=scheming.presets
               value="ckanext.fluent:presets.json ckanext.odm_dataset:odm_dataset_presets.json ckanext.odm_library:odm_library_presets.json ckanext.odm_laws:odm_laws_presets.json"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=wp.dataset_detail_page_mekong-organization
+              value="https://pp.opendevelopmentmekong.net/dataset"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=wp.dataset_detail_page_cambodia-organization
+              value="https://pp.opendevelopmentcambodia.net/dataset"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=wp.dataset_detail_page_myanmar-organization
+              value="https://pp.opendevelopmentmyanmar.net/dataset"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=wp.dataset_detail_page_vietnam-organization
+              value="https://vietnam.pp.opendevelopmentmekong.net/dataset"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=wp.dataset_detail_page_laos-organization
+              value="https://laos.pp.opendevelopmentmekong.net/dataset"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=wp.dataset_detail_page_thailand-organization
+              value="https://thailand.pp.opendevelopmentmekong.net/dataset"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=ckanext.dcat.rdf.profiles
+              value="odm_dcat_dataset"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=odm.resource_id.odm_laws_status
+              value="TODO"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=odm.resource_id.odm_laws_issuing_agency_parties
+              value="TODO"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=odm_laws_implementing_agencies
+              value="TODO"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=odm_document_type
+              value="TODO"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=odm_province
+              value="TODO"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=document_type
+              value="TODO"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=odm_language
+              value="TODO"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=odm_spatial_range
+              value="TODO"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=odm_agreement_document_type
+              value="TODO"
+
+- ini_file: dest="{{ckan_ini}}"
+              section=app:main
+              option=odm_agreement_contracting_parties
+              value="TODO"
 
 - name: Create cron job for sending out email notifications
   cron: name="Schedule email notifications" special_time="hourly" job="source {{ckan_env}}/bin/activate && echo '{}' | paster --plugin=ckan post -c {{ckan_ini}} /api/action/send_email_notifications > /dev/null" state="present"
@@ -319,6 +409,11 @@
   args:
     chdir: "{{ ckan_env }}/src/ckanext-googleanalytics"
 
+- name: Run odm-automation for CKAN
+  shell: ./deploy.sh ckan local
+  args:
+    chdir: "/tmp/odm-automation"
+
 - name: Initialize database
   shell: source {{ckan_env}}/bin/activate && paster --plugin=ckan db init --config={{ckan_ini}} executable=/bin/bash
 
@@ -334,8 +429,3 @@
 
 - name: Start datapusher
   shell: source {{ckan_env}}/bin/activate && {{supervisor_bin}}/supervisorctl start datapusher executable=/bin/bash
-
-- name: Run odm-automation for CKAN
-  shell: ./deploy.sh ckan local
-  args:
-    chdir: "/tmp/odm-automation"
