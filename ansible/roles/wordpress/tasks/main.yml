@@ -1,6 +1,6 @@
 ---
 - name: Clone WP
-  git: repo=https://github.com/OpenDevelopmentMekong/odm-frontend.git
+  git: repo=https://github.com/WordPress/WordPress.git
          dest="{{wp_dir}}/"
          force=yes
          recursive=no

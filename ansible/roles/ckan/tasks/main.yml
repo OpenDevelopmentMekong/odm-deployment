@@ -18,9 +18,11 @@
 
 - name: Install CKAN dependencies
   pip: requirements={{ckan_src}}/requirements.txt virtualenv="{{virtual_envs}}/ckan"
+  sudo: yes
 
 - name: Install CKAN dependencies for testing
   pip: requirements={{ckan_src}}/dev-requirements.txt virtualenv="{{virtual_envs}}/ckan"
+  sudo: yes
 
 - name: Install CKAN
   pip: name="{{ckan_src}}/." virtualenv="{{virtual_envs}}/ckan"
@@ -395,7 +397,10 @@
 - name: Install ckanext-geoview extension (Just for Preview for spatial formats)
   pip: name="git+https://github.com/ckan/ckanext-geoview.git#egg=ckanext-geoview" virtualenv="{{virtual_envs}}/ckan"
 
-- name: Install  ckanext-spatial extension dependencies
+- name: Install ckanext-spatial extension
+  pip: name="git+https://github.com/okfn/ckanext-spatial.git#egg=ckanext-spatial" virtualenv="{{virtual_envs}}/ckan"
+
+- name: Install ckanext-spatial extension dependencies
   pip: requirements={{ckan_env}}/src/ckanext-geoview/pip-requirements.txt virtualenv="{{virtual_envs}}/ckan"
 
 - shell: source {{ckan_env}}/bin/activate && python setup.py develop executable=/bin/bash
