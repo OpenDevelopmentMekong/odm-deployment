@@ -401,6 +401,9 @@
   pip: name="git+https://github.com/okfn/ckanext-spatial.git#egg=ckanext-spatial" virtualenv="{{virtual_envs}}/ckan"
 
 - name: Install ckanext-spatial extension dependencies
+  pip: requirements={{ckan_env}}/src/ckanext-spatial/pip-requirements.txt virtualenv="{{virtual_envs}}/ckan"
+
+- name: Install ckanext-geoview extension dependencies
   pip: requirements={{ckan_env}}/src/ckanext-geoview/pip-requirements.txt virtualenv="{{virtual_envs}}/ckan"
 
 - shell: source {{ckan_env}}/bin/activate && python setup.py develop executable=/bin/bash
