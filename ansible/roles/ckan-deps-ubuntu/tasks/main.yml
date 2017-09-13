@@ -26,6 +26,7 @@
     - build-essential
     - python-dev
     - postgresql
+    - postgresql-9.3-postgis-2.1
     - libpq-dev
     - libpq5
     - zlib1g-dev
@@ -71,3 +72,15 @@
 
 - name: Setup databases and users (datastore_test)
   postgresql_db: name=datastore_test owner=ckan_default encoding='UTF-8' state=present
+
+- name: create the necessary tables and functions in the database
+  shell: sudo -u postgres psql -d ckan_default -f /usr/share/postgresql/9.3/contrib/postgis-2.1/postgis.sql
+
+- name: populate the spatial reference table
+  shell: sudo -u postgres psql -d ckan_default -f /usr/share/postgresql/9.3/contrib/postgis-2.1/spatial_ref_sys.sql
+
+- name: Change the owner of spatial tables to the CKAN user to avoid errors later on
+  shell: sudo -u postgres psql -d ckan_default -c 'ALTER VIEW geometry_columns OWNER TO ckan_default;'
+
+- name: Change the owner of spatial tables to the CKAN user to avoid errors later on
+  shell: sudo -u postgres psql -d ckan_default -c 'ALTER TABLE spatial_ref_sys OWNER TO ckan_default;'

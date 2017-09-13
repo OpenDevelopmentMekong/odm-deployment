@@ -22,7 +22,7 @@
   file: path="{{wp_dir}}"/phpmyadmin src=/usr/share/phpmyadmin state=link
   sudo: yes
 
-- name: Run odm-automation for CKAN
+- name: Run odm-automation for WP
   shell: ./deploy.sh wp local
   args:
     chdir: "/tmp/odm-automation"
