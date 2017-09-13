@@ -85,7 +85,8 @@
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
               option=ckan.plugins
-              value="stats image_view text_view webpage_view recline_view recline_grid_view recline_graph_view recline_map_view pdf_view datastore datapusher resource_proxy geo_view geojson_view issues fluent scheming_datasets odm_agreement odm_laws odm_library odm_dataset odm_nav odm_audit odm_migration odm_notifications dcat spatial_metadata spatial_query sitemap geopusher"
+              value="stats image_view text_view webpage_view recline_view recline_grid_view recline_graph_view recline_map_view pdf_view datastore datapusher resource_proxy geo_view geojson_view issues fluent scheming_datasets odm_agreement odm_laws odm_library odm_dataset odm_nav odm_audit odm_migration odm_notifications dcat spatial_metadata spatial_query sitemap"
+              #geopusher
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
@@ -410,16 +411,16 @@
   args:
     chdir: "{{ ckan_env }}/src/ckanext-geoview"
 
-- name: Install CKAN geopusher
-  pip: name="git+https://github.com/datacats/ckanext-geopusher.git#egg=ckanext-geopusher" virtualenv="{{virtual_envs}}/ckan"
-
-- name: CKAN geopusher Develop
-  shell: source {{ckan_env}}/bin/activate && python setup.py develop executable=/bin/bash
-  args:
-    chdir: "{{virtual_envs}}/ckan/src/ckanext-geopusher"
-
-- name: Install ckanext-geopusher extension dependencies
-  pip: requirements="{{ ckan_env }}/src/ckanext-geopusher/requirements.txt" virtualenv="{{virtual_envs}}/ckan"
+# - name: Install CKAN geopusher
+#   pip: name="git+https://github.com/datacats/ckanext-geopusher.git#egg=ckanext-geopusher" virtualenv="{{virtual_envs}}/ckan"
+#
+# - name: CKAN geopusher Develop
+#   shell: source {{ckan_env}}/bin/activate && python setup.py develop executable=/bin/bash
+#   args:
+#     chdir: "{{virtual_envs}}/ckan/src/ckanext-geopusher"
+#
+# - name: Install ckanext-geopusher extension dependencies
+#   pip: requirements="{{ ckan_env }}/src/ckanext-geopusher/requirements.txt" virtualenv="{{virtual_envs}}/ckan"
 
 - name: Run odm-automation for CKAN
   shell: ./deploy.sh ckan local
