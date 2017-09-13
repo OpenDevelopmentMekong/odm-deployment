@@ -266,7 +266,7 @@
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
               option=scheming.dataset_schemas
-              value="ckanext.fluent:presets.json ckanext.odm_dataset:odm_dataset_presets.json ckanext.odm_library:odm_library_presets.json ckanext.odm_laws:odm_laws_presets.json ckanext.odm_agreement:odm_agreement_presets.json"
+              value="ckanext.odm_dataset:odm_dataset_schema.json ckanext.odm_library:odm_library_schema.json ckanext.odm_laws:odm_laws_schema.json ckanext.odm_agreement:odm_agreement_schema.json"
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
