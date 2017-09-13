@@ -320,42 +320,42 @@
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
-              option=odm_laws_implementing_agencies
+              option=odm.resource_id.odm_laws_implementing_agencies
               value="TODO"
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
-              option=odm_document_type
+              option=odm.resource_id.odm_document_type
               value="TODO"
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
-              option=odm_province
+              option=odm.resource_id.odm_province
               value="TODO"
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
-              option=document_type
+              option=odm.resource_id.document_type
               value="TODO"
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
-              option=odm_language
+              option=odm.resource_id.odm_language
               value="TODO"
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
-              option=odm_spatial_range
+              option=odm.resource_id.odm_spatial_range
               value="TODO"
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
-              option=odm_agreement_document_type
+              option=odm.resource_id.odm_agreement_document_type
               value="TODO"
 
 - ini_file: dest="{{ckan_ini}}"
               section=app:main
-              option=odm_agreement_contracting_parties
+              option=odm.resource_id.odm_agreement_contracting_parties
               value="TODO"
 
 - name: Create cron job for sending out email notifications
