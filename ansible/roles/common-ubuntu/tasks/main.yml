@@ -28,3 +28,9 @@
 - name: reconfigure locales
   shell: dpkg-reconfigure locales
   sudo: yes
+
+- name: Clone odm-automation
+  git: repo=https://github.com/OpenDevelopmentMekong/odm-automation.git
+         dest="/tmp/odm-automation"
+         force=yes
+         recursive=no
