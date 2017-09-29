@@ -26,3 +26,4 @@
   shell: ./deploy.sh wp local
   args:
     chdir: "/tmp/odm-automation"
+  sudo: yes
