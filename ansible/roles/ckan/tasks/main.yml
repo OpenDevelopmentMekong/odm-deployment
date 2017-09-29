@@ -366,50 +366,64 @@
 
 - name: Install CKAN Api
   pip: name="git+https://github.com/ckan/ckanapi.git#egg=ckanapi" virtualenv="{{virtual_envs}}/ckan"
+  sudo: yes
 
 - name: CKAN Api Develop
   shell: source {{ckan_env}}/bin/activate && python setup.py develop executable=/bin/bash
   args:
     chdir: "{{virtual_envs}}/ckan/src/ckanapi"
+  sudo: yes
 
 - name: Install Datapusher extension
   git: repo=https://github.com/ckan/datapusher.git version=stable
         dest="{{ ckan_env }}/src/datapusher"
+  sudo: yes
 
 - pip: requirements="{{ckan_env}}/src/datapusher/requirements.txt" extra_args="-e {{ckan_env}}/src/datapusher/" virtualenv="{{virtual_envs}}/ckan"
+  sudo: yes
 
 - name: Remove datapusher_settings.py, will be copied in the next step
   file: path="{{ckan_env}}/src/datapusher/deployment/datapusher_settings.py" state=absent
+  sudo: yes
 
 - name: Copy datapusher_settings.py Template over
   template: src=datapusher_settings.py dest={{ckan_env}}/src/datapusher/deployment/datapusher_settings.py
+  sudo: yes
 
 - name: Install pdfview extension
   file: path="{{ ckan_env }}/src/ckanext-pdfview" state=directory
+  sudo: yes
 
 - git: repo=https://github.com/ckan/ckanext-pdfview.git
         dest="{{ ckan_env }}/src/ckanext-pdfview"
         version=master
+  sudo: yes
 
 - shell: source {{ckan_env}}/bin/activate && python setup.py develop executable=/bin/bash
   args:
     chdir: "{{ ckan_env }}/src/ckanext-pdfview"
+  sudo: yes
 
 - name: Install ckanext-geoview extension (Just for Preview for spatial formats)
   pip: name="git+https://github.com/ckan/ckanext-geoview.git#egg=ckanext-geoview" virtualenv="{{virtual_envs}}/ckan"
+  sudo: yes
 
 - name: Install ckanext-spatial extension
   pip: name="git+https://github.com/okfn/ckanext-spatial.git#egg=ckanext-spatial" virtualenv="{{virtual_envs}}/ckan"
+  sudo: yes
 
 - name: Install ckanext-spatial extension dependencies
   pip: requirements={{ckan_env}}/src/ckanext-spatial/pip-requirements.txt virtualenv="{{virtual_envs}}/ckan"
+  sudo: yes
 
 - name: Install ckanext-geoview extension dependencies
   pip: requirements={{ckan_env}}/src/ckanext-geoview/pip-requirements.txt virtualenv="{{virtual_envs}}/ckan"
+  sudo: yes
 
 - shell: source {{ckan_env}}/bin/activate && python setup.py develop executable=/bin/bash
   args:
     chdir: "{{ ckan_env }}/src/ckanext-geoview"
+  sudo: yes
 
 # - name: Install CKAN geopusher
 #   pip: name="git+https://github.com/datacats/ckanext-geopusher.git#egg=ckanext-geopusher" virtualenv="{{virtual_envs}}/ckan"
@@ -426,6 +440,7 @@
   shell: ./deploy.sh ckan local
   args:
     chdir: "/tmp/odm-automation"
+  sudo: yes
 
 - name: Initialize database
   shell: source {{ckan_env}}/bin/activate && paster --plugin=ckan db init --config={{ckan_ini}} executable=/bin/bash

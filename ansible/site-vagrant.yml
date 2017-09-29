@@ -1,6 +1,5 @@
 ---
 - hosts: vagrant-box
-  sudo: yes
   roles:
   - common-ubuntu
   - ckan-deps-ubuntu
