@@ -4,6 +4,7 @@
          dest="{{wp_dir}}/"
          force=yes
          recursive=no
+         version=4.8.2
 
 - name: Copy config.php file
   template: src=wp-config.php.j2 dest="{{wp_dir}}/wp-config.php"
